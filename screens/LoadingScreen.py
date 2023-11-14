@@ -12,6 +12,11 @@ class LoadingScreen(Screen):
     def display(self):
         self.screen.fill((255, 255, 255))
         self.screen.blit(self.text, self.text_rect)
+
+    def handle_events(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            return "test"
+
+        return None
     
-    def get_screen(self):
-        return self.screen
+    
