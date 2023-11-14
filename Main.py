@@ -14,19 +14,17 @@ pygame.display.update()
 
 def init_home_screen():
 
-    monster1=TestMonster(10.0, 9.0, "Test Monster 1", 100, 100)
-
-    monster1.render(100, 100, 200, 200, screen)
-    #monster1.shoot(screen)
-    pygame.display.update()
+    monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100)
 
     # Establishing game loop to keep screen running
 
     gameLoop = True
     
     while gameLoop:
-        #monster1.shoot(screen)
-        #pygame.display.update()
+        screen.fill((255,255,255))
+        monster1.render(800, 100, 200, 200, screen)
+        monster1.shoot(screen)
+        pygame.display.update()
 
         for event in pygame.event.get():
             

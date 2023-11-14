@@ -1,7 +1,6 @@
 import pygame
 from Projectile import *
 import os
-import time
 class Monster:
 
     def __init__(self, attack_power:float, health:float, img:pygame.image, monster_type:str, start_pos_x:int, start_pos_y:int):
@@ -12,13 +11,16 @@ class Monster:
         self.x_pos=start_pos_x
         self.y_pos=start_pos_y
         self.monster_type=monster_type
+        self.projectile = Projectile(10, self.x_pos+2, self.y_pos, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
+
     
-    def shoot(self, screen) -> None:
-        
-        img=pygame.image.load(os.path.join("Assets", "fireball.png"))
-        projectile = Projectile(10, self.x_pos+2, self.y_pos, img)
-        projectile.render(50, 50, self.x_pos+4, self.y_pos, screen)
-        
+    def shoot(self, screen:pygame.display) -> None:
+        if self.projectile.x_pos<=0:
+            self.projectile.x_pos=self.x_pos-2
+
+        self.projectile.x_pos+=-1.5
+        self.projectile.render(self.projectile.x_pos, self.projectile.y_pos, screen)
+    
           
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         self.x_pos=x_pos
@@ -26,8 +28,6 @@ class Monster:
 
         image = pygame.transform.scale(self.img, (height, width))
         screen.blit(image, (x_pos, y_pos))
-
-        print(f"Monster: {self.monster_type} has been rendered at position ({x_pos}, {y_pos})")
 
     def start_moving(self) -> None:
         
