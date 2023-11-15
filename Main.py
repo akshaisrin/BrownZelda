@@ -3,6 +3,7 @@ import pygame
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
+from Player import *
 
 pygame.init()
 
@@ -15,6 +16,7 @@ pygame.display.update()
 def init_home_screen():
 
     monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100)
+    player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
 
     # Establishing game loop to keep screen running
 
@@ -24,6 +26,8 @@ def init_home_screen():
         screen.fill((255,255,255))
         monster1.render(800, 100, 200, 200, screen)
         monster1.shoot(screen)
+        player1.render(player1.x_pos,player1.y_pos, 100, 100, screen)
+        
         pygame.display.update()
 
         for event in pygame.event.get():

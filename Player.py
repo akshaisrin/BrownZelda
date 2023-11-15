@@ -1,9 +1,11 @@
 import pygame
 import Constants
+import os
 
 class Player:
 
-    def __init__(self, username: str, inventory:dict, curr_item:str, curr_level:int, curr_checkpoint:tuple(int,int,int), lives_remaining: int, health_bar: int, wealth: int, img:str, start_x, start_y, start_z):
+    def __init__(self, username: str, inventory:dict, curr_item:str, curr_level:int, curr_checkpoint:tuple, lives_remaining: int, health_bar: int, wealth: int, img:str, start_x, start_y, start_z):
+        self.img=pygame.image.load(os.path.join("Assets", "player_sprite_test.png"))
         self.username = username
         self.inventory = inventory
         self.curr_item = curr_item
@@ -47,3 +49,9 @@ class Player:
         self.y_pos = self.curr_checkpoint[1]
         self.z_pos = self.curr_checkpoint[2]
 
+    def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
+        self.x_pos=x_pos
+        self.y_pos=y_pos
+
+        image = pygame.transform.scale(self.img, (height, width))
+        screen.blit(image, (x_pos, y_pos))
