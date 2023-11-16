@@ -27,9 +27,10 @@ class Overworld(Room):
             self.tundra.render(screen)
         else:
             self.zelda.render(screen)
+        pygame.display.update()
         
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
         image = pygame.transform.scale(img, (screen_width, screen_height))
         screen.blit(image, (0, 0))
-        
+        pygame.display.update()
