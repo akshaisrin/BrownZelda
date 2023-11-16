@@ -1,5 +1,6 @@
 import os
 import pygame
+import sys
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
