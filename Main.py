@@ -22,15 +22,41 @@ def init_home_screen():
 
 
     # Establishing game loop to keep screen running
-
     gameLoop = True
     
     while gameLoop:
         screen.fill((255,255,255))
         monster1.render(800, 100, 200, 200, screen)
         monster1.shoot(screen)
-        player1.render(player1.x_pos,player1.y_pos, 100, 100, screen)
+        player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
         
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+         
+            # checking if keydown event happened or not, updating direction accordingly, and then calling move function
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    print("move left")
+                    player1.direction = "left"
+                    player1.move()
+
+                elif event.key == pygame.K_RIGHT:
+                    print("right")
+                    player1.direction = "right"
+                    player1.move()
+
+                elif event.key == pygame.K_UP:
+                    print("up")
+                    player1.direction = "up"
+                    player1.move()
+
+                elif event.key == pygame.K_DOWN:
+                    print("down")
+                    player1.direction = "down"
+                    player1.move()
+
         pygame.display.update()
 
         for event in pygame.event.get():

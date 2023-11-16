@@ -18,11 +18,12 @@ class Player:
         self.x_pos = start_x
         self.y_pos = start_y
         self.z_pos = start_z
+        self.direction = None
 
 
-    def move(self,direction:str): #figure out how to use arrow keys to set direction string variable -- right arrow sets direction to "right" and calls move
-        self.x_pos += Constants.directions[direction][0]
-        self.y_pos += Constants.directions[direction][1]
+    def move(self,): #figure out how to use arrow keys to set direction string variable -- right arrow sets direction to "right" and calls move
+        self.x_pos += Constants.directions[self.direction][0]
+        self.y_pos += Constants.directions[self.direction][1]
         
     def select_item(self, item:str):
         if item in self.inventory:
