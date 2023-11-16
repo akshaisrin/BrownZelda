@@ -3,11 +3,8 @@ import pygame
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
-<<<<<<< HEAD
 from Player import *
-=======
 from Overworld import *
->>>>>>> ef3b685 (Added code for testing Overworld & Biome class #15)
 
 pygame.init()
 
@@ -19,15 +16,8 @@ pygame.display.update()
 
 def init_home_screen():
 
-<<<<<<< HEAD
     monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100)
     player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
-=======
-    monster1=TestMonster(10.0, 9.0, "Test Monster 1", 100, 100)
-
-    monster1.render(100, 100, 200, 200, screen)
-    #monster1.shoot(screen)
-    pygame.display.update()
     
     """
     # testing Overworld class
@@ -35,7 +25,6 @@ def init_home_screen():
     overworld.display_biome("desert", screen)
     pygame.display.update()
     """
->>>>>>> ef3b685 (Added code for testing Overworld & Biome class #15)
 
     # Establishing game loop to keep screen running
 
