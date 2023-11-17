@@ -3,11 +3,14 @@ from Projectile import *
 import os
 class Monster:
 
-    def __init__(self, attack_power:float, health:float, img:pygame.image, monster_type:str, start_pos_x:int, start_pos_y:int):
+    def __init__(self, attack_power:float, health:float, img:pygame.image, monster_type:str, start_pos_x:int, start_pos_y:int, height:int, width:int):
 
         self.attack_power=attack_power
         self.health=health
+        self.height=height
+        self.width=width
         self.img=img
+        self.img=pygame.transform.scale(self.img, (self.height, self.width))
         self.x_pos=start_pos_x
         self.y_pos=start_pos_y
         self.monster_type=monster_type
@@ -26,14 +29,8 @@ class Monster:
         self.x_pos=x_pos
         self.y_pos=y_pos
 
-        image = pygame.transform.scale(self.img, (height, width))
+        image = pygame.transform.scale(self.img, (width, height))
         screen.blit(image, (x_pos, y_pos))
-
-    def start_moving(self) -> None:
-        
-        # Implement start_moving here
-
-        print(f"Monster: {self.monster_type} has been begun moving")
     
     def get_hit(self, damage:float):
         
