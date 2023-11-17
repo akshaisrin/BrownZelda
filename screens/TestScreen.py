@@ -6,7 +6,7 @@ from Constants import *
 from TestMonster import *
 from .Screen import Screen
 from items.MoneyItem import MoneyItem
-from screens.LoadingScreen import LoadingScreen
+from screens.InitialLoadingScreen import InitialLoadingScreen
 
 class TestScreen(Screen):
     def __init__(self, screen):
