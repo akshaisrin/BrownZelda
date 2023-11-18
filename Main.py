@@ -8,7 +8,7 @@ from inputs import get_gamepad
 import math
 import threading
 from XBoxController import *
-
+from Player import *
 pygame.init()
 
 
@@ -17,60 +17,82 @@ pygame.display.set_caption("Brown Zelda (But Not Garbage)")
 screen.fill((255,255,255))
 pygame.display.update()
 
-def test_x_box_controller():
-    joystick = XboxController()
-    while True:
-        print(joystick.get_a_button())
-
 def init_home_screen():
-
+    controller_detected=True
     monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
-    monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100)
     player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
 
+    try:
+        joystick=XboxController()
+    except:
+        controller_detected=False
 
     # Establishing game loop to keep screen running
+
     gameLoop = True
     
     while gameLoop:
+        
         screen.fill((255,255,255))
         monster1.render(800, 100, 250, 300, screen)
         monster1.shoot(screen)
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
-        
+
+        if controller_detected:
+            new_state=(joystick.get_x_axis(), joystick.get_y_axis())
+            print(new_state[0])
+            if (new_state[0]<-0.25):
+                print("move left")
+                player1.direction = "left"
+                player1.move()
+                
+
+            if (new_state[0]>0.25):
+                print("move right")
+                player1.direction = "right"
+                player1.move()
+
+            if (new_state[1]<-0.25):
+                print("move down")
+                player1.direction = "down"
+                player1.move()   
+            
+            if (new_state[1]>0.25):
+                print("move up")
+                player1.direction = "up"
+                player1.move()   
+     
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-         
+
             # checking if keydown event happened or not, updating direction accordingly, and then calling move function
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+            
+            if (event.type == pygame.KEYDOWN):
+                print("button pressed")
+                if (event.key == pygame.K_LEFT):
                     print("move left")
                     player1.direction = "left"
-                    player1.move()
-
-                elif event.key == pygame.K_RIGHT:
+                    player1.move()   
+                    
+                elif (event.key == pygame.K_RIGHT):
                     print("right")
                     player1.direction = "right"
-                    player1.move()
-
-                elif event.key == pygame.K_UP:
+                    player1.move()   
+                    
+                elif (event.key == pygame.K_UP):
                     print("up")
                     player1.direction = "up"
-                    player1.move()
-
-                elif event.key == pygame.K_DOWN:
+                    player1.move()   
+                
+                elif (event.key == pygame.K_DOWN):
                     print("down")
                     player1.direction = "down"
-                    player1.move()
-
-        pygame.display.update()
-
-        for event in pygame.event.get():
+                    player1.move()           
             
             if event.type == pygame.QUIT:
                 gameLoop=False
+                pygame.quit()
+                sys.exit()
+            
+        pygame.display.update()
 
-#init_home_screen()
-test_x_box_controller()
+init_home_screen()

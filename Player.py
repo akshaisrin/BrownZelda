@@ -21,7 +21,7 @@ class Player:
         self.direction = None
 
 
-    def move(self,): #figure out how to use arrow keys to set direction string variable -- right arrow sets direction to "right" and calls move
+    def move(self): #figure out how to use arrow keys to set direction string variable -- right arrow sets direction to "right" and calls move
         self.x_pos += Constants.directions[self.direction][0]
         self.y_pos += Constants.directions[self.direction][1]
         
