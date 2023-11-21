@@ -8,6 +8,8 @@ from TestMonsterMedium import *
 from inputs import get_gamepad
 from XBoxController import *
 from Player import *
+from items.Sword import Sword
+import time
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
@@ -26,6 +28,8 @@ def init_home_screen():
 
     player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
 
+    sword = Sword()
+
     try:
         joystick=XboxController()
     except:
@@ -34,11 +38,12 @@ def init_home_screen():
     # Establishing game loop to keep screen running
 
     gameLoop = True
+    attacktime = None
     pressed_left=False
     pressed_right=False
     pressed_up=False
     pressed_down=False
-
+    
     while gameLoop:
         
         screen.fill((255,255,255))
@@ -46,11 +51,21 @@ def init_home_screen():
         screen.blit(healthBarDisplay, (1200, 100))
         #monster1.render(800, 100, 250, 300, screen)
         #monster1.shoot(screen)
-
-        monster2.render(500, 100, 250, 300, screen)
-        monster2.shoot(screen, player1)
+        if monster2.alive:
+            monster2.render(500, 100, 250, 300, screen)
+        # monster2.shoot(screen, player1)
 
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
+        if sword.attacking:
+            elaspedTime = time.time() - attacktime
+            if elaspedTime > 0.5:
+                sword.attacking = False
+            elif elaspedTime > 0.25:
+                sword.render(player1.x_pos + 75 + (100 * elaspedTime), player1.y_pos + 75 + (100 * elaspedTime), 50, 50, screen)      
+            else:
+                sword.render(player1.x_pos + 100 - (100 * elaspedTime), player1.y_pos + 100 - (100 * elaspedTime), 50, 50, screen)      
+            
+
 
 
 
@@ -100,6 +115,10 @@ def init_home_screen():
                     pressed_up = False
                 elif event.key == pygame.K_DOWN:
                     pressed_down = False
+                elif (event.key == pygame.K_SPACE) and not sword.attacking:
+                    print("attack")
+                    attacktime = time.time()
+                    sword.attack(player1, monster2)
 
             if event.type == pygame.QUIT:
                 gameLoop=False
