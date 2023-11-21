@@ -14,6 +14,9 @@ screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE
 pygame.display.set_caption("Brown Zelda (But Not Garbage)")
 screen.fill((255,255,255))
 pygame.display.update()
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+
 
 def init_home_screen():
     controller_detected=True
@@ -31,10 +34,16 @@ def init_home_screen():
     # Establishing game loop to keep screen running
 
     gameLoop = True
-    
+    pressed_left=False
+    pressed_right=False
+    pressed_up=False
+    pressed_down=False
+
     while gameLoop:
         
         screen.fill((255,255,255))
+        healthBarDisplay = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
+        screen.blit(healthBarDisplay, (1200, 100))
         #monster1.render(800, 100, 250, 300, screen)
         #monster1.shoot(screen)
 
@@ -42,6 +51,8 @@ def init_home_screen():
         monster2.shoot(screen, player1)
 
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
+
+
 
         if controller_detected:
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
@@ -70,35 +81,47 @@ def init_home_screen():
      
         for event in pygame.event.get():
 
-            # checking if keydown event happened or not, updating direction accordingly, and then calling move function (arrow keys)
-            
-            if (event.type == pygame.KEYDOWN):
-                print("button pressed")
-                if (event.key == pygame.K_LEFT):
-                    print("move left")
-                    player1.direction = "left"
-                    player1.move()   
-                    
-                elif (event.key == pygame.K_RIGHT):
-                    print("right")
-                    player1.direction = "right"
-                    player1.move()   
-                    
-                elif (event.key == pygame.K_UP):
-                    print("up")
-                    player1.direction = "up"
-                    player1.move()   
-                
-                elif (event.key == pygame.K_DOWN):
-                    print("down")
-                    player1.direction = "down"
-                    player1.move()           
-            
+            if event.type == pygame.KEYDOWN:                   
+                if event.key == pygame.K_LEFT:        
+                    pressed_left = True
+                elif event.key == pygame.K_RIGHT:     
+                    pressed_right = True
+                elif event.key == pygame.K_UP:        
+                    pressed_up = True
+                elif event.key == pygame.K_DOWN:     
+                    pressed_down = True
+
+            elif event.type == pygame.KEYUP:            
+                if event.key == pygame.K_LEFT:        
+                    pressed_left = False
+                elif event.key == pygame.K_RIGHT:     
+                    pressed_right = False
+                elif event.key == pygame.K_UP:       
+                    pressed_up = False
+                elif event.key == pygame.K_DOWN:
+                    pressed_down = False
+
             if event.type == pygame.QUIT:
                 gameLoop=False
                 pygame.quit()
                 sys.exit()
+
+        if pressed_left:
+            player1.direction = "left"
+            player1.move() 
+        
+        if pressed_right:
+            player1.direction = "right"
+            player1.move() 
+        if pressed_up:
+            player1.direction = "up"
+            player1.move() 
             
+        if pressed_down:
+            player1.direction = "down"
+            player1.move() 
+
         pygame.display.update()
+
 
 init_home_screen()
