@@ -24,5 +24,3 @@ medium_boss_projectile_offset_y=-100
 # Projectile bounds for medium boss
 
 med_boss_projectile_bounds=2
-
-
