@@ -11,10 +11,14 @@ class Biome(Room):
         self.file_path = file_path
         self.exit_x = exit_x
         self.exit_y = exit_y
-        
-    def render(self, screen:pygame.display):
+    
+    def get_image(self):
         img = pygame.image.load(os.path.join("Assets/biomes", self.file_path))
         image = pygame.transform.scale(img, (screen_width, screen_height))
+        return image
+    
+    def render(self, screen:pygame.display):
+        image = self.get_image()
         screen.blit(image, (0, 0))
     
     # need to implement function below to ensure the player can't go beyond screen or on places it shouldn't be able to go for each biome
