@@ -1,7 +1,7 @@
 import pygame
 import Constants
 import os
-from Overworld import *
+# from Overworld import *
 
 class Player:
 
@@ -39,12 +39,14 @@ class Player:
     def get_healed(self, healing:int):
         self.health_bar += healing
     
+    """
     def die_and_begone(self, overworld:Overworld):
         self.lives_remaining -= 1
         if self.lives_remaining == 0:
             overworld.game_over()
         else:
             self.respawn() 
+    """
 
     def respawn(self):
         self.x_pos = self.curr_checkpoint[0]
