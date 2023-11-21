@@ -2,7 +2,7 @@ import pygame
 import sys
 import os
 import time
-from .Screen import Screen 
+from screens.Screen import Screen 
 
 class NewLoadingScreen(Screen):
     def __init__(self, screen):

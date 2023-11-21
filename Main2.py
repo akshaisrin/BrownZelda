@@ -2,9 +2,10 @@ import os
 import sys
 import time
 import pygame
-from screens.InitialLoadingScreen import InitialLoadingScreen
-from screens.NewLoadingScreen import NewLoadingScreen
+from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
+from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
 from screens.TestScreen import TestScreen
+from screens.InstructionsScreen import InstructionsScreen
 
 pygame.init()
 
@@ -13,6 +14,7 @@ screen_width, screen_height = 1500, 800
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Brown Zelda (But Not Garbage)")
 pygame.mixer.init()
+current_screen = None
 
 def init_loading_screen():
     current_screen = InitialLoadingScreen(screen)
@@ -29,7 +31,7 @@ def init_loading_screen():
     gameLoop = True
     initialLoadingScreenDone = False
     newLoadingScreenDone = False
-    testScreenStarted = False
+    instructionsScreenStarted = False
     firstSongSet = False
     secondSongSet = False
     thirdSongSet = False
@@ -38,11 +40,11 @@ def init_loading_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
-            elif newLoadingScreenDone and not testScreenStarted and event.type == pygame.KEYDOWN:
+            elif newLoadingScreenDone and not instructionsScreenStarted and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     current_screen = TestScreen(screen)
                     pygame.mixer.music.stop()
-                    testScreenStarted = True
+                    instructionsScreenStarted = True
 
         if not initialLoadingScreenDone:
             elapsedTime = time.time() - loadingscreenstarttime
@@ -75,12 +77,22 @@ def init_loading_screen():
                 newLoadingScreenDone = True
             else:
                 current_screen.display(elapsedTime)    
-        elif testScreenStarted:
-            current_screen.display()            
+        elif instructionsScreenStarted:
+            gameLoop = False         
         pygame.display.update()
 
-    pygame.quit()
-    sys.exit()
 
+def init_instructions_screen():
+    current_screen = InstructionsScreen(screen)
 
-init_loading_screen()
+    gameLoop = True
+    while gameLoop:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameLoop = False
+
+        current_screen.display()
+        pygame.display.update()
+
+# init_loading_screen()
+init_instructions_screen()
