@@ -11,11 +11,10 @@ class Overworld(Room):
         super().__init__(0, 0, 0)
         
         # intialize all the biomes
-        self.desert = Biome("desert", "desert_biome.png", 1200, 500)
-        self.graveyard = Biome("graveyard", "graveyard_biome.jpg", 1200, 500)
-        self.homes = Biome("homes", "homes_biome.png", 1200, 500)
-        self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500)
-        self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500)
+        self.desert = Biome("desert", "desert_biome.png", 1200, 500, True, 500, 400)
+        self.homes = Biome("homes", "homes_biome.png", 1200, 500, True, 500, 400)
+        self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500, True, 500, 400)
+        self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500, True, 500, 400)
         
     def biome_name_to_biome(self, biome_name:str):
         if biome_name == "desert":
@@ -42,15 +41,19 @@ class Overworld(Room):
     
     def going_to_dungeon(self, player:Player, biome_name:str, screen:pygame.display):
         biome = self.biome_name_to_biome(biome_name)
-        if (player.x_pos < biome.exit_x + 10 and player.x_pos > biome.exit_x - 10) and (player.y_pos < biome.exit_y + 10 and player.y_pos > biome.exit_y - 10):
-            img = pygame.image.load(os.path.join("Assets", "dungeon1.jpg"))
-            image = pygame.transform.scale(img, (screen_width, screen_height))
-            screen.blit(image, (0, 0))
-            pygame.display.update()
-            player.x_pos = 0 # change to location of dungeon
-            player.y_pos = 0 # change to location of dungeon
-            player.z_pos = -1
-            return image
+        if biome.dungeon:
+            if (player.x_pos < biome.dungeon_x + 10 and player.x_pos > biome.dungeon_x - 10) and (player.y_pos < biome.dungeon_y + 10 and player.y_pos > biome.dungeon_y - 10):
+                img = pygame.image.load(os.path.join("Assets", "dungeon1.jpg"))
+                image = pygame.transform.scale(img, (screen_width, screen_height))
+                screen.fill((0, 0, 0))
+                pygame.display.update()
+                pygame.time.wait(500)
+                for i in range(5, 1, -1):
+                    screen.blit(image, (int(screen_width/(i*2)), 0), (int(screen_width/(i*2)), 0, int(screen_width/i), screen_height))
+                    pygame.display.update()
+                    pygame.time.wait(200)
+                player.z_pos = -1
+                return image
         return None
     
     def going_to_next_biome(self, player:Player, biomes:list, biomes_order:list, biome_name:str, curr_image, curr_screen_x_pos:int, screen:pygame.display):    

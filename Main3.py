@@ -40,16 +40,17 @@ def init_home_screen():
         screen.blit(image, (curr_screen_x_pos, 0))
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
         
-        """
-        new_image = overworld.going_to_dungeon(player1, curr_biome, image, curr_screen_x_pos, screen)
-        if new_image != None:
-            image = new_image
-            curr_screen_x_pos = 0
-        """
-        new_image, biomes_order = overworld.going_to_next_biome(player1, biomes, biomes_order, curr_biome, image, curr_screen_x_pos, screen)
-        if new_image != None:
-            image = new_image
-            curr_screen_x_pos = 0
+        if curr_biome != None:
+            
+            new_image, biomes_order = overworld.going_to_next_biome(player1, biomes, biomes_order, curr_biome, image, curr_screen_x_pos, screen)
+            if new_image != None:
+                image = new_image
+                curr_screen_x_pos = 0
+                
+            new_image_2 = overworld.going_to_dungeon(player1, curr_biome, screen)
+            if new_image_2 != None:
+                image = new_image_2
+                curr_biome = None
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
