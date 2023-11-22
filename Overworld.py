@@ -68,10 +68,10 @@ class Overworld(Room):
                 if x_pos > 0:
                     player.x_pos -= 100
                 else:
-                    player.x_pos = 0
+                    player.x_pos = -100
                 player.render(player.x_pos, player.y_pos, 300, 300, screen)
                 pygame.display.update()
-                pygame.time.wait(100)
+                pygame.time.wait(10)
             return (image, biomes_order)
         return (None, biomes_order)
         

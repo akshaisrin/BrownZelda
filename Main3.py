@@ -50,8 +50,6 @@ def init_home_screen():
         if new_image != None:
             image = new_image
             curr_screen_x_pos = 0
-            
-        #biomes_order = overworld.going_to_next_biome(player1, 650, 500, biomes, biomes_order, screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
