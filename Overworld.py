@@ -38,7 +38,8 @@ class Overworld(Room):
         image = pygame.transform.scale(img, (screen_width, screen_height))
         screen.blit(image, (0, 0))
         pygame.display.update()
-    
+        
+    # NOTE: NEED TO CHANGE THE CODE BELOW TO ACCEPT AN ACTUAL DUNGEON OBJECT AS A PARAMETER AND USE THAT OBJECT'S PICTURE & EXIT POSITIONS
     def going_to_dungeon(self, player:Player, biome_name:str, screen:pygame.display):
         biome = self.biome_name_to_biome(biome_name)
         if biome.dungeon:
@@ -48,10 +49,12 @@ class Overworld(Room):
                 screen.fill((0, 0, 0))
                 pygame.display.update()
                 pygame.time.wait(500)
-                for i in range(5, 1, -1):
-                    screen.blit(image, (int(screen_width/(i*2)), 0), (int(screen_width/(i*2)), 0, int(screen_width/i), screen_height))
+                for i in range(30, 1, -2):
+                    screen.blit(image, (int((screen_width - screen_width/i)/2), 0), (int((screen_width - screen_width/i)/2), 0, int(screen_width/i), screen_height))
                     pygame.display.update()
-                    pygame.time.wait(200)
+                    pygame.time.wait(100)
+                player.x_pos = 1200
+                player.y_pos = 215
                 player.z_pos = -1
                 return image
         return None
