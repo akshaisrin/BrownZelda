@@ -13,12 +13,15 @@ class Overworld(Room):
         
         # intialize all obstacles
         self.desert_obstacle = Obstacles("obstacle_test.png")
+        self.homes_obstacle = Obstacles("obstacle_test.png")
+        self.tundra_obstacle = Obstacles("obstacle_test.png")
+        self.zelda_obstacle = Obstacles("obstacle_test.png")
         
         # intialize all the biomes
-        self.desert = Biome("desert", "desert_biome.png", 1200, 500, True, 500, 400)
-        self.homes = Biome("homes", "homes_biome.png", 1200, 500, True, 500, 400)
-        self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500, True, 500, 400)
-        self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500, True, 500, 400)
+        self.desert = Biome("desert", "desert_biome.png", 600, 500, True, 500, 400, self.desert_obstacle)
+        self.homes = Biome("homes", "homes_biome.png", 600, 500, True, 500, 400, self.homes_obstacle)
+        self.tundra = Biome("tundra", "tundra_biome.png", 600, 500, True, 500, 400, self.tundra_obstacle)
+        self.zelda = Biome("zelda", "zelda_biome.png", 600, 500, True, 500, 400, self.zelda_obstacle)
         
     def biome_name_to_biome(self, biome_name:str):
         if biome_name == "desert":
@@ -63,18 +66,20 @@ class Overworld(Room):
                 return image
         return None
     
-    def going_to_next_biome(self, player, biomes:list, biomes_order:list, biome_name:str, curr_image, curr_screen_x_pos:int, screen:pygame.display):    
+    def going_to_next_biome(self, player:Player, biomes:list, biomes_order:list, biome_name:str, curr_image1, curr_image2, curr_screen_x_pos:int, screen:pygame.display):    
         curr_biome = self.biome_name_to_biome(biome_name)
         next_biome = self.biome_name_to_biome(biomes[biomes_order[0]])
         if (player.x_pos < curr_biome.exit_x + 10 and player.x_pos > curr_biome.exit_x - 10) and (player.y_pos < curr_biome.exit_y + 10 and player.y_pos > curr_biome.exit_y - 10):
             del biomes_order[0]
-            image = next_biome.get_image()
+            image, image2 = next_biome.get_image()
             x_pos = screen_width
             while x_pos > 0:
                 curr_screen_x_pos -= 100
-                screen.blit(curr_image, (curr_screen_x_pos, 0))
+                screen.blit(curr_image1, (curr_screen_x_pos, 0))
+                screen.blit(curr_image2, (curr_screen_x_pos, 0))
                 x_pos -= 100
                 screen.blit(image, (x_pos, 0))
+                screen.blit(image2, (x_pos, 0))
                 if x_pos > 0:
                     player.x_pos -= 100
                 else:

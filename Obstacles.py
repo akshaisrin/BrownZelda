@@ -1,5 +1,6 @@
 import pygame
 import os
+from Constants import *
 
 class Obstacles():
     
@@ -7,7 +8,8 @@ class Obstacles():
         self.file_path = file_path
     
     def get_image(self):
-        image = pygame.image.load(os.path.join("Assets/obstacles", self.file_path))
+        img = pygame.image.load(os.path.join("Assets/obstacles", self.file_path))
+        image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     
     def render(self, screen:pygame.display):

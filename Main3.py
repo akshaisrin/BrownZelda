@@ -30,19 +30,23 @@ def init_home_screen():
     img = pygame.image.load(os.path.join("Assets/biomes", starting_filepath))
     image = pygame.transform.scale(img, (screen_width, screen_height))
     del biomes_order[0]
+    img2 = pygame.image.load(os.path.join("Assets/obstacles", "obstacle_test.png"))
+    image2 = pygame.transform.scale(img2, (screen_width, screen_height))
     
     
     # Establishing game loop to keep screen running
     gameLoop = True
     
     while gameLoop:
-
+ 
         screen.blit(image, (curr_screen_x_pos, 0))
+        if image2 != None:
+            screen.blit(image2, (curr_screen_x_pos, 0))
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
         
         if curr_biome != None:
             
-            new_image, biomes_order = overworld.going_to_next_biome(player1, biomes, biomes_order, curr_biome, image, curr_screen_x_pos, screen)
+            new_image, biomes_order = overworld.going_to_next_biome(player1, biomes, biomes_order, curr_biome, image, image2, curr_screen_x_pos, screen)
             if new_image != None:
                 image = new_image
                 curr_screen_x_pos = 0
@@ -51,6 +55,7 @@ def init_home_screen():
             if new_image_2 != None:
                 image = new_image_2
                 curr_biome = None
+                image2 = None
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
