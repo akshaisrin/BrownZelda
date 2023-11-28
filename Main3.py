@@ -3,8 +3,8 @@ import pygame
 from pygame.locals import *
 from Constants import *
 from Overworld import *
-import json
 import random
+from Player import *
 
 pygame.init()
 
@@ -25,6 +25,7 @@ def init_home_screen():
     player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
     
     curr_biome = biomes[biomes_order[0]]
+    curr_screen_x_pos = 0
     starting_filepath = curr_biome + "_biome.png"
     img = pygame.image.load(os.path.join("Assets/biomes", starting_filepath))
     image = pygame.transform.scale(img, (screen_width, screen_height))
@@ -36,17 +37,20 @@ def init_home_screen():
     
     while gameLoop:
 
-        screen.blit(image, (0, 0))
+        screen.blit(image, (curr_screen_x_pos, 0))
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
         
-        new_image = overworld.going_to_dungeon(player1, curr_biome, screen)
-        if new_image != None:
-            print(new_image)
-            image = new_image
+        if curr_biome != None:
             
-
-            
-        #biomes_order = overworld.going_to_next_biome(player1, 650, 500, biomes, biomes_order, screen)
+            new_image, biomes_order = overworld.going_to_next_biome(player1, biomes, biomes_order, curr_biome, image, curr_screen_x_pos, screen)
+            if new_image != None:
+                image = new_image
+                curr_screen_x_pos = 0
+                
+            new_image_2 = overworld.going_to_dungeon(player1, curr_biome, screen)
+            if new_image_2 != None:
+                image = new_image_2
+                curr_biome = None
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

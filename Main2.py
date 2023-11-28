@@ -42,7 +42,6 @@ def init_loading_screen():
                 gameLoop = False
             elif newLoadingScreenDone and not instructionsScreenStarted and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    current_screen = TestScreen(screen)
                     pygame.mixer.music.stop()
                     instructionsScreenStarted = True
 
@@ -90,7 +89,10 @@ def init_instructions_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
-
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    current_screen = TestScreen(screen)
+        
         current_screen.display()
         pygame.display.update()
 

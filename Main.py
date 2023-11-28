@@ -28,6 +28,8 @@ def init_home_screen():
    
     sword = Sword()
 
+    sword = Sword()
+
     try:
         joystick=XboxController()
     except:
