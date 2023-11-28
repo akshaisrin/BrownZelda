@@ -8,6 +8,7 @@ from TestMonsterMedium import *
 from inputs import get_gamepad
 from XBoxController import *
 from Player import *
+from Obstacle import *
 
 pygame.init()
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
@@ -42,6 +43,9 @@ def init_home_screen():
         monster2.shoot(screen, player1)
 
         player1.render(player1.x_pos,player1.y_pos, 300, 300, screen)
+
+        obj1 = Obstacle("washington.jpeg", "irrelevant")
+        obj1.render(200, 200, screen)
 
         if controller_detected:
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())

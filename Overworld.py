@@ -40,25 +40,25 @@ class Overworld(Room):
         screen.blit(image, (0, 0))
         pygame.display.update()
         
-    def going_to_dungeon(self, player:Player, biome_name:str, screen:pygame.display):
-        biome = self.biome_name_to_biome(biome_name)
-        if (player.x_pos < biome.exit_x + 10 and player.x_pos > biome.exit_x - 10) and (player.y_pos < biome.exit_y + 10 and player.y_pos > biome.exit_y - 10):
-            img = pygame.image.load(os.path.join("Assets", "dungeon1.jpg"))
-            image = pygame.transform.scale(img, (screen_width, screen_height))
-            screen.blit(image, (0, 0))
-            pygame.display.update()
-            player.x_pos = 0 # change to location of dungeon
-            player.y_pos = 0 # change to location of dungeon
-            player.z_pos = -1
-            print(image)
-            return image
-        return None
+    # def going_to_dungeon(self, player:Player, biome_name:str, screen:pygame.display):
+    #     biome = self.biome_name_to_biome(biome_name)
+    #     if (player.x_pos < biome.exit_x + 10 and player.x_pos > biome.exit_x - 10) and (player.y_pos < biome.exit_y + 10 and player.y_pos > biome.exit_y - 10):
+    #         img = pygame.image.load(os.path.join("Assets", "dungeon1.jpg"))
+    #         image = pygame.transform.scale(img, (screen_width, screen_height))
+    #         screen.blit(image, (0, 0))
+    #         pygame.display.update()
+    #         player.x_pos = 0 # change to location of dungeon
+    #         player.y_pos = 0 # change to location of dungeon
+    #         player.z_pos = -1
+    #         print(image)
+    #         return image
+    #     return None
     
-    def going_to_next_biome(self, player:Player, screen_end_x_pos:float, screen_end_y_pos:float, biomes:list, biomes_order:list, screen:pygame.display):
-        if player.x_pos == screen_end_x_pos and player.y_pos == screen_end_y_pos:
-            player.x_pos = 0 # change to location of next room
-            player.y_pos = 0 # change to location of room
-            self.display_biome(biomes[biomes_order[0]], screen)
-            del biomes_order[0]
-        return biomes_order        
+    # def going_to_next_biome(self, player:Player, screen_end_x_pos:float, screen_end_y_pos:float, biomes:list, biomes_order:list, screen:pygame.display):
+    #     if player.x_pos == screen_end_x_pos and player.y_pos == screen_end_y_pos:
+    #         player.x_pos = 0 # change to location of next room
+    #         player.y_pos = 0 # change to location of room
+    #         self.display_biome(biomes[biomes_order[0]], screen)
+    #         del biomes_order[0]
+    #     return biomes_order        
         
