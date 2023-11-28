@@ -14,7 +14,7 @@ controller_threshold=0.15
 
 # Medium Boss Velocity Constant
 
-medium_boss_velocity_constant=80
+medium_boss_velocity_constant=30
 
 # Medium boss x, y offsets for projectiles
 

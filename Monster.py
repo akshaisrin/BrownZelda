@@ -14,7 +14,7 @@ class Monster:
         self.x_pos=start_pos_x
         self.y_pos=start_pos_y
         self.monster_type=monster_type
-        self.projectile = Projectile(10, self.x_pos+2, self.y_pos, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
+        self.projectile = Projectile(1, self.x_pos+2, self.y_pos, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
         self.alive = True
         self.monster_rectangle=self.img.get_rect()
         self.monster_rectangle.topleft = (start_pos_x, start_pos_x)

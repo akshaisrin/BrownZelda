@@ -24,7 +24,7 @@ def init_home_screen():
     #monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
     monster2=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
 
-    player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 500, 500, 0)
+    player1 = Player("bheem", {}, "", 1, 1.2, 3,5,5, "str", 500, 500, 0)
    
     sword = Sword()
 
@@ -47,8 +47,11 @@ def init_home_screen():
         
         screen.fill((255,255,255))
         # pygame.draw.rect(screen, (255, 0, 255), player1.player_rectangle)
-        healthBarDisplay = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
-        screen.blit(healthBarDisplay, (1200, 100))
+        health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
+        screen.blit(health_bar_display, (1200, 100))
+
+        lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
+        screen.blit(lives_display, (1200, 150))
         # monster1.render(800, 100, 250, 300, screen)        
         # monster1.shoot(screen)
         
@@ -58,6 +61,7 @@ def init_home_screen():
             if (player1.player_rectangle.colliderect(monster2.projectile.projectile_rectangle)):
                 print("player got hit")
                 monster2.realign_projectile()
+                player1.get_attacked(monster2.projectile.damage, screen)
             
             if sword.attacking:
                 elaspedTime = time.time() - attacktime

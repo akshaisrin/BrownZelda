@@ -1,7 +1,9 @@
 import pygame
 import Constants
 import os
-# from Overworld import *
+from Overworld import *
+import sys
+import time
 
 class Player:
 
@@ -13,7 +15,8 @@ class Player:
         self.curr_level = curr_level
         self.curr_checkpoint = curr_checkpoint
         self.lives_remaining = lives_remaining
-        self.health_bar = health_bar
+        self.original_health=health_bar
+        self.health_bar = self.original_health
         self.wealth = wealth
         self.player_rectangle=self.img.get_rect()
         self.player_rectangle.topleft = (start_x, start_y)
@@ -36,25 +39,41 @@ class Player:
     def use_item(self):
         self.curr_item.use() #use function will be defined in Item classes
 
-    def get_attacked(self, damage:int):
+    def get_attacked(self, damage:int, screen):
         self.health_bar -= damage
+
+        if (self.health_bar<=0):
+            print("player just lost all their health")
+            self.lives_remaining-=1
+            self.die_and_begone(screen)
+
 
     def get_healed(self, healing:int):
         self.health_bar += healing
     
-    """
-    def die_and_begone(self, overworld:Overworld):
-        self.lives_remaining -= 1
-        if self.lives_remaining == 0:
-            overworld.game_over()
+    
+    def die_and_begone(self, screen, overworld=None):
+        if self.lives_remaining <= 0:
+            print("GAME OVER")
+            game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
+            game_over_img = pygame.transform.scale(game_over_img, (Constants.screen_width, Constants.screen_height))
+            screen.blit(game_over_img, (0, 0))
+
+            pygame.display.update()
+            time.sleep(3)
+            sys.exit()
+            #overworld.game_over()
         else:
             self.respawn() 
-    """
+
 
     def respawn(self):
-        self.x_pos = self.curr_checkpoint[0]
-        self.y_pos = self.curr_checkpoint[1]
-        self.z_pos = self.curr_checkpoint[2]
+        self.health_bar=self.original_health
+        print("PLAYER RESPAWNED")
+
+        # self.x_pos = self.curr_checkpoint[0]
+        # self.y_pos = self.curr_checkpoint[1]
+        # self.z_pos = self.curr_checkpoint[2]
 
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         # self.x_pos=x_pos

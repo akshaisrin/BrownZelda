@@ -44,7 +44,7 @@ class Overworld(Room):
         pygame.display.update()
         
     # NOTE: NEED TO CHANGE THE CODE BELOW TO ACCEPT AN ACTUAL DUNGEON OBJECT AS A PARAMETER AND USE THAT OBJECT'S PICTURE & EXIT POSITIONS
-    def going_to_dungeon(self, player:Player, biome_name:str, screen:pygame.display):
+    def going_to_dungeon(self, player, biome_name:str, screen:pygame.display):
         biome = self.biome_name_to_biome(biome_name)
         if biome.dungeon:
             if (player.x_pos < biome.dungeon_x + 10 and player.x_pos > biome.dungeon_x - 10) and (player.y_pos < biome.dungeon_y + 10 and player.y_pos > biome.dungeon_y - 10):
@@ -63,7 +63,7 @@ class Overworld(Room):
                 return image
         return None
     
-    def going_to_next_biome(self, player:Player, biomes:list, biomes_order:list, biome_name:str, curr_image, curr_screen_x_pos:int, screen:pygame.display):    
+    def going_to_next_biome(self, player, biomes:list, biomes_order:list, biome_name:str, curr_image, curr_screen_x_pos:int, screen:pygame.display):    
         curr_biome = self.biome_name_to_biome(biome_name)
         next_biome = self.biome_name_to_biome(biomes[biomes_order[0]])
         if (player.x_pos < curr_biome.exit_x + 10 and player.x_pos > curr_biome.exit_x - 10) and (player.y_pos < curr_biome.exit_y + 10 and player.y_pos > curr_biome.exit_y - 10):
