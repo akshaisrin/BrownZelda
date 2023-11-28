@@ -4,11 +4,15 @@ from Room import *
 from Constants import *
 from Biome import *
 from Player import *
+from Obstacles import *
 
 class Overworld(Room):
     
     def __init__(self):
         super().__init__(0, 0, 0)
+        
+        # intialize all obstacles
+        self.desert_obstacle = Obstacles("obstacle_test.png")
         
         # intialize all the biomes
         self.desert = Biome("desert", "desert_biome.png", 1200, 500, True, 500, 400)
