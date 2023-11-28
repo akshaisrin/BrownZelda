@@ -15,7 +15,9 @@ class Monster:
         self.y_pos=start_pos_y
         self.monster_type=monster_type
         self.projectile = Projectile(10, self.x_pos+2, self.y_pos, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
-
+        self.alive = True
+        self.monster_rectangle=self.img.get_rect()
+        self.monster_rectangle.topleft = (start_pos_x, start_pos_x)
     
     def shoot(self, screen:pygame.display) -> None:
         if self.projectile.x_pos<=0:
@@ -26,11 +28,14 @@ class Monster:
     
           
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
-        self.x_pos=x_pos
-        self.y_pos=y_pos
+        # self.x_pos=x_pos
+        # self.y_pos=y_pos
 
         image = pygame.transform.scale(self.img, (width, height))
-        screen.blit(image, (x_pos, y_pos))
+        self.monster_rectangle = image.get_rect()
+        self.monster_rectangle.topleft = (x_pos, y_pos)
+        # pygame.draw.rect(screen, (0, 0, 255), self.monster_rectangle)
+        screen.blit(image, self.monster_rectangle)
     
     def get_hit(self, damage:float):
         
@@ -42,7 +47,6 @@ class Monster:
     def die(self) -> None:  
 
         # Implement die here
+        self.alive = False
 
         print(f"Monster: {self.monster_type} has been killed") 
-
-
