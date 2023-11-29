@@ -16,6 +16,7 @@ class Biome(Room):
         self.dungeon_x = dungeon_x
         self.dungeon_y = dungeon_y
         self.obstacles = obstacle
+        self.monsters = None
     
     def get_image(self):
         img = pygame.image.load(os.path.join("Assets/biomes", self.file_path))
@@ -23,11 +24,13 @@ class Biome(Room):
         image2 = self.obstacles.get_image()
         return (image, image2)
     
+    def add_monsters(self, monsters:list):
+        self.monsters = monsters
+    
     def render(self, screen:pygame.display):
         image, image2 = self.get_image()
         screen.blit(image, (0, 0))
         screen.blit(image2, (0, 0))
-    
-    # need to implement function below to ensure the player can't go beyond screen or on places it shouldn't be able to go for each biome
-    def borders():
-        pass
+        if self.monsters != None:
+            for m in self.monsters:
+                m.render()

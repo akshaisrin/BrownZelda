@@ -87,6 +87,9 @@ class Overworld(Room):
                 player.render(player.x_pos, player.y_pos, 300, 300, screen)
                 pygame.display.update()
                 pygame.time.wait(10)
+            next_biome.render(screen)
             return (image, biomes_order)
         return (None, biomes_order)
-        
+    
+    def obstacles_in_biome(self, player:Player, biome:Biome):
+        pass
