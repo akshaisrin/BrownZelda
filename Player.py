@@ -1,7 +1,7 @@
 import pygame
 import Constants
 import os
-from Overworld import *
+# from Overworld import *
 import sys
 import time
 
