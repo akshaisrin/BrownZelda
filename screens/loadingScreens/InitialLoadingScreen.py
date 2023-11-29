@@ -9,7 +9,7 @@ class InitialLoadingScreen(Screen):
         super().__init__(screen)
 
         self.img = pygame.image.load(os.path.join("Assets", "originalzeldatitlescreen.jpeg"))
-        self.img = pygame.transform.scale(self.img, (self.screen_height, self.screen_width))
+        self.img = pygame.transform.scale(self.img, (self.screen_width, self.screen_height))
 
         self.transitiontime = 4
     
