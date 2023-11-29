@@ -5,6 +5,8 @@ from Constants import *
 from Biome import *
 from Player import *
 from Obstacles import *
+from Monster import *
+from TestMonsterMedium import *
 
 class Overworld(Room):
     
@@ -49,6 +51,11 @@ class Overworld(Room):
         self.zelda.add_obstacles([self.obstacle])
         self.test_room.add_obstacles([self.test2_o1, self.test2_o2, self.test2_o3, self.test2_o4, self.test2_o5, self.test2_o6, self.test2_o7, self.test2_o8, self.test2_o9])
         self.test_room2.add_obstacles([self.test_obstacle1, self.test_obstacle2, self.test_obstacle3, self.test_obstacle4, self.test_obstacle5, self.test_obstacle6, self.test_obstacle7, self.test_obstacle8])
+        
+        # add monster
+        self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
+        self.test_room.add_monsters([self.monster])
+        self.test_room2.add_monsters([self.monster])
         
     def biome_name_to_biome(self, biome_name:str):
         if biome_name == "desert":
@@ -144,4 +151,18 @@ class Overworld(Room):
                 else:
                     y_pos = obstacle_rect[1]-200
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], y_pos)
-                    
+    
+    def monster_attack(self, curr_biome:Biome, player:Player, screen:pygame.display):
+        monsters = curr_biome.monsters
+        mon_alive = 0
+        for m in monsters:
+            if m.alive:
+                mon_alive += 1
+                if (player.player_rectangle.colliderect(m.projectile.projectile_rectangle)):
+                    print("player got hit")
+                    m.realign_projectile()
+                    player.get_attacked(m.projectile.damage, screen)
+        if mon_alive == 0:
+            return False
+        else:
+            return True

@@ -4,6 +4,7 @@ from Room import *
 from Constants import *
 from Obstacles import *
 from Player import *
+from Monster import *
 
 class Biome(Room):
     
@@ -18,6 +19,7 @@ class Biome(Room):
         self.dungeon_y = dungeon_y
         self.obstacles = []
         self.obstacles_rect = []
+        self.monsters = []
     
     def get_image(self):
         img = pygame.image.load(os.path.join("Assets/biomes", self.file_path))
@@ -25,11 +27,18 @@ class Biome(Room):
         return image
     
     def render(self, x_pos:int, player:Player, screen:pygame.display):
+        # render the screen
         image = self.get_image()
         screen.blit(image, (0, x_pos))
+        # render the obstacles
         for o in self.obstacles:
             screen.blit(o.get_image(), (o.x, x_pos + o.y))
+        # render the player
         player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], 300, 300, screen)
+        # render the monsters
+        for m in self.monsters:
+            m.render(500, 100, 250, 300, screen)
+            m.shoot(screen, player)
         pygame.display.update()
         
     def add_obstacles(self, obstacles:list):
@@ -39,4 +48,7 @@ class Biome(Room):
             rect[0] = o.x
             rect[1] = o.y
             self.obstacles_rect.append(rect)
+            
+    def add_monsters(self, monsters:list):
+        self.monsters += monsters
             
