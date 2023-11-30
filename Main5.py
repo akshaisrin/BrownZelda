@@ -244,8 +244,6 @@ def init_instructions_screen():
         
 def init_home_screen():
     controller_detected=True
-    #monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
-
     player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
    
     sword = Sword()
@@ -295,9 +293,9 @@ def init_home_screen():
             if elaspedTime > 0.5:
                 sword.attacking = False
             elif elaspedTime > 0.25:
-                sword.render(player1.player_rectangle.x + 75 + (100 * elaspedTime), player1.player_rectangle.y + 75 + (100 * elaspedTime), 50, 50, screen)
+                sword.render(player1.player_rectangle.x + 10 + (100 * elaspedTime), player1.player_rectangle.y + 10 + (100 * elaspedTime), 50, 50, screen)
             else:
-                sword.render(player1.player_rectangle.x + 100 - (100 * elaspedTime), player1.player_rectangle.y + 100 - (100 * elaspedTime), 50, 50, screen)
+                sword.render(player1.player_rectangle.x + 25 - (100 * elaspedTime), player1.player_rectangle.y + 25 - (100 * elaspedTime), 50, 50, screen)
         
         
         # player contorls
@@ -307,21 +305,17 @@ def init_home_screen():
             # player movement with x box controller
 
         if (new_state[0]<-1*Constants.controller_threshold):
-            player1.direction = "left"
-            player1.move()
-            
-        if (new_state[0]>Constants.controller_threshold):
-            player1.direction = "right"
-            player1.move()
-        
+            direction = "left"
+            player1.current_frame = 10
+        elif (new_state[0]>Constants.controller_threshold):
+            direction = "right"
+            player1.current_frame = 10
         if (new_state[1]<-1*Constants.controller_threshold):
-            player1.direction = "down"
-            player1.move()
-
+            direction = "down"
+            player1.current_frame = 11
         if (new_state[1]>controller_threshold):
-            player1.direction = "up"
-            player1.move()   
-
+            direction = "up"
+            player1.current_frame = 9
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()
             sword.attack(curr_biome.monsters[0])
