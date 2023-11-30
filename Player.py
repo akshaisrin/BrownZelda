@@ -43,7 +43,7 @@ class Player:
         self.health_bar -= damage
 
         if (self.health_bar<=0):
-            print("player just lost all their health")
+            #print("player just lost all their health")
             self.lives_remaining-=1
             self.die_and_begone(screen)
 
@@ -54,7 +54,7 @@ class Player:
     
     def die_and_begone(self, screen, overworld=None):
         if self.lives_remaining <= 0:
-            print("GAME OVER")
+            #print("GAME OVER")
             game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
             game_over_img = pygame.transform.scale(game_over_img, (Constants.screen_width, Constants.screen_height))
             screen.blit(game_over_img, (0, 0))
@@ -69,7 +69,7 @@ class Player:
 
     def respawn(self):
         self.health_bar=self.original_health
-        print("PLAYER RESPAWNED")
+        #print("PLAYER RESPAWNED")
 
         # self.x_pos = self.curr_checkpoint[0]
         # self.y_pos = self.curr_checkpoint[1]

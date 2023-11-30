@@ -11,7 +11,7 @@ class WeaponItem(Item):
     def attack(self, monster):
         self.attacking = True
         if (self.weapon_rectangle.colliderect(monster.monster_rectangle)):
-            print("attack went through")
+            #print("attack went through")
             monster.get_hit(self.power)
 
     def render(self, x_pos:float, y_pos:float, height, width, screen:pygame.display):

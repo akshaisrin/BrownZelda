@@ -274,9 +274,9 @@ def init_home_screen():
         
         curr_biome.render(curr_screen_x_pos, player1, screen)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
-        screen.blit(health_bar_display, (1200, 100))
+        screen.blit(health_bar_display, (1000, 150))
         lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
-        screen.blit(lives_display, (1200, 150))
+        screen.blit(lives_display, (1000, 200))
         
         if curr_biome != None:
             
@@ -291,15 +291,15 @@ def init_home_screen():
                 
         monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
         
-        if monsters_alive:
-            if sword.attacking:
-                elaspedTime = time.time() - attacktime
-                if elaspedTime > 0.5:
-                    sword.attacking = False
-                elif elaspedTime > 0.25:
-                    sword.render(player1.player_rectangle.x + 75 + (100 * elaspedTime), player1.player_rectangle.y + 75 + (100 * elaspedTime), 50, 50, screen)
-                else:
-                    sword.render(player1.player_rectangle.x + 100 - (100 * elaspedTime), player1.player_rectangle.y + 100 - (100 * elaspedTime), 50, 50, screen)
+        
+        if sword.attacking:
+            elaspedTime = time.time() - attacktime
+            if elaspedTime > 0.5:
+                sword.attacking = False
+            elif elaspedTime > 0.25:
+                sword.render(player1.player_rectangle.x + 75 + (100 * elaspedTime), player1.player_rectangle.y + 75 + (100 * elaspedTime), 50, 50, screen)
+            else:
+                sword.render(player1.player_rectangle.x + 100 - (100 * elaspedTime), player1.player_rectangle.y + 100 - (100 * elaspedTime), 50, 50, screen)
         
         
         # player contorls
@@ -324,6 +324,10 @@ def init_home_screen():
             player1.direction = "up"
             player1.move()   
 
+        if (joystick.X) and not sword.attacking:
+            attacktime = time.time()
+            sword.attack(curr_biome.monsters[0])
+    
         for event in pygame.event.get():
 
             if event.type == pygame.KEYDOWN:                   
@@ -372,6 +376,6 @@ def init_home_screen():
         
         pygame.display.update()
         
-#init_loading_screen()
-#init_instructions_screen()
+init_loading_screen()
+init_instructions_screen()
 init_home_screen()

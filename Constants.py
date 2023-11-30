@@ -6,7 +6,7 @@ screen_width=1550
 screen_height=800
 
 # x, y coordinates for move function
-directions = {"left":(-20,0), "right":(20,0), "up":(0,-20), "down":(0,20)}
+directions = {"left":(-8,0), "right":(8,0), "up":(0,-8), "down":(0,8)}
 
 # x box controller mapping threshold
 
@@ -14,7 +14,7 @@ controller_threshold=0.15
 
 # Medium Boss Velocity Constant
 
-medium_boss_velocity_constant=30
+medium_boss_velocity_constant=50
 
 # Medium boss x, y offsets for projectiles
 
