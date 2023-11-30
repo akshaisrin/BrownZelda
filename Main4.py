@@ -250,6 +250,8 @@ def init_home_screen():
         if pressed_down:
             player1.direction = "down"
             player1.move() 
+        print(player1.player_rectangle.x)
+        print(player1.player_rectangle.y)
         pygame.display.update()
         
 init_loading_screen()

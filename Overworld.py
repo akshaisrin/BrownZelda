@@ -40,8 +40,13 @@ class Overworld(Room):
         self.homes = Biome("homes", "homes_biome.png", 1200, 500, True, 500, 400)
         self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500, True, 500, 400)
         self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500, True, 500, 400)
+<<<<<<< HEAD
         self.dungeon = Biome("dungeon", "dungeon1_copy.jpg", -1000, -1000, False)
+        self.test_room = Biome("test_room", "background.jpg", 650, 600, False)
+=======
+        self.dungeon = Biome("dungeon", "dungeons1.jpg", -1000, -1000, False)
         self.test_room = Biome("test_room", "background.jpg", 640, 600, False)
+>>>>>>> abd76ff (merging dungeons and biomes)
         self.test_room2 = Biome("test_room", "test_room.png", 1200, 500, True, 290, 0)
                 
         # add obstacles to each Biome
