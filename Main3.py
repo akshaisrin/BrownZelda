@@ -309,22 +309,18 @@ def init_home_screen():
             # player movement with x box controller
 
         if (new_state[0]<-1*Constants.controller_threshold):
-            print("move left")
             player1.direction = "left"
             player1.move()
             
         if (new_state[0]>Constants.controller_threshold):
-            print("move right")
             player1.direction = "right"
             player1.move()
         
         if (new_state[1]<-1*Constants.controller_threshold):
-            print("move down")
             player1.direction = "down"
             player1.move()
 
         if (new_state[1]>controller_threshold):
-            print("move up")
             player1.direction = "up"
             player1.move()   
 
@@ -350,7 +346,6 @@ def init_home_screen():
                 elif event.key == pygame.K_DOWN:
                      pressed_down = False
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                     print("attack")
                      attacktime = time.time()
                      sword.attack(curr_biome.monsters[0])
             
