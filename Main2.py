@@ -52,7 +52,9 @@ def init_loading_screen():
                 gameLoop = False
             elif newLoadingScreenDone and not instructionsScreenStarted and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
+                    pygame.mixer.music.load(os.path.join("Assets", "echo.mp3"))  
                     pygame.mixer.music.set_volume(0.2)
+                    pygame.mixer.music.play()
                     loadingscreenstarttime = time.time()
                     instructionsScreenStarted = True
 

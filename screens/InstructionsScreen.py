@@ -9,7 +9,6 @@ class InstructionsScreen(Screen):
         super().__init__(screen)
 
         self.img = pygame.image.load(os.path.join("Assets", "prologuescreen.png"))
-        print(self.img.get_height())
         self.img = pygame.transform.scale(self.img, (self.screen_width, int(self.img.get_height())))
         
 
