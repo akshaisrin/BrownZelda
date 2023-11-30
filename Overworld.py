@@ -108,7 +108,7 @@ class Overworld(Room):
         #print(player.player_rectangle.topleft)
         #print(curr_biome.exit_x)
         #print(curr_biome.exit_y)
-        if (player.player_rectangle.topleft[0] < curr_biome.exit_x + 20 and player.player_rectangle.topleft[0] > curr_biome.exit_x - 20) and (player.player_rectangle.topleft[1] < curr_biome.exit_y + 20 and player.player_rectangle.topleft[1] > curr_biome.exit_y - 20):
+        if (player.player_rectangle.topleft[0] < curr_biome.exit_x + 30 and player.player_rectangle.topleft[0] > curr_biome.exit_x - 30) and (player.player_rectangle.topleft[1] < curr_biome.exit_y + 30 and player.player_rectangle.topleft[1] > curr_biome.exit_y - 30):
             x_pos = screen_height
             while x_pos > 0:
                 curr_screen_x_pos -= 100
