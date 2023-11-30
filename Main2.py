@@ -116,7 +116,6 @@ def init_instructions_screen():
 def init_home_screen():
     clock = pygame.time.Clock() 
     player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 500, 500, 0)
-    
     gameLoop = True
     direction = None
     framecounter = 0
@@ -127,10 +126,18 @@ def init_home_screen():
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:                   
-                if event.key == pygame.K_LEFT: direction = "left"
-                elif event.key == pygame.K_RIGHT: direction = "right"
-                elif event.key == pygame.K_UP: direction = "up"
-                elif event.key == pygame.K_DOWN: direction = "down"
+                if event.key == pygame.K_LEFT: 
+                    player1.current_frame = 10
+                    direction = "left"
+                elif event.key == pygame.K_RIGHT: 
+                    player1.current_frame = 10
+                    direction = "right"
+                elif event.key == pygame.K_UP: 
+                    player1.current_frame = 11
+                    direction = "up"
+                elif event.key == pygame.K_DOWN: 
+                    player1.current_frame = 9
+                    direction = "down"
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player1.current_frame = 10

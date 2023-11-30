@@ -6,7 +6,7 @@ screen_width=1550
 screen_height=800
 
 # x, y coordinates for move function
-directions = {"left":(-8,0), "right":(8,0), "up":(0,-8), "down":(0,8)}
+directions = {"left":(-3,0), "right":(3,0), "up":(0,-3), "down":(0,3)}
 
 # x box controller mapping threshold
 

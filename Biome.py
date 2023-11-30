@@ -34,7 +34,7 @@ class Biome(Room):
         for o in self.obstacles:
             screen.blit(o.get_image(), (o.x, x_pos + o.y))
         # render the player
-        player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], 300, 300, screen)
+        player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
         # render the monsters
         for m in self.monsters:
             if m.alive:
