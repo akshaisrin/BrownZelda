@@ -6,7 +6,7 @@ screen_width=1550
 screen_height=800
 
 # x, y coordinates for move function
-directions = {"left":(-7,0), "right":(7,0), "up":(0,-7), "down":(0,7)}
+directions = {"left":(-20,0), "right":(20,0), "up":(0,-20), "down":(0,20)}
 
 # x box controller mapping threshold
 
@@ -24,3 +24,5 @@ medium_boss_projectile_offset_y=-100
 # Projectile bounds for medium boss
 
 med_boss_projectile_bounds=2
+
+mini_boss_movement_vector={"left":(-3,0), "right":(3,0), "up":(0,-3), "down":(0,3)}

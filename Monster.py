@@ -1,6 +1,9 @@
 import pygame
 from Projectile import *
 import os
+import Constants
+import time
+import random
 class Monster:
 
     def __init__(self, attack_power:float, health:float, img:pygame.image, monster_type:str, start_pos_x:int, start_pos_y:int, height:int, width:int):
@@ -14,17 +17,46 @@ class Monster:
         self.x_pos=start_pos_x
         self.y_pos=start_pos_y
         self.monster_type=monster_type
-        self.projectile = Projectile(1, self.x_pos+2, self.y_pos, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
         self.alive = True
         self.monster_rectangle=self.img.get_rect()
-        self.monster_rectangle.topleft = (start_pos_x, start_pos_x)
+        self.monster_rectangle.x, self.monster_rectangle.y = start_pos_x, start_pos_y
+        self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
+        self.current_increment=1
+        self.total_increments=0
+        
     
-    def shoot(self, screen:pygame.display) -> None:
-        if self.projectile.x_pos<=0:
-            self.projectile.x_pos=self.x_pos-2
+    def realign_projectile(self):
+        self.projectile.projectile_rectangle.x=self.monster_rectangle.x
+        self.projectile.projectile_rectangle.y=self.monster_rectangle.y
 
-        self.projectile.x_pos+=-1.5
-        self.projectile.render(self.projectile.x_pos, self.projectile.y_pos, screen)
+    def start_moving(self, player):
+        
+        self.movement_vector=Constants.mini_boss_movement_vector[random.choice(["left", "right", "up", "down"])]
+        self.monster_rectangle.move_ip(self.movement_vector[0], self.movement_vector[1])
+        
+
+
+
+    def shoot(self, screen, player):
+        
+
+        # Returning projectile back to monster
+        
+        if (self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height or self.projectile.projectile_rectangle.y<=0):
+            self.realign_projectile()
+            
+        if (self.monster_rectangle.colliderect(self.projectile.projectile_rectangle)):
+            offset_x=self.projectile.projectile_rectangle.x+Constants.medium_boss_projectile_offset_x
+            offset_y=self.projectile.projectile_rectangle.y+Constants.medium_boss_projectile_offset_y
+
+            self.projectile_change_x=(player.player_rectangle.x-offset_x)/Constants.medium_boss_velocity_constant
+            self.projectile_change_y=(player.player_rectangle.y-offset_y)/Constants.medium_boss_velocity_constant
+
+
+        self.projectile.projectile_rectangle.x+=self.projectile_change_x
+        self.projectile.projectile_rectangle.y+=self.projectile_change_y
+
+        self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
     
           
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
@@ -34,7 +66,7 @@ class Monster:
         image = pygame.transform.scale(self.img, (width, height))
         self.monster_rectangle = image.get_rect()
         self.monster_rectangle.topleft = (x_pos, y_pos)
-        # pygame.draw.rect(screen, (0, 0, 255), self.monster_rectangle)
+        #pygame.draw.rect(screen, (0, 0, 255), self.monster_rectangle)
         screen.blit(image, self.monster_rectangle)
     
     def get_hit(self, damage:float):

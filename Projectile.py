@@ -22,7 +22,7 @@ class Projectile:
         # screen.blit(image, (x_pos, y_pos))
         self.projectile_rectangle.x = x
         self.projectile_rectangle.y = y
-        # pygame.draw.rect(screen, (0, 255, 0), self.projectile_rectangle)
+        #pygame.draw.rect(screen, (0, 255, 0), self.projectile_rectangle)
         screen.blit(self.img, self.projectile_rectangle)
 
 

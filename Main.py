@@ -21,13 +21,11 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 
 def init_home_screen():
     controller_detected=True
-    #monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
-    monster2=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
+    monster2=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
+    #monster2=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
 
     player1 = Player("bheem", {}, "", 1, 1.2, 3,5,5, "str", 500, 500, 0)
    
-    sword = Sword()
-
     sword = Sword()
 
     try:
@@ -46,7 +44,7 @@ def init_home_screen():
     while gameLoop:
         
         screen.fill((255,255,255))
-        # pygame.draw.rect(screen, (255, 0, 255), player1.player_rectangle)
+        #pygame.draw.rect(screen, (255, 0, 255), player1.player_rectangle)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
         screen.blit(health_bar_display, (1200, 100))
 
@@ -56,8 +54,11 @@ def init_home_screen():
         # monster1.shoot(screen)
         
         if monster2.alive:
-            monster2.render(500, 100, 250, 300, screen)
-            monster2.shoot(screen, player1)
+            monster2.start_moving(screen, player1)
+            
+            monster2.render(monster2.monster_rectangle.x, monster2.monster_rectangle.y, 250, 300, screen)
+            
+            #monster2.shoot(screen, player1)
             if (player1.player_rectangle.colliderect(monster2.projectile.projectile_rectangle)):
                 print("player got hit")
                 monster2.realign_projectile()
