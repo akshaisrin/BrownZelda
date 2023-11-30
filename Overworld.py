@@ -26,14 +26,14 @@ class Overworld(Room):
         self.test_obstacle8 = Obstacles("test_object5.png", 260, 0, 130, 250)
         
         self.test2_o1 = Obstacles("room2_object_1.png", 0, 0, screen_width, 120)
-        self.test2_o2 = Obstacles("room2_object_1.png", 0, screen_height-100, (screen_width-200)/2, 100)
+        self.test2_o2 = Obstacles("room2_object_1.png", 0, screen_height-100, int((screen_width-200)/2), 100)
         self.test2_o3 = Obstacles("room2_object_3.png", 350, 250, 80, 80)
         self.test2_o4 = Obstacles("room2_object_3.png", 350, 480, 80, 80)
         self.test2_o5 = Obstacles("room2_object_3.png", 750, 250, 80, 80)
         self.test2_o6 = Obstacles("room2_object_3.png", 750, 480, 80, 80)
         self.test2_o7 = Obstacles("room2_object_3.png", 1150, 250, 80, 80)
         self.test2_o8 = Obstacles("room2_object_3.png", 1150, 480, 80, 80)
-        self.test2_o9 = Obstacles("room2_object_1.png", screen_width/2+100, screen_height-100, (screen_width-200)/2, 100)
+        self.test2_o9 = Obstacles("room2_object_1.png", int(screen_width/2+100), screen_height-100, int((screen_width-200)/2), 100)
         
         # intialize all the biomes
         self.desert = Biome("desert", "desert_biome.png", 1200, 500, True, 500, 400)
@@ -130,26 +130,19 @@ class Overworld(Room):
     
     def obstacles_in_biome(self, player:Player, biome:Biome):
         obstacle_rects = biome.obstacles_rect
-        for o in obstacle_rects:
-            obstacle_rect = Rect(o[0]-60, o[1], o[2]-70, o[3]-100)
-            if obstacle_rect[2] <= 0:
-                obstacle_rect[2] = 1
-            if obstacle_rect[3] <= 0:
-                obstacle_rect[3] = 1
-            player_rect = Rect(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], 85, 180)
-            #print(player_rect)
-            if player_rect.colliderect(obstacle_rect):
+        for obstacle_rect in obstacle_rects:
+            if player.player_rectangle.colliderect(obstacle_rect):
                 if player.direction == "left":
                     x_pos = obstacle_rect[0] + obstacle_rect[2]
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
                 elif player.direction == "right":
-                    x_pos = obstacle_rect[0]-100
+                    x_pos = obstacle_rect[0] - player.player_rectangle[2]
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
                 elif player.direction == "up":
                     y_pos = obstacle_rect[1] + obstacle_rect[3]
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], y_pos)
                 else:
-                    y_pos = obstacle_rect[1]-200
+                    y_pos = obstacle_rect[1] - player.player_rectangle[3]
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], y_pos)
     
     def monster_attack(self, curr_biome:Biome, player:Player, screen:pygame.display):
