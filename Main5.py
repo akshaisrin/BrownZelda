@@ -264,6 +264,7 @@ def init_home_screen():
 
     direction = None
     framecounter = 0
+    firstchange = False
     while gameLoop:
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
@@ -323,17 +324,18 @@ def init_home_screen():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:                   
                 if event.key == pygame.K_LEFT: 
-                    player1.current_frame = 10
                     direction = "left"
+                    firstchange = True
                 elif event.key == pygame.K_RIGHT: 
-                    player1.current_frame = 10
                     direction = "right"
+                    firstchange = True
                 elif event.key == pygame.K_UP: 
-                    player1.current_frame = 11
                     direction = "up"
+                    firstchange = True
                 elif event.key == pygame.K_DOWN: 
-                    player1.current_frame = 9
                     direction = "down"
+                    firstchange = True
+            
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player1.current_frame = 10
@@ -353,7 +355,8 @@ def init_home_screen():
                 pygame.quit()
                 sys.exit()
 
-        player1.handlemove(direction, framecounter)
+        player1.handlemove(direction, framecounter, firstchange)
+        firstchange = False
         
         pygame.display.update()
         

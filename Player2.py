@@ -72,12 +72,12 @@ class Player2:
         # self.y_pos = self.curr_checkpoint[1]
         # self.z_pos = self.curr_checkpoint[2]
 
-    def handlemove(self, direction, framecounter): 
+    def handlemove(self, direction, framecounter, firstchange): 
         self.direction = direction
         if self.direction == None:
             return
         elif self.direction == "left":
-            if framecounter % 1 == 0:
+            if framecounter % self.framegap == 0 or firstchange:
                 if self.current_frame != 10:
                     self.current_frame = 10
                 else:
@@ -91,7 +91,7 @@ class Player2:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.flipped = False
         elif self.direction == "right":
-            if framecounter % 1 == 0:
+            if framecounter % self.framegap == 0 or firstchange:
                 if self.current_frame != 10:
                     self.current_frame = 10
                 else:
@@ -105,7 +105,7 @@ class Player2:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.flipped = True
         elif self.direction == "up":
-            if framecounter % self.framegap == 0:
+            if framecounter % self.framegap == 0 or firstchange:
                 if self.lastup == 14:
                     self.current_frame = 17
                     self.lastup = 17
@@ -113,7 +113,7 @@ class Player2:
                     self.current_frame = 14
                     self.lastup = 14
         else:
-            if framecounter % self.framegap == 0:
+            if framecounter % self.framegap == 0 or firstchange:
                 if self.lastup == 12:
                     self.current_frame = 15
                     self.lastup = 15
