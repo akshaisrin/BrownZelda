@@ -34,12 +34,12 @@ class Biome(Room):
         for o in self.obstacles:
             screen.blit(o.get_image(), (o.x, x_pos + o.y))
         # render the player
-        player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], 300, 300, screen)
         # render the monsters
         for m in self.monsters:
             if m.alive:
                 m.render(500, 100, 250, 300, screen)
                 m.shoot(screen, player)
+        player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], 300, 300, screen)
         pygame.display.update()
         
     def add_obstacles(self, obstacles:list):
