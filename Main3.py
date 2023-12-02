@@ -376,6 +376,6 @@ def init_home_screen():
         
         pygame.display.update()
         
-init_loading_screen()
-init_instructions_screen()
+# init_loading_screen()
+# init_instructions_screen()
 init_home_screen()
