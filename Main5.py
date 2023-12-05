@@ -230,9 +230,10 @@ def init_instructions_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
-            if event.key == pygame.K_SPACE:
-                pygame.mixer.music.stop()
-                gameLoop = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pygame.mixer.music.stop()
+                    gameLoop = False
 
         if elapsedTime > 72:
             pygame.mixer.music.stop()
@@ -367,5 +368,5 @@ def init_home_screen():
         pygame.display.update()
         
 # init_loading_screen()
-# init_instructions_screen()
+init_instructions_screen()
 init_home_screen()
