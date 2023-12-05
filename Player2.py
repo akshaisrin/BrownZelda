@@ -17,7 +17,7 @@ class Player2:
         self.lastup = None
         self.lastleft = None
         self.direction = None
-        self.framegap = 2
+        self.framegap = 10
 
         self.username = username
         self.inventory = inventory

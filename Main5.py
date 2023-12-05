@@ -230,6 +230,10 @@ def init_instructions_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
+            if event.key == pygame.K_SPACE:
+                pygame.mixer.music.stop()
+                gameLoop = False
+
         if elapsedTime > 72:
             pygame.mixer.music.stop()
             gameLoop = False
@@ -243,6 +247,7 @@ def init_instructions_screen():
         
         
 def init_home_screen():
+    clock = pygame.time.Clock() 
     controller_detected=True
     player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
    
@@ -266,6 +271,7 @@ def init_home_screen():
     framecounter = 0
     firstchange = False
     while gameLoop:
+        clock.tick(60)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
         
