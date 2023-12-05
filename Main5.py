@@ -160,7 +160,6 @@ def init_home_screen():
         screen.blit(lives_display, (1000, 200))
         
         if curr_biome != None:
-            
             new_biome = overworld.going_to_next_biome(player1, curr_biome, next_biome, curr_screen_x_pos, screen)
             if new_biome != None:
                 curr_biome = new_biome
@@ -245,5 +244,5 @@ def init_home_screen():
         pygame.display.update()
         
 # init_loading_screen()
-init_instructions_screen()
+# init_instructions_screen()
 init_home_screen()

@@ -18,7 +18,18 @@ class Player2:
         self.lastleft = None
         self.direction = None
         self.framegap = 10
-
+        self.spritesheet_dframes = []
+        for frame in self.spritesheet_frames:
+            rect = frame.get_rect()
+            dsurface = frame.copy()
+            wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
+            wsurface.fill('white')
+            dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
+            self.spritesheet_dframes.append(dsurface)
+        
+        self.attacked = False
+        self.attacktime = time.time()
+    
         self.username = username
         self.inventory = inventory
         self.curr_item = curr_item
@@ -28,7 +39,8 @@ class Player2:
         self.original_health=health_bar
         self.health_bar = self.original_health
         self.wealth = wealth
-
+    
+        
     def select_item(self, item:str):
         if item in self.inventory:
             self.curr_item = item
@@ -37,6 +49,8 @@ class Player2:
         self.curr_item.use() #use function will be defined in Item classes
 
     def get_attacked(self, damage:int, screen):
+        self.attacked = True
+        self.attacktime = time.time()
         self.health_bar -= damage
 
         if (self.health_bar<=0):
@@ -89,6 +103,7 @@ class Player2:
                         self.lastleft = 13
                 if self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
+                    self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
                     self.flipped = False
         elif self.direction == "right":
             if framecounter % self.framegap == 0 or firstchange:
@@ -103,6 +118,7 @@ class Player2:
                         self.lastleft = 13
                 if not self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
+                    self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
                     self.flipped = True
         elif self.direction == "up":
             if framecounter % self.framegap == 0 or firstchange:
@@ -124,7 +140,17 @@ class Player2:
         self.player_rectangle.move_ip(Constants.directions[self.direction][0], Constants.directions[self.direction][1])
         
     def render(self, x_pos:float, y_pos:float,screen:pygame.display) -> None:
-        image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
+        image = None
+        if self.attacked:
+            elapsedTime = time.time() - self.attacktime
+            if elapsedTime > 1:
+                self.attacked = False
+            if elapsedTime % 0.1 > 0.05:
+                image = pygame.transform.scale(self.spritesheet_dframes[self.current_frame], (64, 64))
+            else:
+                image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
+        else:
+            image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
         self.player_rectangle = image.get_rect()
         self.player_rectangle.topleft = (x_pos, y_pos)
         screen.blit(image, self.player_rectangle)
