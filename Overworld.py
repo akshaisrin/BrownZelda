@@ -40,7 +40,7 @@ class Overworld(Room):
         self.homes = Biome("homes", "homes_biome.png", 1200, 500, True, 500, 400)
         self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500, True, 500, 400)
         self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500, True, 500, 400)
-        self.dungeon = Biome("dungeon", "dungeon1_copy.jpg", -1000, -1000, False)
+        self.dungeon = Biome("dungeon", "dungeons1.jpg", -1000, -1000, False)
         self.test_room = Biome("test_room", "background.jpg", 640, 600, False)
         self.test_room2 = Biome("test_room", "test_room.png", 1200, 500, True, 290, 0)
                 
@@ -108,7 +108,7 @@ class Overworld(Room):
         #print(player.player_rectangle.topleft)
         #print(curr_biome.exit_x)
         #print(curr_biome.exit_y)
-        if (player.player_rectangle.topleft[0] < curr_biome.exit_x + 10 and player.player_rectangle.topleft[0] > curr_biome.exit_x - 10) and (player.player_rectangle.topleft[1] < curr_biome.exit_y + 10 and player.player_rectangle.topleft[1] > curr_biome.exit_y - 10):
+        if (player.player_rectangle.topleft[0] < curr_biome.exit_x + 80 and player.player_rectangle.topleft[0] > curr_biome.exit_x - 80) and (player.player_rectangle.topleft[1] < curr_biome.exit_y + 80 and player.player_rectangle.topleft[1] > curr_biome.exit_y - 80):
             x_pos = screen_height
             while x_pos > 0:
                 curr_screen_x_pos -= 100
