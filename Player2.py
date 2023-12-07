@@ -163,17 +163,17 @@ class Player2:
             if elapsedTime > 0.3:
                 self.attacking = False
             if self.current_frame == 10:
-                if self.attacked:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
                     image = pygame.transform.scale(self.spritesheet_dframes[13], (64, 64))
                 else:
                     image = pygame.transform.scale(self.spritesheet_frames[13], (64, 64))
             elif self.current_frame == 11:
-                if self.attacked:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
                     image = pygame.transform.scale(self.spritesheet_dframes[17], (64, 64))
                 else:
                     image = pygame.transform.scale(self.spritesheet_frames[17], (64, 64))
             else:
-                if self.attacked:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
                     image = pygame.transform.scale(self.spritesheet_dframes[12], (64, 64))
                 else:
                     image = pygame.transform.scale(self.spritesheet_frames[12], (64, 64))
