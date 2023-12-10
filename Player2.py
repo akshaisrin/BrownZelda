@@ -23,7 +23,7 @@ class Player2:
             rect = frame.get_rect()
             dsurface = frame.copy()
             wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
-            wsurface.fill('white')
+            #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
         

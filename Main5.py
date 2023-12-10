@@ -10,8 +10,8 @@ from pygame.locals import *
 from Constants import *
 from TestMonster import *
 from TestMonsterMedium import *
-from inputs import get_gamepad
-from XBoxController import *
+#from inputs import get_gamepad
+#from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
 from Obstacle import *
@@ -126,21 +126,23 @@ def init_instructions_screen():
         
 def init_home_screen():
     clock = pygame.time.Clock() 
-    controller_detected=True
+    #controller_detected=True
     player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
    
     sword = Sword()
     
     overworld = Overworld()
     curr_biome = overworld.test_room
-    next_biome = overworld.test_room2
     curr_screen_x_pos = 0
-
+    curr_screen_y_pos = 0
+    
+    """
     try:
         joystick=XboxController()
     except:
         controller_detected=False
     # Establishing game loop to keep screen running
+    """
 
     gameLoop = True
     attacktime = None
@@ -148,22 +150,34 @@ def init_home_screen():
     direction = None
     framecounter = 0
     firstchange = False
+    display_text = True
+    keep_text_displayed = True
+    
     while gameLoop:
         clock.tick(60)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
         
-        curr_biome.render(curr_screen_x_pos, player1, screen)
+        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
         screen.blit(health_bar_display, (1000, 150))
         lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
         screen.blit(lives_display, (1000, 200))
         
+        if display_text:
+            text, text_rect = overworld.display_text("text", curr_biome, player1, 0, 0, screen)
+            display_text = False
+        if keep_text_displayed:
+            screen.blit(text, text_rect)
+            pygame.display.update()
+        
         if curr_biome != None:
-            new_biome = overworld.going_to_next_biome(player1, curr_biome, next_biome, curr_screen_x_pos, screen)
+            new_biome = overworld.going_to_next_biome(player1, curr_biome, curr_screen_x_pos, curr_screen_y_pos, screen)
             if new_biome != None:
                 curr_biome = new_biome
                 curr_screen_x_pos = 0
+                curr_screen_y_pos = 0
+                keep_text_displayed = False
                 
             dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
             if dungeon != None:
@@ -183,6 +197,7 @@ def init_home_screen():
         
         
         # player contorls
+        """
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
 
@@ -203,6 +218,7 @@ def init_home_screen():
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()
             sword.attack(curr_biome.monsters[0])
+        """
     
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:                   
