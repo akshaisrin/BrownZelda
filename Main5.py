@@ -125,7 +125,7 @@ def init_instructions_screen():
         
         
 def init_home_screen():
-    clock = pygame.time.Clock() 
+    clock = pygame.time.Clock()
     controller_detected=True
     player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
    

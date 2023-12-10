@@ -54,14 +54,14 @@ def init_home_screen():
         # monster1.shoot(screen)
         
         if monster2.alive:
-            monster2.start_moving(screen, player1)
+            #monster2.patrol(player1, 500, 200, 500, 500)
             
             monster2.render(monster2.monster_rectangle.x, monster2.monster_rectangle.y, 250, 300, screen)
             
             #monster2.shoot(screen, player1)
             if (player1.player_rectangle.colliderect(monster2.projectile.projectile_rectangle)):
                 print("player got hit")
-                monster2.realign_projectile()
+                #monster2.realign_projectile()
                 player1.get_attacked(monster2.projectile.damage, screen)
             
             if sword.attacking:

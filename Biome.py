@@ -31,14 +31,17 @@ class Biome(Room):
         image = self.get_image()
         screen.blit(image, (0, x_pos))
         # render the obstacles
-        # for o in self.obstacles:
-        #     screen.blit(o.get_image(), (o.x, x_pos + o.y))
+        for o in self.obstacles:
+            screen.blit(o.get_image(), (o.x, x_pos + o.y))
         # render the player
         # render the monsters
         for m in self.monsters:
             if m.alive:
-                m.render(500, 100, 250, 300, screen)
-                m.shoot(screen, player)
+                m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
+                #m.start_moving(player)
+                m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
+
+                #m.shoot(screen, player)
         player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
         
     def add_obstacles(self, obstacles:list):

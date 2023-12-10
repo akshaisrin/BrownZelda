@@ -7,6 +7,7 @@ from Player import *
 from Obstacles import *
 from Monster import *
 from TestMonsterMedium import *
+from TestMonster import *
 
 class Overworld(Room):
     
@@ -53,7 +54,8 @@ class Overworld(Room):
         self.test_room2.add_obstacles([self.test_obstacle1, self.test_obstacle2, self.test_obstacle3, self.test_obstacle4, self.test_obstacle5, self.test_obstacle6, self.test_obstacle7, self.test_obstacle8])
         
         # add monster
-        self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
+        #self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 125, 150)
+        self.monster=TestMonster(10.0, 9.0, "Test Monster 2", 500, 300, 125, 150)
         self.test_room.add_monsters([self.monster])
         self.test_room2.add_monsters([self.monster])
         

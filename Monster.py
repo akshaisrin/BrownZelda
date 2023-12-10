@@ -20,7 +20,7 @@ class Monster:
         self.alive = True
         self.monster_rectangle=self.img.get_rect()
         self.monster_rectangle.x, self.monster_rectangle.y = start_pos_x, start_pos_y
-        self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, 50, 50, pygame.image.load(os.path.join("Assets", "flappybird.png")))
+        self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, 40, 40, pygame.image.load(os.path.join("Assets", "flappybird.png")))
         self.current_increment=1
         self.total_increments=0
         
@@ -35,7 +35,16 @@ class Monster:
         self.monster_rectangle.move_ip(self.movement_vector[0], self.movement_vector[1])
         
 
+    def shoot_straight(self, end_x, end_y, screen):
 
+        if self.projectile.started_shooting:
+            self.projectile.projectile_rectangle.x=self.monster_rectangle.x
+            self.projectile.projectile_rectangle.y=self.monster_rectangle.y
+            self.projectile.started_shooting=False
+
+        change=((end_x-self.monster_rectangle.x)/Constants.monster_projectile_constant, (end_y-self.monster_rectangle.y)/Constants.monster_projectile_constant)
+        self.projectile.projectile_rectangle.move_ip(change[0], change[1])
+        self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
 
     def shoot(self, screen, player):
         

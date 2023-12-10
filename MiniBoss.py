@@ -9,37 +9,74 @@ class MiniBoss(Monster):
         self.projectile_change_x=0.0
         self.projectile_change_y=0.0
         self.current_direction=""
-        self.shooting=False
+        self.patrol_vector=(0,0)
+
+        self.stop_moving=False
     
+    def change_direction_patrol(self, x, y):
+        self.end_patrol=(x, y)
 
-    def start_moving(self, screen, player):
+    def patrol_and_shoot(self, player, x1, y1, x2, y2, screen):
         change_direction=False
-        if self.monster_rectangle.left < 0:
-            self.monster_rectangle.left = 0
-            change_direction=True
-        if self.monster_rectangle.right > Constants.screen_width:
-            self.monster_rectangle.right = Constants.screen_width
-            change_direction=True
-        if self.monster_rectangle.top <= 0:
-            self.monster_rectangle.top = 0
-            change_direction=True
-        if self.monster_rectangle.bottom >= Constants.screen_height:
-            self.monster_rectangle.bottom = Constants.screen_height
-            change_direction=True
-        if (change_direction):
-            if self.current_direction=="left":
-                new_direction="right"
-            elif self.current_direction=="right":
-                new_direction="left"
-            elif self.current_direction=="up":
-                new_direction="down"
-            else:
-                new_direction="up"
 
-            self.change_directions(new_direction)
-        # if (self.monster_rectangle.left<0 or self.monster_rectangle.right>Constants.screen_width or self.monster_rectangle.bottom>=Constants.screen_height or self.monster_rectangle.top<=Constants.screen_height):
+        # check vertical distance between player and monster to figure out if monster should shoot
+        
+        if (self.stop_moving):
+            self.shoot_straight(self.projectile.shoot_coords[0], self.projectile.shoot_coords[1], screen)
+
+        elif abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=player.player_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2:
+            self.stop_moving=True
+            self.shoot_straight(player.player_rectangle.x, player.player_rectangle.y, screen)
+            self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
+        
+
+        
+        # check to see if projectile is at edge of screen
+
+        if self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.y<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height:
+            self.stop_moving=False
+            self.projectile.started_shooting=True
+
+
+
+
+        # first check to see if monster at new coords
+
+        if not self.stop_moving:
+
+            if (self.monster_rectangle.collidepoint(x2, y2)):
+                self.patrol_vector=((x1-x2)/Constants.mini_boss_patrol_constant, (y1-y2)/Constants.mini_boss_patrol_constant)
             
-        #     new_direction=""
+            if (self.monster_rectangle.collidepoint(x1, y1)):
+                self.patrol_vector=((x2-x1)/Constants.mini_boss_patrol_constant, (y2-y1)/Constants.mini_boss_patrol_constant)
+            
+            self.monster_rectangle.move_ip(self.patrol_vector[0], self.patrol_vector[1])
+
+
+
+    def start_moving(self, player):
+
+        pass
+        # check to see if touching an obstacle
+
+        # if not, pick
+
+
+
+        # change_direction=False
+        # if self.monster_rectangle.left < 0:
+        #     self.monster_rectangle.left = 0
+        #     change_direction=True
+        # if self.monster_rectangle.right > Constants.screen_width:
+        #     self.monster_rectangle.right = Constants.screen_width
+        #     change_direction=True
+        # if self.monster_rectangle.top <= 0:
+        #     self.monster_rectangle.top = 0
+        #     change_direction=True
+        # if self.monster_rectangle.bottom >= Constants.screen_height:
+        #     self.monster_rectangle.bottom = Constants.screen_height
+        #     change_direction=True
+        # if (change_direction):
         #     if self.current_direction=="left":
         #         new_direction="right"
         #     elif self.current_direction=="right":
@@ -50,30 +87,45 @@ class MiniBoss(Monster):
         #         new_direction="up"
 
         #     self.change_directions(new_direction)
-        
-        if (self.current_increment<=self.total_increments):
-            self.current_increment+=1
-            self.monster_rectangle.move_ip(self.movement_vector[0], self.movement_vector[1])
-            if abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=2 or abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=2:
-                self.shooting=True
+        # # if (self.monster_rectangle.left<0 or self.monster_rectangle.right>Constants.screen_width or self.monster_rectangle.bottom>=Constants.screen_height or self.monster_rectangle.top<=Constants.screen_height):
             
-            if (self.shooting):
-                offset_x=self.projectile.projectile_rectangle.x+Constants.medium_boss_projectile_offset_x
-                offset_y=self.projectile.projectile_rectangle.y+Constants.medium_boss_projectile_offset_y
+        # #     new_direction=""
+        # #     if self.current_direction=="left":
+        # #         new_direction="right"
+        # #     elif self.current_direction=="right":
+        # #         new_direction="left"
+        # #     elif self.current_direction=="up":
+        # #         new_direction="down"
+        # #     else:
+        # #         new_direction="up"
 
-                self.projectile_change_x=(player.player_rectangle.x-offset_x)/Constants.medium_boss_velocity_constant
-                self.projectile_change_y=(player.player_rectangle.y-offset_y)/Constants.medium_boss_velocity_constant
-                self.shoot(screen, player)
-            
-        else:
-            self.change_directions(random.choice(["left", "right", "up", "down"]))    
-            
+        # #     self.change_directions(new_direction)
         
-    def change_directions(self, direction):
-        self.current_direction=direction
-        self.current_increment=0
-        self.total_increments=random.randint(5, 15)*10
-        self.movement_vector=Constants.mini_boss_movement_vector[direction]
+        # if (self.current_increment<=self.total_increments):
+        #     self.current_increment+=1
+        #     self.monster_rectangle.move_ip(self.movement_vector[0], self.movement_vector[1])
+        #     if abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=2 or abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=2:
+        #         self.shooting=True
+            
+        #     if (self.shooting):
+        #         offset_x=self.projectile.projectile_rectangle.x+Constants.medium_boss_projectile_offset_x
+        #         offset_y=self.projectile.projectile_rectangle.y+Constants.medium_boss_projectile_offset_y
+
+        #         self.projectile_change_x=(player.player_rectangle.x-offset_x)/Constants.medium_boss_velocity_constant
+        #         self.projectile_change_y=(player.player_rectangle.y-offset_y)/Constants.medium_boss_velocity_constant
+        #         #self.shoot(screen, player)
+            
+        # else:
+        #     self.change_directions(random.choice(["left", "right", "up", "down"]))    
+            
+    
+
+
+    # def change_directions(self, direction):
+    #     self.current_direction=direction
+    #     self.current_increment=0
+    #     self.total_increments=random.randint(5, 15)*10
+    #     self.movement_vector=Constants.mini_boss_movement_vector[direction]
 
 
     def shoot(self, screen, player):
