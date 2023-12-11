@@ -23,6 +23,11 @@ class Monster:
         self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, 40, 40, pygame.image.load(os.path.join("Assets", "flappybird.png")))
         self.current_increment=1
         self.total_increments=0
+        self.charge_speed=2.25
+        self.cooldown=Constants.cooldown
+        self.in_cooldown=False
+        self.started_charging=True
+        self.charge_coords=(0, 0)
         
     
     def realign_projectile(self):
@@ -45,29 +50,15 @@ class Monster:
         change=((end_x-self.monster_rectangle.x)/Constants.monster_projectile_constant, (end_y-self.monster_rectangle.y)/Constants.monster_projectile_constant)
         self.projectile.projectile_rectangle.move_ip(change[0], change[1])
         self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
-
-    def shoot(self, screen, player):
-        
-
-        # Returning projectile back to monster
-        
-        if (self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height or self.projectile.projectile_rectangle.y<=0):
-            self.realign_projectile()
-            
-        if (self.monster_rectangle.colliderect(self.projectile.projectile_rectangle)):
-            offset_x=self.projectile.projectile_rectangle.x+Constants.medium_boss_projectile_offset_x
-            offset_y=self.projectile.projectile_rectangle.y+Constants.medium_boss_projectile_offset_y
-
-            self.projectile_change_x=(player.player_rectangle.x-offset_x)/Constants.medium_boss_velocity_constant
-            self.projectile_change_y=(player.player_rectangle.y-offset_y)/Constants.medium_boss_velocity_constant
-
-
-        self.projectile.projectile_rectangle.x+=self.projectile_change_x
-        self.projectile.projectile_rectangle.y+=self.projectile_change_y
-
-        self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
     
-          
+    def charge(self):
+
+            
+        change=((self.charge_coords[0]-self.monster_rectangle.x)/self.charge_speed, (self.charge_coords[1]-self.monster_rectangle.y)/self.charge_speed)
+        self.monster_rectangle.move_ip(change[0], change[1])
+        #self.charge_speed-=5
+
+    
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         # self.x_pos=x_pos
         # self.y_pos=y_pos

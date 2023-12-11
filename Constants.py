@@ -33,3 +33,4 @@ monster_projectile_constant=15
 monster_player_collision_buffer_x=10
 monster_player_collision_buffer_y=5
 
+cooldown=40

@@ -140,6 +140,7 @@ def init_home_screen():
         joystick=XboxController()
     except:
         controller_detected=False
+        
     # Establishing game loop to keep screen running
 
     gameLoop = True

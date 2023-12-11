@@ -153,10 +153,14 @@ class Overworld(Room):
         for m in monsters:
             if m.alive:
                 mon_alive += 1
-                if (player.player_rectangle.colliderect(m.projectile.projectile_rectangle)):
-                    print("player got hit")
+                if player.player_rectangle.colliderect(m.projectile.projectile_rectangle) and m.stop_moving:
                     m.realign_projectile()
                     player.get_attacked(m.projectile.damage, screen)
+
+                if player.player_rectangle.colliderect(m.monster_rectangle) and m.cooldown>=Constants.cooldown-1 and m.in_cooldown:
+                    player.get_attacked(3, screen)    
+
+
         if mon_alive == 0:
             return False
         else:
