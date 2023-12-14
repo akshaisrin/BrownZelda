@@ -8,6 +8,7 @@ from Obstacles import *
 from Monster import *
 from TestMonsterMedium import *
 from TestMonster import *
+from Kohli import *
 
 class Overworld(Room):
     
@@ -55,7 +56,8 @@ class Overworld(Room):
         
         # add monster
         #self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 125, 150)
-        self.monster=TestMonster(10.0, 9.0, "Test Monster 2", 500, 300, 125, 150)
+        self.monster=Kohli(10.0, 9.0, "Virat Kohli", 1000, 300, 125, 150)
+        #self.monster=TestMonster(10.0, 9.0, "Test Monster 2", 500, 300, 125, 150)
         self.test_room.add_monsters([self.monster])
         self.test_room2.add_monsters([self.monster])
         

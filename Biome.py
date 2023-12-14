@@ -37,8 +37,9 @@ class Biome(Room):
         # render the monsters
         for m in self.monsters:
             if m.alive:
+                m.walk_towards_player(player, screen)
                 #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
-                m.charge_and_hit(player, screen)
+                #m.charge_and_hit(player)
                 #m.start_moving(player)
                 m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
 

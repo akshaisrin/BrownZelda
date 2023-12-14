@@ -9,77 +9,7 @@ class MiniBoss(Monster):
         self.projectile_change_x=0.0
         self.projectile_change_y=0.0
         self.current_direction=""
-        self.patrol_vector=(0,0)
-        self.hit_wall=False
-
-        self.stop_moving=False
-    
-    def change_direction_patrol(self, x, y):
-        self.end_patrol=(x, y)
-
-    def patrol_and_shoot(self, player, x1, y1, x2, y2, screen):
-        # check vertical distance between player and monster to figure out if monster should shoot
         
-        if (self.stop_moving):
-            self.shoot_straight(self.projectile.shoot_coords[0], self.projectile.shoot_coords[1], screen)
-
-        elif abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=player.player_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2:
-            self.stop_moving=True
-            self.shoot_straight(player.player_rectangle.x, player.player_rectangle.y, screen)
-            self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
-        
-        # check to see if projectile is at edge of screen
-
-        if self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.y<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height:
-            self.stop_moving=False
-            self.projectile.started_shooting=True
-
-
-        # check to see if monster at new coords
-
-        if not self.stop_moving:
-
-            if (self.monster_rectangle.collidepoint(x2, y2)):
-                self.patrol_vector=((x1-x2)/Constants.mini_boss_patrol_constant, (y1-y2)/Constants.mini_boss_patrol_constant)
-            
-            if (self.monster_rectangle.collidepoint(x1, y1)):
-                self.patrol_vector=((x2-x1)/Constants.mini_boss_patrol_constant, (y2-y1)/Constants.mini_boss_patrol_constant)
-            
-            self.monster_rectangle.move_ip(self.patrol_vector[0], self.patrol_vector[1])
-    
-    def charge_and_hit(self, player, screen):
-
-        # Checking if monster is touching player to tell the monster when to stop charging and when to start the cooldown
-
-        if self.monster_rectangle.colliderect(player.player_rectangle):
-
-            self.in_cooldown=True
-        
-        # Checking if cooldown is over to know when the monster can start moving
-
-        if self.in_cooldown:
-            self.cooldown-=1
-
-        if self.cooldown==0:
-           
-            self.cooldown=Constants.cooldown
-            self.in_cooldown=False
-            self.stop_moving=False
-    
-        # Checking if monster is currently already attacking
-
-        if (self.stop_moving) and not self.in_cooldown:
-            self.charge()
-            
-        # Checking if monster is not already charging and the player is in the monster's radius
-        
-        elif (abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=self.monster_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2) and not self.in_cooldown:
-            self.stop_moving=True
-            self.charge_coords=(player.player_rectangle.x, player.player_rectangle.y)
-            self.charge()
-
-
-
 
     def start_moving(self, player):
 
@@ -154,20 +84,6 @@ class MiniBoss(Monster):
     #     self.total_increments=random.randint(5, 15)*10
     #     self.movement_vector=Constants.mini_boss_movement_vector[direction]
 
-
-    def shoot(self, screen, player):
-        
-
-        # Returning projectile back to monster
-        
-        if (self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height or self.projectile.projectile_rectangle.y<=0):
-            self.shooting=False
-
-        else:    
-            self.projectile.projectile_rectangle.x+=self.projectile_change_x
-            self.projectile.projectile_rectangle.y+=self.projectile_change_y
-
-            self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
         
 
 
