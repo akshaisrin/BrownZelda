@@ -4,7 +4,6 @@ import time
 import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
-from screens.TestScreen import TestScreen
 from screens.InstructionsScreen import InstructionsScreen
 from pygame.locals import *
 from Constants import *
