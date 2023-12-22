@@ -36,19 +36,20 @@ class Overworld(Room):
         self.test2_o9 = Obstacles("room2_object_1.png", int(screen_width/2+100), screen_height-100, int((screen_width-200)/2), 100)
         
         # intialize all the biomes
-        self.desert = Biome("desert", "desert_biome.png", 1200, 500, True, 500, 400)
-        self.homes = Biome("homes", "homes_biome.png", 1200, 500, True, 500, 400)
-        self.tundra = Biome("tundra", "tundra_biome.png", 1200, 500, True, 500, 400)
-        self.zelda = Biome("zelda", "zelda_biome.png", 1200, 500, True, 500, 400)
-        self.dungeon = Biome("dungeon", "dungeon1_copy.jpg", -1000, -1000, False)
-        self.test_room = Biome("test_room", "background.jpg", 650, 600, False)
-        self.test_room2 = Biome("test_room", "test_room.png", 1200, 500, True, 290, 0)
+        #self.desert = Biome("desert", "desert_biome.png", [(1200, 500, self.desert, "up")], True, 500, 400)
+        #self.homes = Biome("homes", "homes_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
+        #self.tundra = Biome("tundra", "tundra_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
+        #self.zelda = Biome("zelda", "zelda_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
+        #self.dungeon = Biome("dungeon", "dungeon1_copy.jpg", [(-1000, -1000, self.homes, "up")], False)
+        self.test_room = Biome("test_room", "background.jpg", [], False)
+        self.test_room2 = Biome("test_room", "test_room.png", [(500, 0, self.test_room, "up")], True, 290, 0)
+        self.test_room.add_exits([(650, 600, self.test_room2, "down"), (1200, 500, self.test_room2, "right")])
                 
         # add obstacles to each Biome
-        self.desert.add_obstacles([self.obstacle])
-        self.homes.add_obstacles([self.obstacle])
-        self.tundra.add_obstacles([self.obstacle])
-        self.zelda.add_obstacles([self.obstacle])
+        #self.desert.add_obstacles([self.obstacle])
+        #self.homes.add_obstacles([self.obstacle])
+        #self.tundra.add_obstacles([self.obstacle])
+        #self.zelda.add_obstacles([self.obstacle])
         self.test_room.add_obstacles([self.test2_o1, self.test2_o2, self.test2_o3, self.test2_o4, self.test2_o5, self.test2_o6, self.test2_o7, self.test2_o8, self.test2_o9])
         self.test_room2.add_obstacles([self.test_obstacle1, self.test_obstacle2, self.test_obstacle3, self.test_obstacle4, self.test_obstacle5, self.test_obstacle6, self.test_obstacle7, self.test_obstacle8])
         
@@ -56,6 +57,9 @@ class Overworld(Room):
         self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
         self.test_room.add_monsters([self.monster])
         self.test_room2.add_monsters([self.monster])
+        
+        # set font
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
         
     def biome_name_to_biome(self, biome_name:str):
         if biome_name == "desert":
@@ -102,30 +106,50 @@ class Overworld(Room):
         return None
     
     # change code so that there can be multiple exits in a room and not just one, also order of rooms will be predetermined
-    def going_to_next_biome(self, player:Player, biome:Biome, biome2:Biome, curr_screen_x_pos:int, screen:pygame.display):    
+    def going_to_next_biome(self, player:Player, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
         curr_biome = biome
-        next_biome = biome2
-        #print(player.player_rectangle.topleft)
-        #print(curr_biome.exit_x)
-        #print(curr_biome.exit_y)
-        if (player.player_rectangle.topleft[0] < curr_biome.exit_x + 40 and player.player_rectangle.topleft[0] > curr_biome.exit_x - 40) and (player.player_rectangle.topleft[1] < curr_biome.exit_y + 40 and player.player_rectangle.topleft[1] > curr_biome.exit_y - 40):
-            x_pos = screen_height
-            while x_pos > 0:
-                curr_screen_x_pos -= 100
-                curr_biome.render(curr_screen_x_pos, player, screen)
-                x_pos -= 100
-                next_biome.render(x_pos, player, screen)
-                if x_pos > 0:
-                    new_x = player.player_rectangle.topleft[1] - 100
+        for exit in curr_biome.exits:
+            exit_x = exit[0]
+            exit_y = exit[1]
+            if (player.player_rectangle.topleft[0] < exit_x + 40 and player.player_rectangle.topleft[0] > exit_x - 40) and (player.player_rectangle.topleft[1] < exit_y + 40 and player.player_rectangle.topleft[1] > exit_y - 40):
+                next_biome = exit[2]
+                # moving down or up
+                if (exit[3] == "down" or exit[3] == "up"):
+                    if exit[3] == "down":
+                        change = -100
+                    else:
+                        change = 100
+                    y_pos = screen_height
+                    while y_pos > 0:
+                        curr_screen_y_pos += change
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
+                        y_pos += change
+                        next_biome.render(curr_screen_x_pos, y_pos, player, screen)
+                        new_y = player.player_rectangle.topleft[1] + change
+                        player.player_rectangle.topleft = (player.player_rectangle.topleft[0], new_y)
+                        player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
+                        pygame.display.update()
+                        pygame.time.wait(10)
+                # moving left or right
                 else:
-                    new_x = player.player_rectangle.topleft[1] - 100
-                player.player_rectangle.topleft = (player.player_rectangle.topleft[0], new_x)
-                player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
-                pygame.display.update()
-                pygame.time.wait(10)
-            next_biome.render(0, player, screen)
-            player.player_rectangle.topleft = (player.player_rectangle.topleft[0], -100)
-            return next_biome
+                    if exit[3] == "right":
+                        change = -100
+                    else:
+                        change = 100
+                    x_pos = screen_width
+                    while x_pos > 0:
+                        curr_screen_x_pos += change
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
+                        x_pos += change
+                        next_biome.render(x_pos, curr_screen_y_pos, player, screen)
+                        new_x = player.player_rectangle.topleft[1] + change
+                        player.player_rectangle.topleft = (new_x, player.player_rectangle.topleft[1])
+                        player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
+                        pygame.display.update()
+                        pygame.time.wait(10)
+                next_biome.render(0, 0, player, screen)
+                #player.player_rectangle.topleft = (player.player_rectangle.topleft[0], -100)
+                return next_biome
         return None
     
     def obstacles_in_biome(self, player:Player, biome:Biome):
@@ -159,3 +183,28 @@ class Overworld(Room):
             return False
         else:
             return True
+        
+    def display_text(self, words:str, curr_biome:Biome, player:Player, start_x:int, start_y:int, screen:pygame.display):
+        """
+        # displaying the text in the center always - so letters already displayed continue to shift
+        for i in range(1, len(words) + 1):
+            curr_biome.render(0, player, screen)
+            text = self.font.render(words[0:i], True, (0, 0, 0))
+            text_rect = text.get_rect()
+            text_rect.center = (screen_width//2, screen_height//2)
+            screen.blit(text, text_rect)
+            pygame.display.update()
+            pygame.time.wait(500)
+            #arcadegamer font used in instructions
+        """
+        for i in range(1, len(words) + 1):
+            curr_biome.render(0, 0, player, screen)
+            text = self.font.render(words[0:i], True, (0, 0, 0))
+            text_rect = text.get_rect()
+            text_rect = (start_x, start_y)
+            screen.blit(text, text_rect)
+            pygame.display.update()
+            pygame.time.wait(500)
+        return (text, text_rect)
+        
+        

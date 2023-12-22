@@ -8,12 +8,11 @@ from Monster import *
 
 class Biome(Room):
     
-    def __init__(self, name:str, file_path:str, exit_x:int, exit_y:int, dungeon:bool=False, dungeon_x=None, dungeon_y=None):
+    def __init__(self, name:str, file_path:str, exits:list, dungeon:bool=False, dungeon_x=None, dungeon_y=None):
         super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
-        self.exit_x = exit_x
-        self.exit_y = exit_y
+        self.exits = [] # format: [(x_cor, y_cor, next_biome, travel_direction), (x_cor, y_cor, next_biome, travel_direction), etc.]
         self.dungeon = dungeon
         self.dungeon_x = dungeon_x
         self.dungeon_y = dungeon_y
@@ -26,10 +25,10 @@ class Biome(Room):
         image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     
-    def render(self, x_pos:int, player:Player, screen:pygame.display):
+    def render(self, x_pos:int, y_pos:int, player:Player, screen:pygame.display):
         # render the screen
         image = self.get_image()
-        screen.blit(image, (0, x_pos))
+        screen.blit(image, (x_pos, y_pos))
         # render the obstacles
         # for o in self.obstacles:
         #     screen.blit(o.get_image(), (o.x, x_pos + o.y))
@@ -51,4 +50,7 @@ class Biome(Room):
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters
+        
+    def add_exits(self, exits:list):
+        self.exits += exits
             
