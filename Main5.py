@@ -4,7 +4,6 @@ import time
 import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
-from screens.TestScreen import TestScreen
 from screens.InstructionsScreen import InstructionsScreen
 from pygame.locals import *
 from Constants import *
@@ -126,10 +125,10 @@ def init_instructions_screen():
         
 def init_home_screen():
     clock = pygame.time.Clock() 
-    #controller_detected=True
-    player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
-   
+    controller_detected=True
     sword = Sword()
+    player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 0, 400, 0)
+   
     
     overworld = Overworld()
     curr_biome = overworld.test_room
@@ -145,7 +144,6 @@ def init_home_screen():
     """
 
     gameLoop = True
-    attacktime = None
 
     direction = None
     framecounter = 0
@@ -157,7 +155,7 @@ def init_home_screen():
         clock.tick(60)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
-        
+
         curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
         screen.blit(health_bar_display, (1000, 150))
@@ -184,17 +182,6 @@ def init_home_screen():
                 curr_biome = dungeon
                 
         monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
-        
-        
-        if sword.attacking:
-            elaspedTime = time.time() - attacktime
-            if elaspedTime > 0.5:
-                sword.attacking = False
-            elif elaspedTime > 0.25:
-                sword.render(player1.player_rectangle.x + 10 + (100 * elaspedTime), player1.player_rectangle.y + 10 + (100 * elaspedTime), 50, 50, screen)
-            else:
-                sword.render(player1.player_rectangle.x + 25 - (100 * elaspedTime), player1.player_rectangle.y + 25 - (100 * elaspedTime), 50, 50, screen)
-        
         
         # player contorls
         """
@@ -246,8 +233,7 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                     attacktime = time.time()
-                     sword.attack(curr_biome.monsters[0])
+                     player1.attack(curr_biome.monsters[0])
             
             if event.type == pygame.QUIT:
                 gameLoop=False
@@ -255,6 +241,7 @@ def init_home_screen():
                 sys.exit()
 
         player1.handlemove(direction, framecounter, firstchange)
+        player1.renderhealth(10, 10, screen)
         firstchange = False
         
         pygame.display.update()

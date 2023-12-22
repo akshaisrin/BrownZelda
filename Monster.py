@@ -72,7 +72,7 @@ class Monster:
     def get_hit(self, damage:float):
         
         self.health-=damage
-
+        print("got hit")
         if self.health<=0:
             self.die()
 
