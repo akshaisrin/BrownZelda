@@ -27,7 +27,18 @@ class Player2:
             wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
-        
+        self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
+        self.attackspritesheet=pygame.transform.scale(self.attackspritesheet, (576, 192))
+        self.spritesheet_aframes = [self.attackspritesheet.subsurface((i * 64, j * 64, 64, 64)) for j in range(3) for i in range(9)]
+        self.spritesheet_adframes = []
+        for frame in self.spritesheet_aframes:
+            rect = frame.get_rect()
+            dsurface = frame.copy()
+            wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
+            wsurface.fill('white')
+            dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
+            self.spritesheet_adframes.append(dsurface)
+
         self.attacked = False
         self.attacktime = time.time()
 
@@ -121,6 +132,7 @@ class Player2:
                 if self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
+                    self.spritesheet_aframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_aframes]
                     self.flipped = False
         elif self.direction == "right":
             if framecounter % self.framegap == 0 or firstchange:
@@ -136,6 +148,7 @@ class Player2:
                 if not self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
+                    self.spritesheet_aframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_aframes]
                     self.flipped = True
         elif self.direction == "up":
             if framecounter % self.framegap == 0 or firstchange:
@@ -164,19 +177,19 @@ class Player2:
                 self.attacking = False
             if self.current_frame == 10:
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_dframes[13], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[13], (64, 64))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_frames[13], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[13], (64, 64))
             elif self.current_frame == 11:
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_dframes[17], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[17], (64, 64))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_frames[17], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[17], (64, 64))
             else:
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_dframes[12], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[15], (64, 64))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_frames[12], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[15], (64, 64))
         elif self.attacked:
             elapsedTime = time.time() - self.attacktime
             if elapsedTime > 1:
