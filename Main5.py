@@ -154,7 +154,6 @@ def init_home_screen():
     text_index = 0
     texts = []
     display_count = 0
-    display_text = True
     
     while gameLoop:
         clock.tick(60)
@@ -177,7 +176,6 @@ def init_home_screen():
             display_count += 1
             for t in texts:
                 screen.blit(t[0], t[1])
-                pygame.display.update()
             if display_count == 1:
                 display_count = 0
                 text_index += 1

@@ -15,55 +15,6 @@ class Overworld(Room):
     def __init__(self):
         super().__init__(0, 0, 0)
         
-        # intialize all obstacles
-        """
-        self.obstacle = Obstacles("obstacle_test.png", 500, 200, 100, 100)
-        
-        self.test_obstacle1 = Obstacles("test_object1.png", screen_width-680, 0, 680, 380)
-        self.test_obstacle2 = Obstacles("test_object2.png", 0, screen_height-355, 190, 355)
-        self.test_obstacle3 = Obstacles("test_object2.png", screen_width-190, screen_height-355, 190, 355)
-        self.test_obstacle4 = Obstacles("test_object3.png", 200, screen_height-150, screen_width-400, 150)
-        self.test_obstacle5 = Obstacles("test_object4.png", 480, 0, 200, 150)
-        self.test_obstacle6 = Obstacles("test_object5.png", 0, 0, 150, 380)
-        self.test_obstacle7 = Obstacles("test_object5.png", 150, 0, 110, 350)
-        self.test_obstacle8 = Obstacles("test_object5.png", 260, 0, 130, 250)
-        
-        self.test2_o1 = Obstacles("room2_object_1.png", 0, 0, screen_width, 120)
-        self.test2_o2 = Obstacles("room2_object_1.png", 0, screen_height-100, int((screen_width-200)/2), 100)
-        self.test2_o3 = Obstacles("room2_object_3.png", 350, 250, 80, 80)
-        self.test2_o4 = Obstacles("room2_object_3.png", 350, 480, 80, 80)
-        self.test2_o5 = Obstacles("room2_object_3.png", 750, 250, 80, 80)
-        self.test2_o6 = Obstacles("room2_object_3.png", 750, 480, 80, 80)
-        self.test2_o7 = Obstacles("room2_object_3.png", 1150, 250, 80, 80)
-        self.test2_o8 = Obstacles("room2_object_3.png", 1150, 480, 80, 80)
-        self.test2_o9 = Obstacles("room2_object_1.png", int(screen_width/2+100), screen_height-100, int((screen_width-200)/2), 100)
-        
-        # intialize all the biomes
-        #self.desert = Biome("desert", "desert_biome.png", [(1200, 500, self.desert, "up")], True, 500, 400)
-        #self.homes = Biome("homes", "homes_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
-        #self.tundra = Biome("tundra", "tundra_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
-        #self.zelda = Biome("zelda", "zelda_biome.png", [(1200, 500, self.homes, "up")], True, 500, 400)
-        #self.dungeon = Biome("dungeon", "dungeon1_copy.jpg", [(-1000, -1000, self.homes, "up")], False)
-        self.test_room = Biome("test_room", "background.jpg", [], False)
-        self.test_room2 = Biome("test_room", "test_room.png", [(500, 0, self.test_room, "up")], True, 290, 0)
-        self.test_room.add_exits([(650, 600, self.test_room2, "down"), (1200, 500, self.test_room2, "right")])
-                
-        # add obstacles to each Biome
-        #self.desert.add_obstacles([self.obstacle])
-        #self.homes.add_obstacles([self.obstacle])
-        #self.tundra.add_obstacles([self.obstacle])
-        #self.zelda.add_obstacles([self.obstacle])
-        self.test_room.add_obstacles([self.test2_o1, self.test2_o2, self.test2_o3, self.test2_o4, self.test2_o5, self.test2_o6, self.test2_o7, self.test2_o8, self.test2_o9])
-        self.test_room2.add_obstacles([self.test_obstacle1, self.test_obstacle2, self.test_obstacle3, self.test_obstacle4, self.test_obstacle5, self.test_obstacle6, self.test_obstacle7, self.test_obstacle8])
-        
-        # add monster
-        #self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 125, 150)
-        self.monster=Kohli(10.0, 9.0, "Virat Kohli", 1000, 300, 125, 150)
-        #self.monster=TestMonster(10.0, 9.0, "Test Monster 2", 500, 300, 125, 150)
-        self.test_room.add_monsters([self.monster])
-        self.test_room2.add_monsters([self.monster])
-        """
-        
         # intialize all biomes with their respective obstacles
         self.room1 = Biome("room1", "room1.png", [], [("USE ARROW KEYS TO MOVE AROUND.", (screen_width - 612) // 2, 235), ("PRESS SPACE TO ATTACK.", (screen_width - 421) // 2, 535)], False)
         self.obstacle1 = Obstacles("test_object1.png", 0, 0, screen_width, 290)
@@ -107,7 +58,6 @@ class Overworld(Room):
         self.room1.add_exits([(1550, 380, self.room2, "right", 100, 100)])
         self.room2.add_exits([(1000, 180, self.cricketroom1, "up", 70, 30)])
         self.cricketroom1.add_exits([(800, -95, self.cricketroom2, "up", 100, 100), (-95, 200, self.cricketroom3, "left", 100, 100), (-95, 600, self.cricketroom3, "left", 100, 100)])
-        #self.cricketroom2.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
         self.cricketroom3.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
         self.cricketroom4.add_exits([(800, -95, self.cricketroom5, "up", 100, 100)])
         
@@ -268,7 +218,6 @@ class Overworld(Room):
         start_x = (screen_width - size[0]) // 2
         """
         words = words_startx_starty[0]
-        print(self.font.size(words)[0])
         start_x = words_startx_starty[1]
         start_y = words_startx_starty[2]
         for i in range(1, len(words) + 1):
