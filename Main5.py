@@ -127,11 +127,11 @@ def init_home_screen():
     clock = pygame.time.Clock() 
     controller_detected=True
     sword = Sword()
-    player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 0, 400, 0)
+    player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
    
     
     overworld = Overworld()
-    curr_biome = overworld.test_room
+    curr_biome = overworld.room1
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
@@ -150,6 +150,10 @@ def init_home_screen():
     firstchange = False
     display_text = True
     keep_text_displayed = True
+    text_index = 0
+    texts = []
+    display_count = 0
+    display_text = True
     
     while gameLoop:
         clock.tick(60)
@@ -162,16 +166,28 @@ def init_home_screen():
         lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
         screen.blit(lives_display, (1000, 200))
         
-        if display_text:
-            text, text_rect = overworld.display_text("text", curr_biome, player1, 0, 0, screen)
+        if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
+            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
+            texts.append(new_text)
+            keep_text_displayed = True
             display_text = False
+            
         if keep_text_displayed:
-            screen.blit(text, text_rect)
-            pygame.display.update()
+            display_count += 1
+            for t in texts:
+                screen.blit(t[0], t[1])
+                pygame.display.update()
+            if display_count == 1:
+                display_count = 0
+                text_index += 1
+                display_text = True
         
         if curr_biome != None:
             new_biome = overworld.going_to_next_biome(player1, curr_biome, curr_screen_x_pos, curr_screen_y_pos, screen)
             if new_biome != None:
+                keep_text_displayed = False
+                text_index = 0
+                texts = []
                 curr_biome = new_biome
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
@@ -180,6 +196,8 @@ def init_home_screen():
             dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
             if dungeon != None:
                 curr_biome = dungeon
+                keep_text_displayed = False
+                text_index = 0
                 
         monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
         
