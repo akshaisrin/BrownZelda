@@ -3,6 +3,7 @@ import Constants
 import os
 import sys
 import time
+from items.Sword import Sword
 
 class Player2:
 
@@ -23,16 +24,36 @@ class Player2:
             rect = frame.get_rect()
             dsurface = frame.copy()
             wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
-            wsurface.fill('white')
+            #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
-        
+        self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
+        self.attackspritesheet=pygame.transform.scale(self.attackspritesheet, (576, 192))
+        self.spritesheet_aframes = [self.attackspritesheet.subsurface((i * 64, j * 64, 64, 64)) for j in range(3) for i in range(9)]
+        self.spritesheet_adframes = []
+        for frame in self.spritesheet_aframes:
+            rect = frame.get_rect()
+            dsurface = frame.copy()
+            wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
+            wsurface.fill('white')
+            dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
+            self.spritesheet_adframes.append(dsurface)
+
         self.attacked = False
         self.attacktime = time.time()
+
+        self.currentitem = curr_item
+        self.attacking = False
+        self.attackingtime = time.time()
+
+        self.full_heart_img = pygame.image.load(os.path.join("Assets", "full_heart.png"))
+        self.empty_heart_img = pygame.image.load(os.path.join("Assets", "empty_heart.png"))
+        self.full_heart_img = pygame.transform.scale(self.full_heart_img, (32, 32))
+        self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (32, 32))
+        self.heart_spacing = 40
     
         self.username = username
         self.inventory = inventory
-        self.curr_item = curr_item
         self.curr_level = curr_level
         self.curr_checkpoint = curr_checkpoint
         self.lives_remaining = lives_remaining
@@ -58,6 +79,11 @@ class Player2:
             self.lives_remaining-=1
             self.die_and_begone(screen)
 
+    def attack(self, monster):
+        self.attacking = True
+        self.attackingtime = time.time()
+        if (self.player_rectangle.colliderect(monster.monster_rectangle)):
+            monster.get_hit(self.currentitem.power)
 
     def get_healed(self, healing:int):
         self.health_bar += healing
@@ -87,6 +113,8 @@ class Player2:
         # self.z_pos = self.curr_checkpoint[2]
 
     def handlemove(self, direction, framecounter, firstchange): 
+        if self.attacking: 
+            return
         self.direction = direction
         if self.direction == None:
             return
@@ -104,6 +132,7 @@ class Player2:
                 if self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
+                    self.spritesheet_aframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_aframes]
                     self.flipped = False
         elif self.direction == "right":
             if framecounter % self.framegap == 0 or firstchange:
@@ -119,6 +148,7 @@ class Player2:
                 if not self.flipped:
                     self.spritesheet_frames = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_frames]
                     self.spritesheet_dframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_dframes]
+                    self.spritesheet_aframes = [pygame.transform.flip(frame, True, False) for frame in self.spritesheet_aframes]
                     self.flipped = True
         elif self.direction == "up":
             if framecounter % self.framegap == 0 or firstchange:
@@ -139,9 +169,28 @@ class Player2:
         
         self.player_rectangle.move_ip(Constants.directions[self.direction][0], Constants.directions[self.direction][1])
         
-    def render(self, x_pos:float, y_pos:float,screen:pygame.display) -> None:
+    def render(self, x_pos:float, y_pos:float, screen:pygame.display) -> None:
         image = None
-        if self.attacked:
+        if self.attacking:
+            elapsedTime = time.time() - self.attackingtime
+            if elapsedTime > 0.3:
+                self.attacking = False
+            if self.current_frame == 10:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
+                    image = pygame.transform.scale(self.spritesheet_adframes[13], (64, 64))
+                else:
+                    image = pygame.transform.scale(self.spritesheet_aframes[13], (64, 64))
+            elif self.current_frame == 11:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
+                    image = pygame.transform.scale(self.spritesheet_adframes[17], (64, 64))
+                else:
+                    image = pygame.transform.scale(self.spritesheet_aframes[17], (64, 64))
+            else:
+                if self.attacked and elapsedTime % 0.1 > 0.05:
+                    image = pygame.transform.scale(self.spritesheet_adframes[15], (64, 64))
+                else:
+                    image = pygame.transform.scale(self.spritesheet_aframes[15], (64, 64))
+        elif self.attacked:
             elapsedTime = time.time() - self.attacktime
             if elapsedTime > 1:
                 self.attacked = False
@@ -154,3 +203,9 @@ class Player2:
         self.player_rectangle = image.get_rect()
         self.player_rectangle.topleft = (x_pos, y_pos)
         screen.blit(image, self.player_rectangle)
+    
+    def renderhealth(self, x_pos, y_pos, screen):
+        for i in range(self.original_health):
+            heart_image = self.full_heart_img if i < self.health_bar else self.empty_heart_img
+            screen.blit(heart_image, (x_pos + i * self.heart_spacing, y_pos))
+    

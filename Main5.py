@@ -4,14 +4,13 @@ import time
 import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
-from screens.TestScreen import TestScreen
 from screens.InstructionsScreen import InstructionsScreen
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
 from TestMonsterMedium import *
-from inputs import get_gamepad
-from XBoxController import *
+#from inputs import get_gamepad
+#from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
 from Obstacle import *
@@ -127,63 +126,84 @@ def init_instructions_screen():
 def init_home_screen():
     clock = pygame.time.Clock()
     controller_detected=True
-    player1 = Player2("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
-   
     sword = Sword()
+    player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
+   
     
     overworld = Overworld()
-    curr_biome = overworld.test_room
-    next_biome = overworld.test_room2
+    curr_biome = overworld.room1
     curr_screen_x_pos = 0
-
+    curr_screen_y_pos = 0
+    
+    """
     try:
         joystick=XboxController()
     except:
         controller_detected=False
         
     # Establishing game loop to keep screen running
+    """
 
     gameLoop = True
-    attacktime = None
 
     direction = None
     framecounter = 0
     firstchange = False
+    display_text = True
+    keep_text_displayed = True
+    text_index = 0
+    texts = []
+    display_count = 0
+    display_text = True
+    
     while gameLoop:
         clock.tick(60)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
-        
-        curr_biome.render(curr_screen_x_pos, player1, screen)
+
+        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
         screen.blit(health_bar_display, (1000, 150))
         lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
         screen.blit(lives_display, (1000, 200))
         
+        if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
+            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
+            texts.append(new_text)
+            keep_text_displayed = True
+            display_text = False
+            
+        if keep_text_displayed:
+            display_count += 1
+            for t in texts:
+                screen.blit(t[0], t[1])
+                pygame.display.update()
+            if display_count == 1:
+                display_count = 0
+                text_index += 1
+                display_text = True
+        
         if curr_biome != None:
-            new_biome = overworld.going_to_next_biome(player1, curr_biome, next_biome, curr_screen_x_pos, screen)
+            new_biome = overworld.going_to_next_biome(player1, curr_biome, curr_screen_x_pos, curr_screen_y_pos, screen)
             if new_biome != None:
+                keep_text_displayed = False
+                text_index = 0
+                texts = []
                 curr_biome = new_biome
                 curr_screen_x_pos = 0
+                curr_screen_y_pos = 0
+                keep_text_displayed = False
                 
             dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
             if dungeon != None:
                 curr_biome = dungeon
+                keep_text_displayed = False
+                text_index = 0
                 
         monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
         
-        
-        if sword.attacking:
-            elaspedTime = time.time() - attacktime
-            if elaspedTime > 0.5:
-                sword.attacking = False
-            elif elaspedTime > 0.25:
-                sword.render(player1.player_rectangle.x + 10 + (100 * elaspedTime), player1.player_rectangle.y + 10 + (100 * elaspedTime), 50, 50, screen)
-            else:
-                sword.render(player1.player_rectangle.x + 25 - (100 * elaspedTime), player1.player_rectangle.y + 25 - (100 * elaspedTime), 50, 50, screen)
-        
-        
         # player contorls
+        """
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
 
@@ -204,6 +224,7 @@ def init_home_screen():
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()
             sword.attack(curr_biome.monsters[0])
+        """
     
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:                   
@@ -231,8 +252,7 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                     attacktime = time.time()
-                     sword.attack(curr_biome.monsters[0])
+                     player1.attack(curr_biome.monsters[0])
             
             if event.type == pygame.QUIT:
                 gameLoop=False
@@ -240,6 +260,7 @@ def init_home_screen():
                 sys.exit()
 
         player1.handlemove(direction, framecounter, firstchange)
+        player1.renderhealth(10, 10, screen)
         firstchange = False
         
         pygame.display.update()

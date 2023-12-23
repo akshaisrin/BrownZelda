@@ -3,33 +3,33 @@ import os
 from Room import *
 from Constants import *
 from Obstacles import *
-from Player import *
+from Player2 import *
 from Monster import *
 
 class Biome(Room):
     
-    def __init__(self, name:str, file_path:str, exit_x:int, exit_y:int, dungeon:bool=False, dungeon_x=None, dungeon_y=None):
+    def __init__(self, name:str, file_path:str, exits:list, text:list, dungeon:bool=False, dungeon_x=None, dungeon_y=None):
         super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
-        self.exit_x = exit_x
-        self.exit_y = exit_y
+        self.exits = exits # format: [(x_cor, y_cor, next_biome, travel_direction, h_range, v_range), (x_cor, y_cor, next_biome, travel_direction, h_range, v_range), etc.]
         self.dungeon = dungeon
         self.dungeon_x = dungeon_x
         self.dungeon_y = dungeon_y
         self.obstacles = []
         self.obstacles_rect = []
         self.monsters = []
+        self.text = text
     
     def get_image(self):
-        img = pygame.image.load(os.path.join("Assets/biomes", self.file_path))
+        img = pygame.image.load(os.path.join("Assets/rooms", self.file_path))
         image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     
-    def render(self, x_pos:int, player:Player, screen:pygame.display):
+    def render(self, x_pos:int, y_pos:int, player:Player2, screen:pygame.display):
         # render the screen
         image = self.get_image()
-        screen.blit(image, (0, x_pos))
+        screen.blit(image, (x_pos, y_pos))
         # render the obstacles
         for o in self.obstacles:
             screen.blit(o.get_image(), (o.x, x_pos + o.y))
@@ -56,4 +56,6 @@ class Biome(Room):
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters
-            
+        
+    def add_exits(self, exits:list):
+        self.exits += exits
