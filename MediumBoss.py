@@ -1,6 +1,6 @@
 from Monster import *
 from Constants import *
-from Player import *
+from Player2 import *
 import Constants
 
 class MediumBoss(Monster):
