@@ -107,8 +107,8 @@ class Overworld(Room):
         self.room1.add_exits([(1550, 380, self.room2, "right", 100, 100)])
         self.room2.add_exits([(1000, 180, self.cricketroom1, "up", 70, 30)])
         self.cricketroom1.add_exits([(800, -95, self.cricketroom2, "up", 100, 100), (-95, 200, self.cricketroom3, "left", 100, 100), (-95, 600, self.cricketroom3, "left", 100, 100)])
-        self.cricketroom2.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
-        self.cricketroom3.add_exits([(800, -95, self.cricketroom2, "up", 100, 100)])
+        #self.cricketroom2.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
+        self.cricketroom3.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
         self.cricketroom4.add_exits([(800, -95, self.cricketroom5, "up", 100, 100)])
         
         

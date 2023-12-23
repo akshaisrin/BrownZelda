@@ -31,8 +31,8 @@ class Biome(Room):
         image = self.get_image()
         screen.blit(image, (x_pos, y_pos))
         # render the obstacles
-        for o in self.obstacles:
-            screen.blit(o.get_image(), (o.x, x_pos + o.y))
+        #for o in self.obstacles:
+            #screen.blit(o.get_image(), (o.x, x_pos + o.y))
         # render the player
         # render the monsters
         for m in self.monsters:
