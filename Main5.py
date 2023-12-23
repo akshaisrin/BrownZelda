@@ -161,10 +161,6 @@ def init_home_screen():
         overworld.obstacles_in_biome(player1, curr_biome)
 
         curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
-        health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
-        screen.blit(health_bar_display, (1000, 150))
-        lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
-        screen.blit(lives_display, (1000, 200))
         
         if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
             new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
