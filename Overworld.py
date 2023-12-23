@@ -7,6 +7,8 @@ from Player2 import *
 from Obstacles import *
 from Monster import *
 from TestMonsterMedium import *
+from TestMonster import *
+from Kohli import *
 
 class Overworld(Room):
     
@@ -55,7 +57,9 @@ class Overworld(Room):
         self.test_room2.add_obstacles([self.test_obstacle1, self.test_obstacle2, self.test_obstacle3, self.test_obstacle4, self.test_obstacle5, self.test_obstacle6, self.test_obstacle7, self.test_obstacle8])
         
         # add monster
-        self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 250, 300)
+        #self.monster=TestMonsterMedium(10.0, 9.0, "Test Monster 2", 500, 100, 125, 150)
+        self.monster=Kohli(10.0, 9.0, "Virat Kohli", 1000, 300, 125, 150)
+        #self.monster=TestMonster(10.0, 9.0, "Test Monster 2", 500, 300, 125, 150)
         self.test_room.add_monsters([self.monster])
         self.test_room2.add_monsters([self.monster])
         """
@@ -244,10 +248,14 @@ class Overworld(Room):
         for m in monsters:
             if m.alive:
                 mon_alive += 1
-                if (player.player_rectangle.colliderect(m.projectile.projectile_rectangle)):
-                    print("player got hit")
+                if player.player_rectangle.colliderect(m.projectile.projectile_rectangle) and m.stop_moving:
                     m.realign_projectile()
                     player.get_attacked(m.projectile.damage, screen)
+
+                if player.player_rectangle.colliderect(m.monster_rectangle) and m.cooldown>=Constants.cooldown-1 and m.in_cooldown:
+                    player.get_attacked(3, screen)    
+
+
         if mon_alive == 0:
             return False
         else:

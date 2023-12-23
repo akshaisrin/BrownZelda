@@ -1,21 +1,144 @@
+"""
+import os
+import pygame
+from pygame.locals import *
+from Constants import *
+from Overworld import *
+import random
+from Player import *
+
+
+pygame.init()
+
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.RESIZABLE)
+pygame.display.set_caption("Brown Zelda (But Not Garbage)")
+screen.fill((255,255,255))
+pygame.display.update()
+
+
+def init_home_screen():
+    
+    # initialize all variables
+    # biomes = ["desert", "homes", "tundra", "zelda"]
+    # biomes_order = [0, 1, 2, 3]
+    # random.shuffle(biomes_order)
+        
+    overworld = Overworld()
+    curr_biome = overworld.test_room
+    next_biome = overworld.test_room2
+    
+    player1 = Player("bheem", {}, "", 1, 1.2, 5,5,5, "str", 0, 400, 0)
+    
+    # curr_biome = biomes[biomes_order[0]]
+    curr_screen_x_pos = 0
+    # starting_filepath = curr_biome + "_biome.png"
+    # img = pygame.image.load(os.path.join("Assets/biomes", starting_filepath))
+    # image = pygame.transform.scale(img, (screen_width, screen_height))
+    # del biomes_order[0]
+    
+    gameLoop = True
+    attacktime = None
+    pressed_left=False
+    pressed_right=False
+    pressed_up=False
+    pressed_down=False
+    
+    # Establishing game loop to keep screen running
+    gameLoop = True
+    
+    while gameLoop:
+        
+        overworld.obstacles_in_biome(player1, curr_biome)
+        
+        curr_biome.render(curr_screen_x_pos, player1, screen)
+        
+        if curr_biome != None:
+            
+            new_biome = overworld.going_to_next_biome(player1, curr_biome, next_biome, curr_screen_x_pos, screen)
+            if new_biome != None:
+                curr_biome = new_biome
+                curr_screen_x_pos = 0
+                
+            dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
+            if dungeon != None:
+                curr_biome = dungeon
+        
+        
+        # player controls
+        
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:                   
+                if event.key == pygame.K_LEFT:        
+                    pressed_left = True
+                elif event.key == pygame.K_RIGHT:     
+                    pressed_right = True
+                elif event.key == pygame.K_UP:        
+                    pressed_up = True
+                elif event.key == pygame.K_DOWN:     
+                    pressed_down = True
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    pressed_left = False
+                elif event.key == pygame.K_RIGHT:
+                    pressed_right = False
+                elif event.key == pygame.K_UP: 
+                    pressed_up = False
+                elif event.key == pygame.K_DOWN:
+                     pressed_down = False
+            
+            if event.type == pygame.QUIT:
+                gameLoop=False
+                pygame.quit()
+                sys.exit()
+
+        if pressed_left:
+            player1.direction = "left"
+            player1.move() 
+
+        if pressed_right:
+            player1.direction = "right"
+            player1.move() 
+
+        if pressed_up:
+            player1.direction = "up"
+            player1.move()
+        
+        if pressed_down:
+            player1.direction = "down"
+            player1.move() 
+        
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            
+            if event.type == pygame.QUIT:
+                gameLoop=False
+
+
+init_home_screen()
+
+"""
+
 import os
 import sys
 import time
 import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
+from screens.TestScreen import TestScreen
 from screens.InstructionsScreen import InstructionsScreen
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
 from TestMonsterMedium import *
-#from inputs import get_gamepad
-#from XBoxController import *
-from Player2 import *
+from inputs import get_gamepad
+from XBoxController import *
+from Player import *
 from items.Sword import Sword
 from Obstacle import *
 from Overworld import *
-
 
 pygame.init()
 
@@ -106,11 +229,6 @@ def init_instructions_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    pygame.mixer.music.stop()
-                    gameLoop = False
-
         if elapsedTime > 72:
             pygame.mixer.music.stop()
             gameLoop = False
@@ -124,144 +242,136 @@ def init_instructions_screen():
         
         
 def init_home_screen():
-    clock = pygame.time.Clock()
     controller_detected=True
-    sword = Sword()
-    player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
+    #monster1=TestMonster(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
+
+    player1 = Player("bheem", {}, "", 1, 1.2, 3,5,5, "str", 0, 400, 0)
    
+    sword = Sword()
+    sword = Sword()
     
     overworld = Overworld()
-    curr_biome = overworld.room1
+    curr_biome = overworld.test_room
+    next_biome = overworld.test_room2
     curr_screen_x_pos = 0
-    curr_screen_y_pos = 0
-    
-    """
+
     try:
         joystick=XboxController()
     except:
         controller_detected=False
-        
     # Establishing game loop to keep screen running
-    """
 
     gameLoop = True
+    attacktime = None
+    pressed_left=False
+    pressed_right=False
+    pressed_up=False
+    pressed_down=False
 
-    direction = None
-    framecounter = 0
-    firstchange = False
-    display_text = True
-    keep_text_displayed = True
-    text_index = 0
-    texts = []
-    display_count = 0
-    display_text = True
-    
     while gameLoop:
-        clock.tick(60)
-        framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_biome)
-
-        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
+        
+        curr_biome.render(curr_screen_x_pos, player1, screen)
         health_bar_display = font.render('Player Health: ' + str(player1.health_bar), True, Color(0, 0, 0))
         screen.blit(health_bar_display, (1000, 150))
         lives_display = font.render('Lives Remaining: ' + str(player1.lives_remaining), True, Color(0, 0, 0))
         screen.blit(lives_display, (1000, 200))
         
-        if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
-            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
-            texts.append(new_text)
-            keep_text_displayed = True
-            display_text = False
-            
-        if keep_text_displayed:
-            display_count += 1
-            for t in texts:
-                screen.blit(t[0], t[1])
-                pygame.display.update()
-            if display_count == 1:
-                display_count = 0
-                text_index += 1
-                display_text = True
-        
         if curr_biome != None:
-            new_biome = overworld.going_to_next_biome(player1, curr_biome, curr_screen_x_pos, curr_screen_y_pos, screen)
+            
+            new_biome = overworld.going_to_next_biome(player1, curr_biome, next_biome, curr_screen_x_pos, screen)
             if new_biome != None:
-                keep_text_displayed = False
-                text_index = 0
-                texts = []
                 curr_biome = new_biome
                 curr_screen_x_pos = 0
-                curr_screen_y_pos = 0
-                keep_text_displayed = False
                 
             dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
             if dungeon != None:
                 curr_biome = dungeon
-                keep_text_displayed = False
-                text_index = 0
                 
         monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
         
+        
+        if sword.attacking:
+            elaspedTime = time.time() - attacktime
+            if elaspedTime > 0.5:
+                sword.attacking = False
+            elif elaspedTime > 0.25:
+                sword.render(player1.player_rectangle.x + 75 + (100 * elaspedTime), player1.player_rectangle.y + 75 + (100 * elaspedTime), 50, 50, screen)
+            else:
+                sword.render(player1.player_rectangle.x + 100 - (100 * elaspedTime), player1.player_rectangle.y + 100 - (100 * elaspedTime), 50, 50, screen)
+        
+        
         # player contorls
-        """
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
 
             # player movement with x box controller
 
         if (new_state[0]<-1*Constants.controller_threshold):
-            direction = "left"
-            player1.current_frame = 10
-        elif (new_state[0]>Constants.controller_threshold):
-            direction = "right"
-            player1.current_frame = 10
+            player1.direction = "left"
+            player1.move()
+            
+        if (new_state[0]>Constants.controller_threshold):
+            player1.direction = "right"
+            player1.move()
+        
         if (new_state[1]<-1*Constants.controller_threshold):
-            direction = "down"
-            player1.current_frame = 11
+            player1.direction = "down"
+            player1.move()
+
         if (new_state[1]>controller_threshold):
-            direction = "up"
-            player1.current_frame = 9
+            player1.direction = "up"
+            player1.move()   
+
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()
             sword.attack(curr_biome.monsters[0])
-        """
     
         for event in pygame.event.get():
+
             if event.type == pygame.KEYDOWN:                   
-                if event.key == pygame.K_LEFT: 
-                    direction = "left"
-                    firstchange = True
-                elif event.key == pygame.K_RIGHT: 
-                    direction = "right"
-                    firstchange = True
-                elif event.key == pygame.K_UP: 
-                    direction = "up"
-                    firstchange = True
-                elif event.key == pygame.K_DOWN: 
-                    direction = "down"
-                    firstchange = True
-            
+                if event.key == pygame.K_LEFT:        
+                    pressed_left = True
+                elif event.key == pygame.K_RIGHT:     
+                    pressed_right = True
+                elif event.key == pygame.K_UP:        
+                    pressed_up = True
+                elif event.key == pygame.K_DOWN:     
+                    pressed_down = True
+
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    player1.current_frame = 10
-                    direction = None
-                elif event.key == pygame.K_UP:
-                    player1.current_frame = 11
-                    direction = None
+                if event.key == pygame.K_LEFT:
+                    pressed_left = False
+                elif event.key == pygame.K_RIGHT:
+                    pressed_right = False
+                elif event.key == pygame.K_UP: 
+                    pressed_up = False
                 elif event.key == pygame.K_DOWN:
-                    player1.current_frame = 9
-                    direction = None
+                     pressed_down = False
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                     player1.attack(curr_biome.monsters[0])
+                     attacktime = time.time()
+                     sword.attack(curr_biome.monsters[0])
             
             if event.type == pygame.QUIT:
                 gameLoop=False
                 pygame.quit()
                 sys.exit()
 
-        player1.handlemove(direction, framecounter, firstchange)
-        player1.renderhealth(10, 10, screen)
-        firstchange = False
+        if pressed_left:
+            player1.direction = "left"
+            player1.move() 
+
+        if pressed_right:
+            player1.direction = "right"
+            player1.move() 
+
+        if pressed_up:
+            player1.direction = "up"
+            player1.move()
+        
+        if pressed_down:
+            player1.direction = "down"
+            player1.move() 
         
         pygame.display.update()
         
