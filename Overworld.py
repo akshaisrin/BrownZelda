@@ -78,7 +78,7 @@ class Overworld(Room):
         self.obstacle8 = Obstacles("test_object1.png", 935, 0, screen_width-935, 150)
         self.obstacle9 = Obstacles("test_object1.png", screen_width-150, 0, 150, screen_height)
         self.obstacle10 = Obstacles("test_object1.png", screen_width-340, screen_height-155, 340, 155)
-        self.obstacle11 = Obstacles("test_object1.png", 0, 305, 600, 195)
+        self.obstacle11 = Obstacles("test_object1.png", 0, 290, 600, 200)
         self.obstacle12 = Obstacles("test_object1.png", 0, screen_height-155, 905, 155)
         self.cricketroom1.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle10, self.obstacle11, self.obstacle12])
         
@@ -91,7 +91,7 @@ class Overworld(Room):
         
         self.cricketroom3 = Biome("cricketroom3", "cricketroom3.png", [(1550, 200, self.cricketroom1, "right", 100, 100), (1550, 600, self.cricketroom1, "right", 100, 100)], [], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-150, screen_width, 150)
-        self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 305, 600, 195)
+        self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
         
         self.cricketroom4 = Biome("cricketroom4", "cricketroom4.png", [(800, 895, self.cricketroom3, "down", 100, 100)], [], False)
@@ -188,7 +188,7 @@ class Overworld(Room):
                         count -= 100
                         pygame.display.update()
                         pygame.time.wait(10)
-                    if curr_biome == self.cricketroom1:
+                    if curr_biome == self.cricketroom1 and exit[3] == "down":
                         player.player_rectangle.topleft = (player.player_rectangle.topleft[0], 220)
                         player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
                         pygame.display.update()
@@ -275,5 +275,4 @@ class Overworld(Room):
             pygame.display.update()
             pygame.time.wait(80)
         return (text, text_rect)
-        
         
