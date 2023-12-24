@@ -61,30 +61,12 @@ class Overworld(Room):
         self.cricketroom3.add_exits([(800, -95, self.cricketroom4, "up", 100, 100)])
         self.cricketroom4.add_exits([(800, -95, self.cricketroom5, "up", 100, 100)])
         
-        
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
-    def biome_name_to_biome(self, biome_name:str):
-        if biome_name == "desert":
-            return self.desert
-        elif biome_name == "graveyard":
-            return self.graveyard
-        elif biome_name == "homes":
-            return self.homes
-        elif biome_name == "tundra":
-            return self.tundra
-        else:
-            return self.zelda
-    
-    """
-    def display_biome(self, biome_name:str, x_pos:int, screen:pygame.display):
-        biome = self.biome_name_to_biome(biome_name)
-        biome.render(x_pos, screen)
-        for o in biome.obstacles:
-            screen.blit(o.get_image(), (x_pos + o.x, o.y))
-        pygame.display.update()
-    """
+        # create a monster
+        monster1=Kohli(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
+        self.cricketroom4.add_monsters([monster1])
         
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
@@ -92,7 +74,6 @@ class Overworld(Room):
         screen.blit(image, (0, 0))
         pygame.display.update()
         
-    # NOTE: NEED TO CHANGE THE CODE BELOW TO ACCEPT AN ACTUAL DUNGEON OBJECT AS A PARAMETER AND USE THAT OBJECT'S PICTURE & EXIT POSITIONS
     def going_to_dungeon(self, player:Player2, biome:Biome, screen:pygame.display):
         if biome.dungeon:
             if (player.player_rectangle.topleft[0] < biome.dungeon_x + 10 and player.player_rectangle.topleft[0] > biome.dungeon_x - 10) and (player.player_rectangle.topleft[1] < biome.dungeon_y + 10 and player.player_rectangle.topleft[1] > biome.dungeon_y - 10):
@@ -109,10 +90,8 @@ class Overworld(Room):
                 return self.dungeon
         return None
     
-    # change code so that there can be multiple exits in a room and not just one, also order of rooms will be predetermined
     def going_to_next_biome(self, player:Player2, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
         curr_biome = biome
-        #print(player.player_rectangle.topleft)
         for exit in curr_biome.exits:
             exit_x = exit[0]
             exit_y = exit[1]
@@ -171,7 +150,6 @@ class Overworld(Room):
                         pygame.display.update()
                         pygame.time.wait(20)
                 next_biome.render(0, 0, player, screen)
-                #player.player_rectangle.topleft = (player.player_rectangle.topleft[0], -100)
                 return next_biome
         return None
     
