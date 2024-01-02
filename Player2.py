@@ -79,11 +79,12 @@ class Player2:
             self.lives_remaining-=1
             self.die_and_begone(screen)
 
-    def attack(self, monster):
+    def attack(self, monsters):
         self.attacking = True
         self.attackingtime = time.time()
-        if (self.player_rectangle.colliderect(monster.monster_rectangle)):
-            monster.get_hit(self.currentitem.power)
+        for monster in monsters:
+            if (self.player_rectangle.colliderect(monster.monster_rectangle)):
+                monster.get_hit(self.currentitem.power)
 
     def get_healed(self, healing:int):
         self.health_bar += healing

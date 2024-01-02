@@ -208,6 +208,6 @@ class Overworld(Room):
             text_rect = (start_x, start_y)
             screen.blit(text, text_rect)
             pygame.display.update()
-            pygame.time.wait(80)
+            pygame.time.wait(1)
         return (text, text_rect)
         

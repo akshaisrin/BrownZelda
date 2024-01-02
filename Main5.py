@@ -163,8 +163,8 @@ def init_home_screen():
         curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
         if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
-            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
-            texts.append(new_text)
+            #new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
+            #texts.append(new_text)
             keep_text_displayed = True
             display_text = False
             
@@ -246,7 +246,7 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                     player1.attack(curr_biome.monsters[0])
+                    player1.attack(curr_biome.monsters)
             
             if event.type == pygame.QUIT:
                 gameLoop=False
