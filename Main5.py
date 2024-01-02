@@ -128,10 +128,13 @@ def init_home_screen():
     controller_detected=True
     sword = Sword()
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
-   
     
+    
+    test_mode = True
     overworld = Overworld()
     curr_biome = overworld.room1
+    if test_mode:
+        curr_biome = overworld.cricketroom1
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
@@ -163,8 +166,8 @@ def init_home_screen():
         curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
         if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
-            #new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
-            #texts.append(new_text)
+            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
+            texts.append(new_text)
             keep_text_displayed = True
             display_text = False
             
