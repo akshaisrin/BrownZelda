@@ -6,13 +6,13 @@ class Kohli(MediumBoss):
 
     def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float, height:int, width:int):
 
-        img=pygame.image.load(os.path.join("Assets", "enemy2.png"))
-        super().__init__(attack_power, health, img, "Virat Kohli", start_pos_x, start_pos_y, height, width, ["charge_and_hit", "shoot_attack"])
+        img=pygame.image.load(os.path.join("Assets", "kohli.png"))
+        super().__init__(attack_power, health, img, "Virat Kohli", start_pos_x, start_pos_y, height, width, ["charge_and_hit", "shoot_attack"], "cricket_ball.png", 40, 40)
         self.test_monster_name=test_monster_name
 
         # Fields for charge attack
 
-        self.charge_speed=2.25
+        self.charge_speed=10
 
         # Post-charge attack cooldown duration
 
@@ -27,7 +27,7 @@ class Kohli(MediumBoss):
         #self.patrol_constant=Constants.kohli_patrol_constant
 
         self.projectile.damage=2
-        self.projectile_constant=Constants.kohli_projectile_constant
+        self.projectile_constant=Constants.kohli_projectile_speed
         self.current_attack=""
         self.exclamation=pygame.image.load(os.path.join("Assets", "exclamationmark.png"))
         self.exclamation=pygame.transform.scale(self.exclamation, (25, 25))
@@ -46,7 +46,7 @@ class Kohli(MediumBoss):
 
     # Main charge attack
     
-    def charge_and_hit(self, player, screen):
+    def charge_and_hit(self, player, speed, screen):
 
         # Checking if monster is touching player to tell the monster when to stop charging and when to start the cooldown
 
@@ -101,15 +101,16 @@ class Kohli(MediumBoss):
         
             
     
-    def shoot_attack(self, player, screen):
+    def shoot_attack(self, player, speed, screen):
+
         # check vertical distance between player and monster to figure out if monster should shoot
         
         if (self.stop_moving):
-            self.shoot_straight(self.projectile.shoot_coords[0], self.projectile.shoot_coords[1], screen)
+            self.shoot_straight(self.projectile.shoot_coords[0], self.projectile.shoot_coords[1], speed, screen)
 
         elif (abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=self.monster_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2):
             self.stop_moving=True
-            self.shoot_straight(player.player_rectangle.x, player.player_rectangle.y, screen)
+            self.shoot_straight(player.player_rectangle.x, player.player_rectangle.y, speed, screen)
             self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
         
         # check to see if projectile is at edge of screen
@@ -120,34 +121,33 @@ class Kohli(MediumBoss):
     
     # Main shoot attack function
 
-    def shoot_straight(self, end_x, end_y, screen):
+    # def shoot_straight(self, end_x, end_y, screen):
 
-        # Checking if monster has just started shooting to move the projectile back to the monster
+    #     # Checking if monster has just started shooting to move the projectile back to the monster
 
-        if self.projectile.started_shooting:
-            self.projectile.projectile_rectangle.x=self.monster_rectangle.x
-            self.projectile.projectile_rectangle.y=self.monster_rectangle.y
+    #     if self.projectile.started_shooting:
+    #         self.projectile.projectile_rectangle.x=self.monster_rectangle.x
+    #         self.projectile.projectile_rectangle.y=self.monster_rectangle.y
 
-            # Setting started_shooting to false since it is now in the middle of launching a projectile
+    #         # Setting started_shooting to false since it is now in the middle of launching a projectile
 
-            self.projectile.started_shooting=False
+    #         self.projectile.started_shooting=False
 
-        # Calculating the projectile's change in x and y to get the projectile to its target destination + moving the projectile
+    #     # Calculating the projectile's change in x and y to get the projectile to its target destination + moving the projectile
 
-        change=((end_x-self.monster_rectangle.x)/self.projectile_constant, (end_y-self.monster_rectangle.y)/self.projectile_constant)
-        self.projectile.projectile_rectangle.move_ip(change[0], change[1])
-        self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
+    #     change=((end_x-self.monster_rectangle.x)/self.projectile_constant, (end_y-self.monster_rectangle.y)/self.projectile_constant)
+    #     self.projectile.projectile_rectangle.move_ip(change[0], change[1])
+    #     self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
     
     # If the monster is not attacking, it is moving towards the player. This function handles the movement
 
-    def walk_towards_player(self, player, screen):
+    def attack(self, player, screen):
 
         # Checking if monster in movement mode, and moving the monster if it is
 
         if not self.stop_moving:
 
-            change=((player.player_rectangle.x-self.monster_rectangle.x)/(Constants.kohli_speed), (player.player_rectangle.y-self.monster_rectangle.y)/(Constants.kohli_speed))
-            self.monster_rectangle.move_ip(change[0], change[1])    
+            self.move_towards_player(player, Constants.kohli_speed)
 
         # If stop moving is true, then monster should already be in the middle of an attack.
 
@@ -155,7 +155,7 @@ class Kohli(MediumBoss):
 
             # Calling the corresponding function based on current_attack string
             
-            getattr(Kohli, self.current_attack)(self, player, screen)
+            getattr(Kohli, self.current_attack)(self, player, Constants.kohli_projectile_speed, screen)
 
         # Checking if player is directly in in a straight-line distance away from the monster in the four directions (not diagonal), to tell the monster to randomly select a new attack
 
@@ -174,7 +174,7 @@ class Kohli(MediumBoss):
 
 
             self.current_attack=random.choice(self.attacks)
-            getattr(Kohli, self.current_attack)(self, player, screen)
+            getattr(Kohli, self.current_attack)(self, player, Constants.kohli_projectile_speed, screen)
     
             
             

@@ -9,6 +9,7 @@ from Monster import *
 from TestMonsterMedium import *
 from TestMonster import *
 from Kohli import *
+from CricketNPC import *
 
 class Overworld(Room):
     
@@ -65,9 +66,15 @@ class Overworld(Room):
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
         # create a monster
-        monster1=Kohli(10.0, 9.0, "Test Monster 1", 800, 100, 250, 300)
+        monster1=Kohli(10.0, 9.0, "Kohli", 800, 100, 225, 175)
         self.cricketroom4.add_monsters([monster1])
-        
+
+        npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, 125, 75, "shoot")
+        self.cricketroom1.add_monsters([npc_cricker_player_1])
+
+        npc_cricker_player_2=CricketNPC(10.0, 9.0, "NPC Cricket Player 2", 700, 500, 125, 75, "hit")
+        self.cricketroom1.add_monsters([npc_cricker_player_2])
+
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
         image = pygame.transform.scale(img, (screen_width, screen_height))
@@ -93,6 +100,9 @@ class Overworld(Room):
     def going_to_next_biome(self, player:Player2, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
         curr_biome = biome
         for exit in curr_biome.exits:
+
+            # Gets the x and y coordinates of each exit
+
             exit_x = exit[0]
             exit_y = exit[1]
             if (player.player_rectangle.topleft[0] < exit_x + exit[4] and player.player_rectangle.topleft[0] > exit_x - exit[4]) and (player.player_rectangle.topleft[1] < exit_y + exit[5] and player.player_rectangle.topleft[1] > exit_y - exit[5]):
@@ -180,9 +190,12 @@ class Overworld(Room):
                     m.realign_projectile()
                     player.get_attacked(m.projectile.damage, screen)
 
-                if player.player_rectangle.colliderect(m.monster_rectangle) and m.cooldown>=Constants.cooldown-1 and m.in_cooldown:
-                    player.get_attacked(3, screen)    
-
+                if player.player_rectangle.colliderect(m.monster_rectangle): 
+                    if isinstance(m, MediumBoss):
+                        if m.cooldown>=Constants.cooldown-1 and m.in_cooldown:
+                            player.get_attacked(3, screen)
+                    else:
+                        player.get_attacked(3, screen)
 
         if mon_alive == 0:
             return False

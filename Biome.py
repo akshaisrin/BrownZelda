@@ -37,7 +37,7 @@ class Biome(Room):
         # render the monsters
         for m in self.monsters:
             if m.alive:
-                m.walk_towards_player(player, screen)
+                m.attack(player, screen)
                 #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
                 #m.charge_and_hit(player)
                 #m.start_moving(player)
@@ -58,4 +58,7 @@ class Biome(Room):
         self.monsters += monsters
         
     def add_exits(self, exits:list):
+
+        # Combines the list of exits
+
         self.exits += exits

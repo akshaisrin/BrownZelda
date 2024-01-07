@@ -16,7 +16,6 @@ from items.Sword import Sword
 from Obstacle import *
 from Overworld import *
 
-
 pygame.init()
 
 # Set up screen dimensions
