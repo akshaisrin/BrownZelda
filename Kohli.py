@@ -4,10 +4,10 @@ import Constants
 
 class Kohli(MediumBoss):
 
-    def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float, height:int, width:int):
+    def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float):
 
         img=pygame.image.load(os.path.join("Assets", "kohli.png"))
-        super().__init__(attack_power, health, img, "Virat Kohli", start_pos_x, start_pos_y, height, width, ["charge_and_hit", "shoot_attack"], "cricket_ball.png", 40, 40)
+        super().__init__(attack_power, health, img, "Virat Kohli", start_pos_x, start_pos_y, 150, 125, ["charge_and_hit", "shoot_attack"], "cricket_ball.png", 25, 25)
         self.test_monster_name=test_monster_name
 
         # Fields for charge attack
@@ -121,24 +121,6 @@ class Kohli(MediumBoss):
     
     # Main shoot attack function
 
-    # def shoot_straight(self, end_x, end_y, screen):
-
-    #     # Checking if monster has just started shooting to move the projectile back to the monster
-
-    #     if self.projectile.started_shooting:
-    #         self.projectile.projectile_rectangle.x=self.monster_rectangle.x
-    #         self.projectile.projectile_rectangle.y=self.monster_rectangle.y
-
-    #         # Setting started_shooting to false since it is now in the middle of launching a projectile
-
-    #         self.projectile.started_shooting=False
-
-    #     # Calculating the projectile's change in x and y to get the projectile to its target destination + moving the projectile
-
-    #     change=((end_x-self.monster_rectangle.x)/self.projectile_constant, (end_y-self.monster_rectangle.y)/self.projectile_constant)
-    #     self.projectile.projectile_rectangle.move_ip(change[0], change[1])
-    #     self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
-    
     # If the monster is not attacking, it is moving towards the player. This function handles the movement
 
     def attack(self, player, screen):

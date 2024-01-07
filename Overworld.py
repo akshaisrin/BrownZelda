@@ -66,13 +66,13 @@ class Overworld(Room):
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
         # create a monster
-        monster1=Kohli(10.0, 9.0, "Kohli", 800, 100, 225, 175)
+        monster1=Kohli(10.0, 9.0, "Kohli", 800, 100)
         self.cricketroom4.add_monsters([monster1])
 
-        npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, 125, 75, "shoot")
+        npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, "shoot")
         self.cricketroom1.add_monsters([npc_cricker_player_1])
 
-        npc_cricker_player_2=CricketNPC(10.0, 9.0, "NPC Cricket Player 2", 700, 500, 125, 75, "hit")
+        npc_cricker_player_2=CricketNPC(10.0, 9.0, "NPC Cricket Player 2", 700, 500, "hit")
         self.cricketroom1.add_monsters([npc_cricker_player_2])
 
     def game_over(self, screen:pygame.display):
@@ -183,24 +183,54 @@ class Overworld(Room):
     def monster_attack(self, curr_biome:Biome, player:Player2, screen:pygame.display):
         monsters = curr_biome.monsters
         mon_alive = 0
+
         for m in monsters:
             if m.alive:
-                mon_alive += 1
+                
+                # Ignore this first if statement- currently trying to fix this
+
+                if m.monster_rectangle.colliderect(player.player_rectangle):
+                    print("fcknwfekwnfelkwnflkwnfelkwnfewneflkwn")
+                mon_alive+=1
+
+                # If the player isn't attacking and they touch monster, they should take damage
+
+                if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
+
+                    # Kohli has more cooldowns, so the player cannot take damage if the Kohli is in a cooldown
+
+                    if isinstance(m, Kohli):
+                        if not m.in_cooldown:
+                            
+                            # Calculating the time between attacks again as a cooldown
+
+                            now = pygame.time.get_ticks()
+                            if now - m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                                m.last_damage = now
+                                player.get_attacked(m.current_attack_damage, screen)
+                                m.first_time_attacking=False
+                    else:
+
+                        # Same cooldown logic if not Kohli
+
+                        now = pygame.time.get_ticks()
+                        if now -m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                            m.last_damage = now
+                            player.get_attacked(m.current_attack_damage, screen)
+                            m.first_time_attacking=False
+                    
+                # Projectile is realigned and player takes damage if player gets hit by projectile
+
                 if player.player_rectangle.colliderect(m.projectile.projectile_rectangle) and m.stop_moving:
                     m.realign_projectile()
-                    player.get_attacked(m.projectile.damage, screen)
-
-                if player.player_rectangle.colliderect(m.monster_rectangle): 
-                    if isinstance(m, MediumBoss):
-                        if m.cooldown>=Constants.cooldown-1 and m.in_cooldown:
-                            player.get_attacked(3, screen)
-                    else:
-                        player.get_attacked(3, screen)
-
-        if mon_alive == 0:
-            return False
+                    m.current_attack_damage=m.projectile.damage
+                    player.get_attacked(m.current_attack_damage, screen)
+                    m.stop_moving=False    
+                
+                
+            return False, monsters
         else:
-            return True
+            return True, monsters
         
     def display_text(self, words_startx_starty:list, curr_biome:Biome, player:Player2, text_index:int, previous_text:list, screen:pygame.display):
         """

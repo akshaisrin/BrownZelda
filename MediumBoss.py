@@ -6,7 +6,7 @@ import Constants
 class MediumBoss(Monster):
 
     def __init__(self, attack_power:float, health:float, img:pygame.image, medium_boss_name:str, start_pos_x:int, start_pos_y:int, height:int, width:int, attacks, proj_img, proj_height, proj_width):
-        super().__init__(attack_power, health, img, "Medium Boss", start_pos_x, start_pos_y, height, width, proj_img, proj_height, proj_width)
+        super().__init__(attack_power, health, img, medium_boss_name, start_pos_x, start_pos_y, height, width, proj_img, proj_height, proj_width)
         
         self.medium_boss_name=medium_boss_name
         self.projectile_change_x=0.0

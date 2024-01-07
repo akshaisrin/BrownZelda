@@ -28,16 +28,16 @@ med_boss_projectile_bounds=2
 mini_boss_movement_vector={"left":(-3,0), "right":(3,0), "up":(0,-3), "down":(0,3)}
 
 reg_patrol_constant=30
-kohli_patrol_speed=17
+kohli_patrol_speed=15
 
 reg_projectile_constant=50
-kohli_projectile_speed=13
+kohli_projectile_speed=10
 
 monster_player_collision_buffer_x=10
 monster_player_collision_buffer_y=5
 
 cooldown=70
-kohli_speed=130
+kohli_speed=20
 kohli_initial_cooldown=70
 
 npc_cricker_player_speed=3

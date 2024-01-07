@@ -26,6 +26,8 @@ pygame.mixer.init()
 font = pygame.font.Font('freesansbold.ttf', 32)
 current_screen = None
 
+
+
 def init_loading_screen():
     current_screen = InitialLoadingScreen(screen)
     loadingscreenstarttime = time.time()
@@ -134,6 +136,7 @@ def init_home_screen():
     curr_biome = overworld.room1
     if test_mode:
         curr_biome = overworld.cricketroom1
+        
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
@@ -156,7 +159,8 @@ def init_home_screen():
     text_index = 0
     texts = []
     display_count = 0
-    
+
+
     while gameLoop:
         clock.tick(60)
         framecounter = framecounter + 1
@@ -196,8 +200,8 @@ def init_home_screen():
                 keep_text_displayed = False
                 text_index = 0
                 
-        monsters_alive = overworld.monster_attack(curr_biome, player1, screen)
-        
+        monsters_alive = overworld.monster_attack(curr_biome, player1, screen)[1]
+
         # player contorls
         """
         if controller_detected:        
@@ -249,7 +253,7 @@ def init_home_screen():
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
                     player1.attack(curr_biome.monsters)
-            
+
             if event.type == pygame.QUIT:
                 gameLoop=False
                 pygame.quit()

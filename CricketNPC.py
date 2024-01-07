@@ -3,10 +3,10 @@ import os
 
 class CricketNPC(MiniBoss):
 
-    def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float, height:int, width:int, main_attack:str):
+    def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float, main_attack:str):
         
         img=pygame.image.load(os.path.join("Assets", "cricketer" + str(random.randint(1,10)) + ".png"))
-        super().__init__(attack_power, health, img, "Cricket NPC", start_pos_x, start_pos_y, height, width, "cricket_ball.png", 25, 25)
+        super().__init__(attack_power, health, img, "Cricket NPC", start_pos_x, start_pos_y, 125, 75, "cricket_ball.png", 25, 25)
         self.test_monster_name=test_monster_name
         self.main_attack=main_attack
     
@@ -20,5 +20,5 @@ class CricketNPC(MiniBoss):
             #self.follow_path(coords, Constants.npc_cricker_player_speed)
 
         else:
-           
+            
             self.move_towards_player(player,Constants.npc_cricker_player_speed)
