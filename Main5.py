@@ -122,6 +122,8 @@ def init_instructions_screen():
             current_screen.display(elapsedTime)
         pygame.display.update()
         
+def slowtextdisplay():
+    pass
         
 def init_home_screen():
     clock = pygame.time.Clock()
@@ -143,8 +145,8 @@ def init_home_screen():
         joystick=XboxController()
     except:
         controller_detected=False
-        
     # Establishing game loop to keep screen running
+    
     """
 
     gameLoop = True
@@ -265,3 +267,4 @@ def init_home_screen():
 # init_loading_screen()
 # init_instructions_screen()
 init_home_screen()
+
