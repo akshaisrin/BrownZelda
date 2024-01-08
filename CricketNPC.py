@@ -11,14 +11,16 @@ class CricketNPC(MiniBoss):
         self.main_attack=main_attack
     
     def attack(self, player, screen):
-        if self.main_attack=="shoot":
+        if self.main_attack=="shoot and follow path":
 
             #self.patrol_and_shoot(player, 700, 500, 900, 500, Constants.npc_cricker_player_projectile_speed, screen)
             #self.patrol(Constants.npc_cricker_player_speed, 500, 'x')
-            coords=[(self.start_pos_x, self.start_pos_y), (self.start_pos_x+450, self.start_pos_y), (self.start_pos_x+450, self.start_pos_y+450), (self.start_pos_x, self.start_pos_y+450)]
-            self.follow_path_and_shoot(coords, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, player, screen)
+            
+            self.follow_path_and_shoot(self.path_coords, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, player, screen)
             #self.follow_path(coords, Constants.npc_cricker_player_speed)
 
+        elif self.main_attack=="shoot and patrol":
+            self.patrol_and_shoot(player, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, self.patrol_distance, self.patrol_direction, screen)
         else:
             
-            self.move_towards_player(player,Constants.npc_cricker_player_speed)
+            self.move_towards_player(player,Constants.npc_cricker_player_speed, screen)

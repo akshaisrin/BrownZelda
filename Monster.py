@@ -55,18 +55,27 @@ class Monster:
 
     # Monster walks towards player- this is kinda buggy so ignore for time being
         
-    def move_towards_player(self, player, speed):
+    def move_towards_player(self, player, speed, screen):
         self.current_attack_damage=1
 
         distance = [player.player_rectangle.x - self.monster_rectangle.x, player.player_rectangle.y - self.monster_rectangle.y]
         
         norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
         if norm==0:
-            norm=0.01
+            norm=1
         direction = [distance[0] / norm, distance[1 ] / norm]
 
         movement_vector = [direction[0] * speed, direction[1] * speed]
         self.monster_rectangle.move_ip(movement_vector[0], movement_vector[1])
+
+        # This collision detection code should technically go in overworld, but the collision wasn't detecting there (idk why) so I've also included it here, which seems to work
+
+        if self.monster_rectangle.colliderect(player.player_rectangle) and not player.attacking:
+            now = pygame.time.get_ticks()
+            if now -self.last_damage >= self.attack_cooldown or self.first_time_attacking:
+                self.last_damage = now
+                player.get_attacked(self.current_attack_damage, screen)
+                self.first_time_attacking=False
     
     # Patrols between two points
 
@@ -239,7 +248,6 @@ class Monster:
         image = pygame.transform.scale(self.img, (width, height))
         self.monster_rectangle = image.get_rect()
         self.monster_rectangle.topleft = (x_pos, y_pos)
-        pygame.draw.rect(screen, (255,0,0),self.monster_rectangle)
         screen.blit(image, self.monster_rectangle)
     
     def get_hit(self, damage:float):

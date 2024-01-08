@@ -27,7 +27,6 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 current_screen = None
 
 
-
 def init_loading_screen():
     current_screen = InitialLoadingScreen(screen)
     loadingscreenstarttime = time.time()
@@ -130,7 +129,6 @@ def init_home_screen():
     sword = Sword()
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
-    
     test_mode = True
     overworld = Overworld()
     curr_biome = overworld.room1
@@ -150,7 +148,6 @@ def init_home_screen():
     """
 
     gameLoop = True
-
     direction = None
     framecounter = 0
     firstchange = False

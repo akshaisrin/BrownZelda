@@ -106,11 +106,11 @@ class Kohli(MediumBoss):
         # check vertical distance between player and monster to figure out if monster should shoot
         
         if (self.stop_moving):
-            self.shoot_straight(self.projectile.shoot_coords[0], self.projectile.shoot_coords[1], speed, screen)
+            self.shoot_straight(speed, screen)
 
         elif (abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=self.monster_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2):
             self.stop_moving=True
-            self.shoot_straight(player.player_rectangle.x, player.player_rectangle.y, speed, screen)
+            self.shoot_straight(speed, screen)
             self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
         
         # check to see if projectile is at edge of screen
@@ -129,7 +129,7 @@ class Kohli(MediumBoss):
 
         if not self.stop_moving:
 
-            self.move_towards_player(player, Constants.kohli_speed)
+            self.move_towards_player(player, Constants.kohli_speed, screen)
 
         # If stop moving is true, then monster should already be in the middle of an attack.
 

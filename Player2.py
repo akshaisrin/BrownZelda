@@ -203,7 +203,7 @@ class Player2:
             image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
         self.player_rectangle = image.get_rect()
         self.player_rectangle.topleft = (x_pos, y_pos)
-        pygame.draw.rect(screen, (0, 255, 0), self.player_rectangle)
+   
         screen.blit(image, self.player_rectangle)
     
     def renderhealth(self, x_pos, y_pos, screen):
