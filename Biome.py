@@ -22,7 +22,7 @@ class Biome(Room):
         self.text = text
     
     def get_image(self):
-        img = pygame.image.load(os.path.join("Assets/rooms", self.file_path))
+        img = pygame.image.load(os.path.join("Assets/rooms/floor1", self.file_path))
         image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     

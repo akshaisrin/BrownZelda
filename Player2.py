@@ -30,6 +30,11 @@ class Player2:
         self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
         self.attackspritesheet=pygame.transform.scale(self.attackspritesheet, (576, 192))
         self.spritesheet_aframes = [self.attackspritesheet.subsurface((i * 64, j * 64, 64, 64)) for j in range(3) for i in range(9)]
+        self.attackspritesheet2=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet3.png"))
+        self.attackspritesheet2=pygame.transform.scale(self.attackspritesheet2, (576, 192))
+        self.spritesheet_aframes[13] = (self.attackspritesheet2.subsurface((0, 30, 104, 64)))
+        self.spritesheet_aframes[15] = (self.attackspritesheet2.subsurface((144, 30, 64, 104)))
+        self.spritesheet_aframes[17] = (self.attackspritesheet2.subsurface((208, 0, 64, 104)))
         self.spritesheet_adframes = []
         for frame in self.spritesheet_aframes:
             rect = frame.get_rect()
@@ -172,25 +177,30 @@ class Player2:
         
     def render(self, x_pos:float, y_pos:float, screen:pygame.display) -> None:
         image = None
+        adjustx = 0
+        adjusty = 0
         if self.attacking:
             elapsedTime = time.time() - self.attackingtime
             if elapsedTime > 0.3:
                 self.attacking = False
             if self.current_frame == 10:
+                if not self.flipped:
+                    adjustx = 64
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_adframes[13], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[13], (104, 64))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_aframes[13], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[13], (104, 64))
             elif self.current_frame == 11:
+                adjusty = 40
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_adframes[17], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[17], (64, 104))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_aframes[17], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[17], (64, 104))
             else:
                 if self.attacked and elapsedTime % 0.1 > 0.05:
-                    image = pygame.transform.scale(self.spritesheet_adframes[15], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_adframes[15], (64, 104))
                 else:
-                    image = pygame.transform.scale(self.spritesheet_aframes[15], (64, 64))
+                    image = pygame.transform.scale(self.spritesheet_aframes[15], (64, 104))
         elif self.attacked:
             elapsedTime = time.time() - self.attacktime
             if elapsedTime > 1:
@@ -202,9 +212,9 @@ class Player2:
         else:
             image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
         self.player_rectangle = image.get_rect()
-        self.player_rectangle.topleft = (x_pos, y_pos)
-   
+        self.player_rectangle.topleft = (x_pos - adjustx, y_pos - adjusty)
         screen.blit(image, self.player_rectangle)
+        self.player_rectangle.topleft = (x_pos, y_pos)
     
     def renderhealth(self, x_pos, y_pos, screen):
         for i in range(self.original_health):
