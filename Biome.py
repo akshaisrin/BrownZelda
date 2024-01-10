@@ -12,7 +12,7 @@ class Biome(Room):
         super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
-        self.exits = exits # format: [(x_cor, y_cor, next_biome, travel_direction, h_range, v_range), (x_cor, y_cor, next_biome, travel_direction, h_range, v_range), etc.]
+        self.exits = exits # list of exit objects
         self.dungeon = dungeon
         self.dungeon_x = dungeon_x
         self.dungeon_y = dungeon_y
