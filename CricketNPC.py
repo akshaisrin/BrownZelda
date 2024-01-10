@@ -11,16 +11,23 @@ class CricketNPC(MiniBoss):
         self.main_attack=main_attack
     
     def attack(self, player, screen):
-        if self.main_attack=="shoot and follow path":
+        if not self.in_hit_cooldown:
+            if self.main_attack=="shoot and follow path":
 
-            #self.patrol_and_shoot(player, 700, 500, 900, 500, Constants.npc_cricker_player_projectile_speed, screen)
-            #self.patrol(Constants.npc_cricker_player_speed, 500, 'x')
-            
-            self.follow_path_and_shoot(self.path_coords, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, player, screen)
-            #self.follow_path(coords, Constants.npc_cricker_player_speed)
+                #self.patrol_and_shoot(player, 700, 500, 900, 500, Constants.npc_cricker_player_projectile_speed, screen)
+                #self.patrol(Constants.npc_cricker_player_speed, 500, 'x')
+                
+                self.follow_path_and_shoot(self.path_coords, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, player, screen)
+                #self.follow_path(coords, Constants.npc_cricker_player_speed)
 
-        elif self.main_attack=="shoot and patrol":
-            self.patrol_and_shoot(player, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, self.patrol_distance, self.patrol_direction, screen)
-        else:
+            elif self.main_attack=="shoot and patrol":
+                self.patrol_and_shoot(player, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, self.patrol_distance, self.patrol_direction, screen)
+            else:
+                
+                self.move_towards_player(player,Constants.npc_cricker_player_speed, screen)
+        
+        if self.in_hit_cooldown:
+            now = pygame.time.get_ticks()
             
-            self.move_towards_player(player,Constants.npc_cricker_player_speed, screen)
+            if now - self.last_hit>= self.hit_cooldown_count:
+                self.in_hit_cooldown=False

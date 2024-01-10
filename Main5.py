@@ -218,7 +218,7 @@ def init_home_screen():
             direction = "down"
             player1.current_frame = 11
         if (new_state[1]>controller_threshold):
-            direction = "up"
+            direction = "up"   
             player1.current_frame = 9
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()

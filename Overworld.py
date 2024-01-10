@@ -68,7 +68,7 @@ class Overworld(Room):
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
         # create a monster
-        monster1=Kohli(10.0, 9.0, "Kohli", 800, 100)
+        monster1=Kohli(10.0,"Kohli", 800, 100)
         self.cricketroom4.add_monsters([monster1])
 
         npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
@@ -226,24 +226,27 @@ class Overworld(Room):
                     # Kohli has more cooldowns, so the player cannot take damage if the Kohli is in a cooldown
 
                     if isinstance(m, Kohli):
-                        if not m.in_cooldown:
+                        if not m.in_initial_cooldown or not m.in_post_attack_cooldown:
                             
                             # Calculating the time between attacks again as a cooldown
 
                             now = pygame.time.get_ticks()
                             if now - m.last_damage >= m.attack_cooldown or m.first_time_attacking:
-                                m.last_damage = now
-                                player.get_attacked(m.current_attack_damage, screen)
-                                m.first_time_attacking=False
+                                if not m.in_hit_cooldown:
+                                    m.last_damage = now
+                                    
+                                    player.get_attacked(m.current_attack_damage, screen)
+                                    m.first_time_attacking=False
                     else:
 
                         # Same cooldown logic if not Kohli
 
                         now = pygame.time.get_ticks()
                         if now -m.last_damage >= m.attack_cooldown or m.first_time_attacking:
-                            m.last_damage = now
-                            player.get_attacked(m.current_attack_damage, screen)
-                            m.first_time_attacking=False
+                            if not m.in_hit_cooldown:
+                                m.last_damage = now
+                                player.get_attacked(m.current_attack_damage, screen)
+                                m.first_time_attacking=False
                     
                 # Projectile is realigned and player takes damage if player gets hit by projectile
 

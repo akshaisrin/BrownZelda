@@ -11,7 +11,10 @@ class MediumBoss(Monster):
         self.medium_boss_name=medium_boss_name
         self.projectile_change_x=0.0
         self.projectile_change_y=0.0
+
         self.attacks=attacks
+        self.main_attack_timer = pygame.time.get_ticks()
+        self.main_attack_cooldown=5000
     
     def realign_projectile(self):
         self.projectile.projectile_rectangle.x=self.monster_rectangle.x

@@ -90,6 +90,9 @@ class Player2:
         for monster in monsters:
             if (self.player_rectangle.colliderect(monster.monster_rectangle)):
                 monster.get_hit(self.currentitem.power)
+                if not monster.in_hit_cooldown:
+                    monster.in_hit_cooldown=True
+                    monster.last_hit=pygame.time.get_ticks()
 
     def get_healed(self, healing:int):
         self.health_bar += healing
@@ -213,7 +216,10 @@ class Player2:
             image = pygame.transform.scale(self.spritesheet_frames[self.current_frame], (64, 64))
         self.player_rectangle = image.get_rect()
         self.player_rectangle.topleft = (x_pos - adjustx, y_pos - adjusty)
+        #pygame.draw.rect(screen, (255,0,0), self.player_rectangle)
         screen.blit(image, self.player_rectangle)
+        
+        
         self.player_rectangle.topleft = (x_pos, y_pos)
     
     def renderhealth(self, x_pos, y_pos, screen):

@@ -31,14 +31,16 @@ reg_patrol_constant=30
 kohli_patrol_speed=15
 
 reg_projectile_constant=50
-kohli_projectile_speed=10
+
 
 monster_player_collision_buffer_x=10
 monster_player_collision_buffer_y=5
 
 cooldown=70
-kohli_speed=20
+kohli_speed=5
+kohli_charge_speed=25
 kohli_initial_cooldown=70
+kohli_projectile_speed=13
 
 npc_cricker_player_speed=3
 npc_cricker_player_projectile_speed=10

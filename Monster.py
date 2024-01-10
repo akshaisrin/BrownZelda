@@ -47,6 +47,10 @@ class Monster:
         self.last_fired=pygame.time.get_ticks()
         self.attack_cooldown=3500
 
+        self.hit_cooldown_count=1500
+        self.in_hit_cooldown=False
+        self.last_hit=pygame.time.get_ticks()
+
     # Moves projectile back to monster
         
     def realign_projectile(self):
@@ -228,7 +232,13 @@ class Monster:
             self.realign_projectile()
         
     # Shoots a projectile in the direction of shoot_coords, which is the projectile's end destination
-            
+    
+    def walk_towards_player_and_shoot(self, player, speed, projectile_speed, screen):
+        self.current_attack_damage=1
+        self.check_if_in_line_with_player_and_shoot(projectile_speed, player, screen)        
+        if not self.stop_moving:
+            self.move_towards_player(player, speed, screen)
+
     def shoot_straight(self, speed, screen):
 
         self.current_attack_damage=1
@@ -248,6 +258,7 @@ class Monster:
         image = pygame.transform.scale(self.img, (width, height))
         self.monster_rectangle = image.get_rect()
         self.monster_rectangle.topleft = (x_pos, y_pos)
+        #pygame.draw.rect(screen, (0,255,0), self.monster_rectangle)
         screen.blit(image, self.monster_rectangle)
     
     def get_hit(self, damage:float):
