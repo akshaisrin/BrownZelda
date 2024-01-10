@@ -154,14 +154,14 @@ class Overworld(Room):
                         count -= 100
                         pygame.display.update()
                         pygame.time.wait(10)
-                    if exit[3] == "down":
+                    if exit.player_direction == "down":
                         new_y = 11
                     else:
                         new_y = screen_height - player.player_rectangle[3]
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], new_y)
                     player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
                     pygame.display.update()
-                    if curr_biome == self.cricketroom1 and exit[3] == "down":
+                    if curr_biome == self.cricketroom1 and exit.player_direction == "down":
                         player.player_rectangle.topleft = (player.player_rectangle.topleft[0], 220)
                         player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
                         pygame.display.update()
