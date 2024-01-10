@@ -31,7 +31,7 @@ class Overworld(Room):
         self.obstacle6 = Obstacles("test_object1.png", 0, 0, screen_width, 200)
         self.room2.add_obstacles([self.obstacle2, self.obstacle4, self.obstacle5, self.obstacle6])
         
-        self.cricketroom1 = Biome("cricketroom1", "cricketroom1.png", [Exit(1000, 895, self.room2, "down", 100, 100)], [], False)
+        self.cricketroom1 = Biome("cricketroom1", "cricketroom1.png", [Exit(1000, screen_height, self.room2, "down", 100, 35)], [], False)
         self.obstacle7 = Obstacles("test_object1.png", 0, 0, 705, 150)
         self.obstacle8 = Obstacles("test_object1.png", 935, 0, screen_width-935, 150)
         self.obstacle9 = Obstacles("test_object1.png", screen_width-150, 0, 150, screen_height)
@@ -40,7 +40,7 @@ class Overworld(Room):
         self.obstacle12 = Obstacles("test_object1.png", 0, screen_height-155, 905, 155)
         self.cricketroom1.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle10, self.obstacle11, self.obstacle12])
         
-        self.cricketroom2 = Biome("cricketroom2", "cricketroom2.png", [Exit(800, 895, self.cricketroom1, "down", 100, 100)], [], False)
+        self.cricketroom2 = Biome("cricketroom2", "cricketroom2.png", [Exit(800, screen_height, self.cricketroom1, "down", 100, 35)], [], False)
         self.obstacle13 = Obstacles("test_object1.png", 0, 0, screen_width, 150)
         self.obstacle14 = Obstacles("test_object1.png", 950, screen_height-150, screen_width-950, 150)
         self.obstacle15 = Obstacles("test_object1.png", 0, screen_height-160, 700, 160)
@@ -52,17 +52,17 @@ class Overworld(Room):
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
         
-        self.cricketroom4 = Biome("cricketroom4", "cricketroom4.png", [Exit(800, 895, self.cricketroom3, "down", 100, 100)], [], False)
+        self.cricketroom4 = Biome("cricketroom4", "cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", 100, 35)], [], False)
         self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
-        self.cricketroom5 = Biome("cricketroom5", "cricketroom2.png", [Exit(800, 895, self.cricketroom4, "down", 100, 100)], [], False)
+        self.cricketroom5 = Biome("cricketroom5", "cricketroom2.png", [Exit(800, screen_height, self.cricketroom4, "down", 100, 35)], [], False)
         self.cricketroom5.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         self.room1.add_exits([Exit(1550, 380, self.room2, "right", 100, 100)])
         self.room2.add_exits([Exit(1000, 180, self.cricketroom1, "up", 70, 30)])
-        self.cricketroom1.add_exits([Exit(800, -95, self.cricketroom2, "up", 100, 100), Exit(-95, 200, self.cricketroom3, "left", 100, 100), Exit(-95, 600, self.cricketroom3, "left", 100, 100)])
-        self.cricketroom3.add_exits([Exit(800, -95, self.cricketroom4, "up", 100, 100)])
-        self.cricketroom4.add_exits([Exit(800, -95, self.cricketroom5, "up", 100, 100)])
+        self.cricketroom1.add_exits([Exit(800, 0, self.cricketroom2, "up", 100, 10), Exit(-95, 200, self.cricketroom3, "left", 100, 100), Exit(-95, 600, self.cricketroom3, "left", 100, 100)])
+        self.cricketroom3.add_exits([Exit(800, 0, self.cricketroom4, "up", 100, 10)])
+        self.cricketroom4.add_exits([Exit(800, 0, self.cricketroom5, "up", 100, 10)])
         
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
@@ -149,16 +149,19 @@ class Overworld(Room):
                         y_pos += change
                         exit.next_room.render(curr_screen_x_pos, y_pos, player, screen)
                         new_y = player.player_rectangle.topleft[1] + change
-                        if new_y < 0:
-                            new_y = player.player_rectangle[3] + 20
-                        if new_y > screen_height:
-                            new_y = screen_height - 10
                         player.player_rectangle.topleft = (player.player_rectangle.topleft[0], new_y)
                         player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
                         count -= 100
                         pygame.display.update()
                         pygame.time.wait(10)
-                    if curr_biome == self.cricketroom1 and exit.player_direction == "down":
+                    if exit[3] == "down":
+                        new_y = 11
+                    else:
+                        new_y = screen_height - player.player_rectangle[3]
+                    player.player_rectangle.topleft = (player.player_rectangle.topleft[0], new_y)
+                    player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
+                    pygame.display.update()
+                    if curr_biome == self.cricketroom1 and exit[3] == "down":
                         player.player_rectangle.topleft = (player.player_rectangle.topleft[0], 220)
                         player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
                         pygame.display.update()
@@ -274,5 +277,6 @@ class Overworld(Room):
             text_rect = (start_x, start_y)
             screen.blit(text, text_rect)
             pygame.display.update()
+            pygame.time.wait(1)
             pygame.time.wait(1)
         return (text, text_rect)        
