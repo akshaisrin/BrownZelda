@@ -26,6 +26,7 @@ medium_boss_projectile_offset_y=-100
 med_boss_projectile_bounds=2
 
 mini_boss_movement_vector={"left":(-3,0), "right":(3,0), "up":(0,-3), "down":(0,3)}
+mini_boss_speed = 80
 
 reg_patrol_constant=30
 kohli_patrol_speed=15
@@ -44,3 +45,5 @@ kohli_projectile_speed=13
 
 npc_cricker_player_speed=3
 npc_cricker_player_projectile_speed=10
+
+auntie_clone_speed = 3

@@ -10,6 +10,7 @@ from TestMonsterMedium import *
 from TestMonster import *
 from Kohli import *
 from CricketNPC import *
+from Auntieji import *
 from Exit import *
 from items.Ladoo import *
 from items.Key import *
@@ -114,14 +115,19 @@ class Overworld(Room):
         npc_cricker_player_6=CricketNPC(10.0, 9.0, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
         npc_cricker_player_6.path_coords=[(npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y), 
-                                          (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
+                                              (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
                                           (npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y+470)]
         self.cricketroom3.add_monsters([npc_cricker_player_6])
 
         npc_cricker_player_7=CricketNPC(10.0, 9.0, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
-        
+        #auntie monsters
+        auntie1 = Auntieji(7.0, 10.0, "OG Auntie", 690, 150)
+        auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 690, 150)
+        auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 690, 150)
+        auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 690, 150)
+                
         
         
         # initialize the second level
@@ -303,7 +309,16 @@ class Overworld(Room):
         self.schoolroom7.add_exits([Exit(screen_width, screen_height//2, self.schoolroom8, "right", self.right_width, self.H_height)])
 
 
-
+        
+        #set auntie coordinates based on player
+        def set_auntie_coordinates(self, player: Player2, auntie: Auntieji):
+            auntie.start_pos_x, auntie.start_pos_y = player.player_rectangle.x + 450, player.player_rectangle.y
+        
+        def set_auntie_clone_coords(self, player:Player2, clones: list[AuntieClone]):
+            coord_modifiers = [(0,-450), (450,0), (-450,0)]
+            i = 0
+            for clone in clones:
+                clone.start_pos_x, clone.start_pos_y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
 
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
@@ -346,13 +361,29 @@ class Overworld(Room):
                     if exit.player_direction == "down":
                         change = -100
                         y_pos = screen_height
+                        corresponding_exit = None
+                        for exit in next_biome.exits:
+                            if exit[3] == "up":
+                                corresponding_exit = exit
+                        y_threshold = corresponding_exit[1]
+                        if player.player_rectangle.bottomleft[1] > y_threshold:
+                            no_no_attack = False
+                        
                     else:
                         change = 100
                         y_pos = -1 * screen_height
+                        corresponding_exit = None
+                        for exit in next_biome.exits:
+                            if exit[3] == "down":
+                                corresponding_exit = exit
+                        y_threshold = corresponding_exit[1]
+                        if player.player_rectangle.bottomleft[1] < y_threshold:
+                            no_no_attack = False
+
                     count = screen_height
                     while count > 0:
                         curr_screen_y_pos += change
-                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen, no_no_attack)
                         y_pos += change
                         exit.next_room.render(curr_screen_x_pos, y_pos, player, screen)
                         new_y = player.player_rectangle.topleft[1] + change
@@ -379,13 +410,27 @@ class Overworld(Room):
                     if exit.player_direction == "right":
                         change = -100
                         x_pos = screen_width
+                        corresponding_exit = None
+                        for exit in next_biome.exits:
+                            if exit[3] == "left":
+                                corresponding_exit = exit
+                        x_threshold = corresponding_exit[0]
+                        if player.player_rectangle.bottomleft[0] > x_threshold:
+                            no_no_attack = False
                     else:
                         change = 100
                         x_pos = -1 * screen_width
+                        corresponding_exit = None
+                        for exit in next_biome.exits:
+                            if exit[3] == "right":
+                                corresponding_exit = exit
+                        x_threshold = corresponding_exit[0]
+                        if player.player_rectangle.bottomright[0] < x_threshold:
+                            no_no_attack = False
                     count = screen_width
                     while count > 0:
                         curr_screen_x_pos += change
-                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen, no_no_attack)
                         x_pos += change
                         exit.next_room.render(x_pos, curr_screen_y_pos, player, screen)
                         new_x = player.player_rectangle.topleft[0] + change
@@ -483,7 +528,7 @@ class Overworld(Room):
         start_x = words_startx_starty[1]
         start_y = words_startx_starty[2]
         for i in range(1, len(words) + 1):
-            curr_biome.render(0, 0, player, screen)
+            curr_biome.render(0, 0, player, screen, True)
             for t in previous_text:
                 screen.blit(t[0], t[1])
                 pygame.display.update()

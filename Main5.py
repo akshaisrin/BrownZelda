@@ -161,6 +161,8 @@ def init_home_screen():
     texts = []
     display_count = 0
 
+    timestart = time.time()
+
 
     while gameLoop:
         clock.tick(30)
