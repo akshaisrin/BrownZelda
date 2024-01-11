@@ -133,9 +133,11 @@ def init_home_screen():
     
     test_mode = True
     overworld = Overworld()
-    curr_biome = overworld.room1
+    curr_screen = overworld.room1
     if test_mode:
-        curr_biome = overworld.cricketroom1
+        curr_screen = overworld.cricketroom1
+    if curr_screen == overworld.schoolroom1:
+        player1.player_rectangle.topleft = (750, 700)
         
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
@@ -163,12 +165,12 @@ def init_home_screen():
     while gameLoop:
         clock.tick(60)
         framecounter = framecounter + 1
-        overworld.obstacles_in_biome(player1, curr_biome)
+        overworld.obstacles_in_biome(player1, curr_screen)
 
-        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
+        curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
-        if curr_biome.text != None and text_index < len(curr_biome.text) and display_text:
-            new_text = overworld.display_text(curr_biome.text[text_index], curr_biome, player1, text_index, texts, screen)
+        if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
+            new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, text_index, texts, screen)
             texts.append(new_text)
             keep_text_displayed = True
             display_text = False
@@ -182,24 +184,24 @@ def init_home_screen():
                 text_index += 1
                 display_text = True
         
-        if curr_biome != None:
-            new_biome = overworld.going_to_next_biome(player1, curr_biome, curr_screen_x_pos, curr_screen_y_pos, screen)
-            if new_biome != None:
+        if curr_screen != None:
+            new_screen = overworld.going_to_next_biome(player1, curr_screen, curr_screen_x_pos, curr_screen_y_pos, screen)
+            if new_screen != None:
                 keep_text_displayed = False
                 text_index = 0
                 texts = []
-                curr_biome = new_biome
+                curr_screen = new_screen
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
                 keep_text_displayed = False
                 
-            dungeon = overworld.going_to_dungeon(player1, curr_biome, screen)
+            dungeon = overworld.going_to_dungeon(player1, curr_screen, screen)
             if dungeon != None:
-                curr_biome = dungeon
+                curr_screen = dungeon
                 keep_text_displayed = False
                 text_index = 0
                 
-        monsters_alive = overworld.monster_attack(curr_biome, player1, screen)[1]
+        monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
         # player contorls
         """
@@ -222,7 +224,7 @@ def init_home_screen():
             player1.current_frame = 9
         if (joystick.X) and not sword.attacking:
             attacktime = time.time()
-            sword.attack(curr_biome.monsters[0])
+            sword.attack(curr_screen.monsters[0])
         """
     
         for event in pygame.event.get():
@@ -251,7 +253,7 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not sword.attacking:
-                    player1.attack(curr_biome.monsters)
+                    player1.attack(curr_screen.monsters)
 
             if event.type == pygame.QUIT:
                 gameLoop=False
