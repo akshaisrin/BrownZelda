@@ -11,6 +11,7 @@ from TestMonster import *
 from Kohli import *
 from CricketNPC import *
 from Exit import *
+from items.Ladoo import *
 
 class Overworld(Room):
     
@@ -52,14 +53,16 @@ class Overworld(Room):
         self.obstacle11 = Obstacles("test_object1.png", 0, 290, 600, 200)
         self.obstacle12 = Obstacles("test_object1.png", 0, screen_height-155, 905, 155)
         self.cricketroom1.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle10, self.obstacle11, self.obstacle12])
-        
+        self.cricketroom1.add_items(1)
+
         self.cricketroom2 = Biome("cricketroom2", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom1, "down", self.V_width, self.down_height)], [], False)
         self.obstacle13 = Obstacles("test_object1.png", 0, 0, screen_width, 150)
         self.obstacle14 = Obstacles("test_object1.png", 935, screen_height-150, screen_width-935, 150)
         self.obstacle15 = Obstacles("test_object1.png", 0, screen_height-160, 705, 160)
         self.obstacle16 = Obstacles("test_object1.png", 0, 0, 150, screen_height)
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
-        
+        self.cricketroom2.add_items(1)
+
         self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-150, screen_width, 150)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
@@ -420,4 +423,8 @@ class Overworld(Room):
             pygame.display.update()
             pygame.time.wait(1)
             pygame.time.wait(1)
-        return (text, text_rect)        
+        return (text, text_rect)     
+
+    def picksupitems(self, player:Player2, biome:Biome):
+        for item in biome.items:
+            player.get_healed(item)

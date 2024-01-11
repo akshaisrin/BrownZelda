@@ -89,15 +89,20 @@ class Player2:
         self.attackingtime = time.time()
         for monster in monsters:
             if (self.player_rectangle.colliderect(monster.monster_rectangle)):
-                monster.get_hit(self.currentitem.power)
+                monster.get_hit(self.currentitem.power)                    
                 if not monster.in_hit_cooldown:
                     monster.in_hit_cooldown=True
                     monster.last_hit=pygame.time.get_ticks()
 
-    def get_healed(self, healing:int):
-        self.health_bar += healing
-    
-    
+    def get_healed(self, item):
+        print(item.item_rectangle)
+
+        if (self.player_rectangle.colliderect(item.item_rectangle)) and not item.used:
+            self.health_bar+=item.power
+            if (self.health_bar>self.original_health):
+                self.health_bar=self.original_health
+            item.used=True
+        
     def die_and_begone(self, screen, overworld=None):
         if self.lives_remaining <= 0:
             print("GAME OVER")

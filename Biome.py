@@ -5,6 +5,7 @@ from Constants import *
 from Obstacles import *
 from Player2 import *
 from Monster import *
+from items.Ladoo import *
 
 class Biome(Room):
     
@@ -19,6 +20,7 @@ class Biome(Room):
         self.obstacles = []
         self.obstacles_rect = []
         self.monsters = []
+        self.items = []
         self.text = text
     
     def get_image(self):
@@ -44,6 +46,14 @@ class Biome(Room):
                 m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
 
                 #m.shoot(screen, player)
+            else:
+                if random.randint(0, 9) > 5:
+                    self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)
+                self.monsters.remove(m)
+
+        for i in self.items:
+            i.render(screen)
+
         player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
         
     def add_obstacles(self, obstacles:list):
@@ -62,3 +72,20 @@ class Biome(Room):
         # Combines the list of exits
 
         self.exits += exits
+
+    def add_items(self, amount, x_pos = None, y_pos = None):
+        for i in range(amount):
+            if x_pos == None and y_pos == None or not self.is_valid_spawn(x_pos, y_pos):
+                while True:
+                    x_pos = random.randint(0, 1500)
+                    y_pos = random.randint(0, 800)
+                    if self.is_valid_spawn(x_pos, y_pos):
+                        self.items.append(Ladoo(x_pos, y_pos))
+                        break
+            self.items.append(Ladoo(x_pos, y_pos))
+
+    def is_valid_spawn(self, x_pos, y_pos):
+        for obstacle in self.obstacles_rect:
+            if obstacle.colliderect((x_pos, y_pos, 100, 100)):
+                return False
+        return True

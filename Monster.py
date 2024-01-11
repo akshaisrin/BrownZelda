@@ -274,4 +274,6 @@ class Monster:
         # Implement die here
         self.alive = False
 
+        #have a 50% chance to drop a ladoo
+
         print(f"Monster: {self.monster_type} has been killed") 

@@ -166,6 +166,7 @@ def init_home_screen():
         clock.tick(60)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_screen)
+        overworld.picksupitems(player1, curr_screen)
 
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
