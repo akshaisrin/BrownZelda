@@ -12,6 +12,7 @@ from Kohli import *
 from CricketNPC import *
 from Exit import *
 from items.Ladoo import *
+from items.Key import *
 
 class Overworld(Room):
     
@@ -67,7 +68,8 @@ class Overworld(Room):
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-150, screen_width, 150)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
-        
+        self.cricketroom2.add_key(Key(self.cricketroom3, 800, 400, 800, 100))
+
         self.cricketroom4 = Biome("cricketroom4", "floor1/cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", self.V_width, self.down_height)], [], False)
         self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
@@ -428,3 +430,35 @@ class Overworld(Room):
     def picksupitems(self, player:Player2, biome:Biome):
         for item in biome.items:
             player.get_healed(item)
+
+    def pickupkeys(self, player:Player2, biome:Biome):
+        for key in biome.keys:
+            player.get_key(key)
+
+    def unlockroom(self, player, biome, screen):
+        for key in player.key_inventory:
+            if not key.used and key.biomeunlock == biome:
+                #reset biome.file_path to unlocked version (should be initial file path + unlocked)
+                player.key_inventory.remove(key)
+                key.used = True
+                key.pickedup = False
+                key.x_pos = player.player_rectangle.topleft[0]
+                key.y_pos = player.player_rectangle.topleft[1]
+                for i in range(10):
+                    self.flykey(biome,  player,key, screen, i)
+                key.pickedup = True
+                biome.file_path = biome.file_path[:-4] + "unlocked.png"
+                break
+
+    def flykey(self, biome, player, key, screen, i):
+        if key.k_x_pos > key.x_pos:
+            key.x_pos = key.x_pos + (key.k_x_pos - key.x_pos) * i/10
+        else: key.x_pos = key.x_pos - (key.x_pos - key.k_x_pos) * i/10
+        if key.k_y_pos > key.y_pos:
+            key.y_pos = key.y_pos + (key.k_y_pos - key.y_pos) * i/10
+        else: key.y_pos = key.y_pos - (key.y_pos - key.k_y_pos) * i/10
+        biome.render(0, 0, player, screen)
+        key.render(screen)
+        pygame.display.update()
+        pygame.time.wait(300)
+        

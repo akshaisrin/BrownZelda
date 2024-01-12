@@ -21,6 +21,7 @@ class Biome(Room):
         self.obstacles_rect = []
         self.monsters = []
         self.items = []
+        self.keys = []
         self.text = text
     
     def get_image(self):
@@ -52,6 +53,9 @@ class Biome(Room):
                 self.monsters.remove(m)
 
         for i in self.items:
+            i.render(screen)
+
+        for i in self.keys:
             i.render(screen)
 
         player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
@@ -89,3 +93,6 @@ class Biome(Room):
             if obstacle.colliderect((x_pos, y_pos, 100, 100)):
                 return False
         return True
+    
+    def add_key(self, key):
+        self.keys.append(key)

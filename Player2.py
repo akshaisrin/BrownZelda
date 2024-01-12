@@ -58,6 +58,7 @@ class Player2:
         self.heart_spacing = 40
     
         self.username = username
+        self.key_inventory = []
         self.inventory = inventory
         self.curr_level = curr_level
         self.curr_checkpoint = curr_checkpoint
@@ -95,13 +96,16 @@ class Player2:
                     monster.last_hit=pygame.time.get_ticks()
 
     def get_healed(self, item):
-        print(item.item_rectangle)
-
         if (self.player_rectangle.colliderect(item.item_rectangle)) and not item.used:
             self.health_bar+=item.power
             if (self.health_bar>self.original_health):
                 self.health_bar=self.original_health
             item.used=True
+
+    def get_key(self, key):
+        if (self.player_rectangle.colliderect(key.key_rectangle)):
+            self.key_inventory.append(key)
+            key.pickedup = True
         
     def die_and_begone(self, screen, overworld=None):
         if self.lives_remaining <= 0:
