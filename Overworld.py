@@ -178,6 +178,61 @@ class Overworld(Room):
         
         
         
+        # initialize the third level
+        
+        # create the rooms with obstacles
+        self.galaroom1 = Biome("galaroom1", "floor3/galaroom1.png", [], [], False)
+        self.left_crowd3 = Obstacles("test_object1.png", 0, 0, 415, screen_height)
+        self.right_crowd3 = Obstacles("test_object1.png", 1120, 0, screen_width-1120, screen_height)
+        self.bottom3 = Obstacles("test_object1.png", 0, 750, screen_width, screen_height-750)
+        self.galaroom1.add_obstacles([self.left_crowd3, self.right_crowd3, self.bottom3])
+        
+        self.galaroom2 = Biome("galaroom2", "floor3/galaroom2.png", [Exit(screen_width//2, screen_height, self.galaroom1, "down", 500, self.down_height)], [], False)    
+        self.top3 = Obstacles("test_object1.png", 0, 0, screen_width, 280)
+        self.bottom_right_corner3 = Obstacles("test_object1.png", 1120, 520, screen_width-1120, screen_height-520)
+        self.galaroom2.add_obstacles([self.left_crowd3, self.top3, self.bottom_right_corner3])
+        
+        self.galaroom3 = Biome("galaroom3", "floor3/galaroom3.png", [Exit(0, screen_height//2, self.galaroom2, "left", self.left_width, self.H_height)], [], False)    
+        self.H_left_top_band3 = Obstacles("test_object1.png", 0, 0, 675, 110)
+        self.H_right_top_band3 = Obstacles("test_object1.png", 1010, 0, screen_width-1010, 110)
+        self.bar3 = Obstacles("test_object1.png", 1210, 0, screen_width-1170, screen_height)
+        self.H_bottom_band3 = Obstacles("test_object1.png", 0, screen_height-110, screen_width, 110)
+        self.V_top_left_band3 = Obstacles("test_object1.png", 0, 0, 105, 280)
+        self.V_bottom_left_band3 = Obstacles("test_object1.png", 0, 520, 105, screen_height-520)
+        self.galaroom3.add_obstacles([self.H_left_top_band3, self.H_right_top_band3, self.bar3, self.H_bottom_band3, self.V_top_left_band3, self.V_bottom_left_band3])
+        
+        self.galaroom4 = Biome("galaroom4", "floor3/galaroom4.png", [Exit(820, screen_height, self.galaroom3, "down", self.V_width, self.down_height)], [], False)    
+        self.H_top_band3 = Obstacles("test_object1.png", 0, 0, screen_width, 110)
+        self.V_top_right_band3 = Obstacles("test_object1.png", screen_width-105, 0, 105, 280)
+        self.V_bottom_right_band3 = Obstacles("test_object1.png", screen_width-105, 520, 105, screen_height-520)
+        self.H_left_bottom_band3 = Obstacles("test_object1.png", 0, screen_height-110, 675, 110)
+        self.H_right_bottom_band3 = Obstacles("test_object1.png", 1010, screen_height-110, screen_width-1010, 110)
+        self.left_table3 = Obstacles("test_object1.png", 230, 180, 215, 190)
+        self.right_table3 = Obstacles("test_object1.png", 1040, 390, 215, 190)
+        self.galaroom4.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_right_bottom_band3, self.H_left_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.left_table3, self.right_table3])
+        
+        self.galaroom5 = Biome("galaroom5", "floor3/galaroom5.png", [Exit(screen_width, screen_height//2, self.galaroom4, "right", self.right_width, self.H_height)], [], False)    
+        self.V_left_band3 = Obstacles("test_object1.png", 0, 0, 105, screen_height)
+        self.disco_ball3 = Obstacles("test_object1.png", 770, 110, 140, 150)
+        self.dj3 = Obstacles("test_object1.png", 0, 420, 540, screen_height-420)
+        self.galaroom5.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_left_band3, self.disco_ball3, self.dj3])
+        
+        self.galaroom6 = Biome("galaroom6", "floor3/galaroom6.png", [Exit(0, screen_height//2, self.galaroom4, "left", self.left_width, self.H_height)], [], False)    
+        self.galaroom6.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
+        
+        self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [], False)    
+        self.V_right_band3 = Obstacles("test_object1.png", screen_width-105, 0, 105, screen_height)
+        self.galaroom7.add_obstacles([self.H_top_band3, self.V_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
+        
+        self.galaroom1.add_exits([Exit(screen_width//2, 0, self.galaroom2, "up", 500, self.up_height)])
+        self.galaroom2.add_exits([Exit(1231, screen_height//2, self.galaroom3, "right", self.right_width, self.H_height)])
+        self.galaroom3.add_exits([Exit(820, 0, self.galaroom4, "up", self.V_width, self.up_height)])
+        self.galaroom4.add_exits([Exit(0, screen_height//2, self.galaroom5, "left", self.left_width, self.H_height), Exit(screen_width, screen_height//2, self.galaroom6, "right", self.right_width, self.H_height)])
+        self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
+        
+        
+        
+        
         # initialize the fourth level
         
         # create the rooms with obstacles
@@ -306,8 +361,6 @@ class Overworld(Room):
                         player.player_rectangle.topleft = (750, 400)
                     if curr_biome == self.schoolroom2 and exit.player_direction == "down":
                         player.player_rectangle.topleft = (player.player_rectangle.topleft[0], 421)
-                    player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
-                    pygame.display.update()
                 # moving left or right
                 else:
                     if exit.player_direction == "right":
@@ -332,6 +385,8 @@ class Overworld(Room):
                         count -= 100
                         pygame.display.update()
                         pygame.time.wait(20)
+                    if curr_biome == self.galaroom3 and exit.player_direction == "left":
+                        player.player_rectangle.topleft = (1140, player.player_rectangle.topleft[1])
                 exit.next_room.render(0, 0, player, screen)
                 return exit.next_room
         return None
