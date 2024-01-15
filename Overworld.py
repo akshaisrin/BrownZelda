@@ -65,7 +65,7 @@ class Overworld(Room):
         self.cricketroom2.add_items(1)
 
         self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
-        self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-150, screen_width, 150)
+        self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
         self.cricketroom2.add_key(Key(self.cricketroom3, 800, 400, 800, 100))
@@ -138,7 +138,7 @@ class Overworld(Room):
         self._26 = Obstacles("test_object1.png", 0, 0, 75, 290) # V left top band
         self._27 = Obstacles("test_object1.png", 0, screen_height-325, 75, 325) # V left bottom band
         self._28 = Obstacles("test_object1.png", screen_width-75, 0, 75, 290) # V right top band
-        self._29 = Obstacles("test_object1.png", screen_width-75, screen_height-300, 75, 325) # V right bottom band
+        self._29 = Obstacles("test_object1.png", screen_width-75, screen_height-325, 75, 325) # V right bottom band
         self._210 = Obstacles("test_object1.png", screen_width//2 - 230, 100, 470, 330) # dining table
         self._211 = Obstacles("test_object1.png", screen_width//2+150, screen_height-75, screen_width//2-150, 75) # H bottom right band
         self.houseroom2.add_obstacles([self._24, self._25, self._26, self._27, self._28, self._29, self._210, self._211])
@@ -152,8 +152,8 @@ class Overworld(Room):
         self.houseroom3.add_obstacles([self._24, self._212, self._213, self._28, self._29, self._214, self._215, self._216])
         
         self.houseroom4 = Biome("houseroom4", "floor2/houseroom4.png", [Exit(0, screen_height//2, self.houseroom2, "left", self.left_width, self.H_height)], [], False)
-        self._217 = Obstacles("test_object1.png", 0, 0, screen_width//2-100, 75) # H top left band
-        self._218 = Obstacles("test_object1.png", screen_width//2+100, 0, screen_width//2-100, 75) # H top right band
+        self._217 = Obstacles("test_object1.png", 0, 0, screen_width//2-140, 75) # H top left band
+        self._218 = Obstacles("test_object1.png", screen_width//2+150, 0, screen_width//2-150, 75) # H top right band
         self._219 = Obstacles("test_object1.png", screen_width-75, 0, 75, screen_height) # V right band
         self._220 = Obstacles("test_object1.png", 550, 280, 430, 520) # TV + couch
         self.houseroom4.add_obstacles([self._212, self._217, self._218, self._219, self._26, self._27, self._220])
@@ -237,10 +237,12 @@ class Overworld(Room):
         
         # create the rooms with obstacles
         self.schoolroom1 = Biome("schoolroom1", "floor4/schoolroom1.png", [], [], False)
-        self.left_side4 = Obstacles("test_object1.png", 0, 0, 660, screen_height)
-        self.right_side4 = Obstacles("test_object1.png", 950, 0, screen_width-950, screen_height)
+        self.left_side4 = Obstacles("test_object1.png", 0, 0, 630, screen_height)
+        self.right_side4 = Obstacles("test_object1.png", 925, 0, screen_width-925, screen_height)
         self.bottom4 = Obstacles("test_object1.png", 660, 790, 950-660, 10)
-        self.schoolroom1.add_obstacles([self.left_side4, self.right_side4, self.bottom4])
+        self.left_school_side4 = Obstacles("test_object1.png", 0, 0, 660, 430)
+        self.right_school_side4 = Obstacles("test_object1.png", 880, 0, screen_width-880, 430)
+        self.schoolroom1.add_obstacles([self.left_side4, self.right_side4, self.bottom4, self.left_school_side4, self.right_school_side4])
         
         self.schoolroom2 = Biome("schoolroom2", "floor4/schoolroom2.png", [Exit(screen_width//2, screen_height, self.schoolroom1, "down", self.V_width, self.down_height)], [], False)
         self.H_top_band4 = Obstacles("test_object1.png", 0, 0, screen_width, 100)
@@ -268,9 +270,9 @@ class Overworld(Room):
         self.schoolroom5 = Biome("schoolroom5", "floor4/schoolroom5.png", [Exit(screen_width, screen_height//2, self.schoolroom4, "right", self.right_width, self.H_height)], [], False)
         self.H_bottom_band4 = Obstacles("test_object1.png", 0, screen_height-100, screen_width, 100)
         self.V_left_band4 = Obstacles("test_object1.png", 0, 0, 100, screen_height)
-        self.left_bookcase4 = Obstacles("test_object1.png", 370, 290, 150, 190)
-        self.middle_bookcase4 = Obstacles("test_object1.png", 710, 290, 150, 190)
-        self.right_bookcase4 = Obstacles("test_object1.png", 1320, 290, 150, 190)
+        self.left_bookcase4 = Obstacles("test_object1.png", 360, 290, 140, 200)
+        self.middle_bookcase4 = Obstacles("test_object1.png", 710, 290, 140, 200)
+        self.right_bookcase4 = Obstacles("test_object1.png", 1060, 290, 140, 200)
         self.schoolroom5.add_obstacles([self.H_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_bookcase4, self.middle_bookcase4, self.right_bookcase4])
         
         self.schoolroom6 = Biome("schoolroom6", "floor4/schoolroom6.png", [Exit(screen_width, screen_height//2, self.schoolroom3, "right", self.right_width, self.H_height)], [], False)
@@ -293,7 +295,7 @@ class Overworld(Room):
         self.schoolroom9 = Biome("schoolroom9", "floor4/schoolroom9.png", [], [], False)
         self.schoolroom9.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_bottom_band4, self.V_left_band4])
         
-        self.schoolroom1.add_exits([Exit(770, 410, self.schoolroom2, "up", 110, self.up_height)])
+        self.schoolroom1.add_exits([Exit(740, 410, self.schoolroom2, "up", 90, self.up_height)])
         self.schoolroom2.add_exits([Exit(0, screen_height//2, self.schoolroom3, "left", self.left_width, self.H_height)])
         self.schoolroom3.add_exits([Exit(screen_width//2, 0, self.schoolroom4, "up", self.V_width, self.up_height), Exit(0, screen_height//2, self.schoolroom6, "left", self.left_width, self.H_height), Exit(screen_width//2, screen_height, self.schoolroom7, "down", self.V_width, self.down_height)])
         self.schoolroom4.add_exits([Exit(0, screen_height//2, self.schoolroom5, "left", self.left_width, self.H_height)])
