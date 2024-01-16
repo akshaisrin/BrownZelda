@@ -322,10 +322,16 @@ class Overworld(Room):
                 screen.fill((0, 0, 0))
                 pygame.display.update()
                 pygame.time.wait(500)
+                """
                 for i in range(30, 1, -2):
                     screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
                     pygame.display.update()
-                    pygame.time.wait(100)
+                    pygame.time.wait(150)
+                """
+                for i in range(1, 11):
+                    screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
+                    pygame.display.update()
+                    pygame.time.wait(300)
                 player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
                 return next_screen
         return None
