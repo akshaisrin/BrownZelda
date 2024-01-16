@@ -247,6 +247,8 @@ class Monster:
 
         distance = [self.projectile.shoot_coords[0] - self.monster_rectangle.x, self.projectile.shoot_coords[1] - self.monster_rectangle.y]
         norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
+        if norm==0:
+            norm = 1
         direction = [distance[0] / norm, distance[1 ] / norm]
         movement_vector = [direction[0] * speed, direction[1] * speed]
         self.projectile.projectile_rectangle.move_ip(movement_vector[0], movement_vector[1])
