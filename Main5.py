@@ -198,9 +198,9 @@ def init_home_screen():
                 curr_screen_y_pos = 0
                 keep_text_displayed = False
                 
-            dungeon = overworld.going_to_dungeon(player1, curr_screen, screen)
-            if dungeon != None:
-                curr_screen = dungeon
+            new_level = overworld.transition_next_level(player1, curr_screen, screen)
+            if new_level != None:
+                curr_screen = new_level
                 keep_text_displayed = False
                 text_index = 0
                 

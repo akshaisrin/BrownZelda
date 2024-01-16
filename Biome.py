@@ -9,14 +9,14 @@ from items.Ladoo import *
 
 class Biome(Room):
     
-    def __init__(self, name:str, file_path:str, exits:list, text:list, dungeon:bool=False, dungeon_x=None, dungeon_y=None):
+    def __init__(self, name:str, file_path:str, exits:list, text:list, last_room:bool=False, new_level_x:int=None, new_level_y:int=None):
         super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
         self.exits = exits # list of exit objects
-        self.dungeon = dungeon
-        self.dungeon_x = dungeon_x
-        self.dungeon_y = dungeon_y
+        self.last_room = last_room # whether the room is the last in the level
+        self.new_level_x = new_level_x # where the player should start after transitioning to next level (x position)
+        self.new_level_y = new_level_y # where the player should start after transitioning to next level (y position)
         self.obstacles = []
         self.obstacles_rect = []
         self.monsters = []
