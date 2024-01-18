@@ -131,9 +131,9 @@ def init_home_screen():
     sword = Sword()
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
-    test_mode = True
+    test_mode = False
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.houseroom6
     if test_mode:
         curr_screen = overworld.cricketroom1
     if curr_screen == overworld.schoolroom1:

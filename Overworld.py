@@ -14,12 +14,14 @@ from Auntieji import *
 from Exit import *
 from items.Ladoo import *
 from items.Key import *
-
+from Auntieji import *
 class Overworld(Room):
     
     def __init__(self):
         super().__init__(0, 0, 0)
-        
+        global auntie_clone1
+        global auntie_clone2
+        global auntie_clone3
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
@@ -115,21 +117,14 @@ class Overworld(Room):
         npc_cricker_player_6=CricketNPC(10.0, 9.0, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
         npc_cricker_player_6.path_coords=[(npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y), 
-                                              (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
+                                          (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
                                           (npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y+470)]
         self.cricketroom3.add_monsters([npc_cricker_player_6])
 
         npc_cricker_player_7=CricketNPC(10.0, 9.0, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
-        #auntie monsters
-        auntie1 = Auntieji(7.0, 10.0, "OG Auntie", 690, 150)
-        auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 690, 150)
-        auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 690, 150)
-        auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 690, 150)
-                
-        
-        
+    
         # initialize the second level
         
         # create the rooms with obstacles
@@ -182,8 +177,10 @@ class Overworld(Room):
         self.houseroom5.add_exits([Exit(0, 380, self.houseroom6, "left", self.left_width, self.H_height)])
         self.houseroom6.add_exits([Exit(0, 380, self.houseroom7, "left", self.left_width, self.H_height)])
         
-        
-        
+        #auntie monsters
+        auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
+        self.houseroom6.add_monsters([auntie1])
+
         
         # initialize the third level
         
@@ -307,18 +304,26 @@ class Overworld(Room):
         self.schoolroom3.add_exits([Exit(screen_width//2, 0, self.schoolroom4, "up", self.V_width, self.up_height), Exit(0, screen_height//2, self.schoolroom6, "left", self.left_width, self.H_height), Exit(screen_width//2, screen_height, self.schoolroom7, "down", self.V_width, self.down_height)])
         self.schoolroom4.add_exits([Exit(0, screen_height//2, self.schoolroom5, "left", self.left_width, self.H_height)])
         self.schoolroom7.add_exits([Exit(screen_width, screen_height//2, self.schoolroom8, "right", self.right_width, self.H_height)])
-
-
         
-        #set auntie coordinates based on player
-        def set_auntie_coordinates(self, player: Player2, auntie: Auntieji):
-            auntie.start_pos_x, auntie.start_pos_y = player.player_rectangle.x + 450, player.player_rectangle.y
-        
-        def set_auntie_clone_coords(self, player:Player2, clones: list[AuntieClone]):
-            coord_modifiers = [(0,-450), (450,0), (-450,0)]
-            i = 0
-            for clone in clones:
-                clone.start_pos_x, clone.start_pos_y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
+    auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
+    auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0)
+    auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0)
+    #add clones when auntie is at half health
+    def add_clones(self, player, clones = [auntie_clone1, auntie_clone2, auntie_clone3]):
+        self.set_auntie_clone_coords(player, clones)
+        self.houseroom6.add_monsters(clones)
+    #set auntie coordinates based on player
+    def set_auntie_coordinates(self, player: Player2, auntie: Auntieji):
+        auntie.start_pos_x, auntie.start_pos_y = player.player_rectangle.x + 450, player.player_rectangle.y
+    
+    def set_auntie_clone_coords(self, player:Player2, clones: list[AuntieClone]):
+        coord_modifiers = [(0,-450), (450,0), (-450,0)]
+        i = 0
+        for clone in clones:
+            clone.monster_rectangle.x, clone.monster_rectangle.y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
+            i+=1
+    
+
 
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
@@ -361,29 +366,13 @@ class Overworld(Room):
                     if exit.player_direction == "down":
                         change = -100
                         y_pos = screen_height
-                        corresponding_exit = None
-                        for exit in next_biome.exits:
-                            if exit[3] == "up":
-                                corresponding_exit = exit
-                        y_threshold = corresponding_exit[1]
-                        if player.player_rectangle.bottomleft[1] > y_threshold:
-                            no_no_attack = False
-                        
                     else:
                         change = 100
                         y_pos = -1 * screen_height
-                        corresponding_exit = None
-                        for exit in next_biome.exits:
-                            if exit[3] == "down":
-                                corresponding_exit = exit
-                        y_threshold = corresponding_exit[1]
-                        if player.player_rectangle.bottomleft[1] < y_threshold:
-                            no_no_attack = False
-
                     count = screen_height
                     while count > 0:
                         curr_screen_y_pos += change
-                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen, no_no_attack)
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
                         y_pos += change
                         exit.next_room.render(curr_screen_x_pos, y_pos, player, screen)
                         new_y = player.player_rectangle.topleft[1] + change
@@ -410,27 +399,13 @@ class Overworld(Room):
                     if exit.player_direction == "right":
                         change = -100
                         x_pos = screen_width
-                        corresponding_exit = None
-                        for exit in next_biome.exits:
-                            if exit[3] == "left":
-                                corresponding_exit = exit
-                        x_threshold = corresponding_exit[0]
-                        if player.player_rectangle.bottomleft[0] > x_threshold:
-                            no_no_attack = False
                     else:
                         change = 100
                         x_pos = -1 * screen_width
-                        corresponding_exit = None
-                        for exit in next_biome.exits:
-                            if exit[3] == "right":
-                                corresponding_exit = exit
-                        x_threshold = corresponding_exit[0]
-                        if player.player_rectangle.bottomright[0] < x_threshold:
-                            no_no_attack = False
                     count = screen_width
                     while count > 0:
                         curr_screen_x_pos += change
-                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen, no_no_attack)
+                        curr_biome.render(curr_screen_x_pos, curr_screen_y_pos, player, screen)
                         x_pos += change
                         exit.next_room.render(x_pos, curr_screen_y_pos, player, screen)
                         new_x = player.player_rectangle.topleft[0] + change
@@ -476,6 +451,11 @@ class Overworld(Room):
                 
                 mon_alive+=1
 
+                #find auntie
+                if isinstance(m, Auntieji):
+                    if m.are_clones:
+                        self.add_clones(player)
+                        m.are_clones = False
                 # If the player isn't attacking and they touch monster, they should take damage
 
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
@@ -528,7 +508,7 @@ class Overworld(Room):
         start_x = words_startx_starty[1]
         start_y = words_startx_starty[2]
         for i in range(1, len(words) + 1):
-            curr_biome.render(0, 0, player, screen, True)
+            curr_biome.render(0, 0, player, screen)
             for t in previous_text:
                 screen.blit(t[0], t[1])
                 pygame.display.update()

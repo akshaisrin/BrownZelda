@@ -47,3 +47,5 @@ npc_cricker_player_speed=3
 npc_cricker_player_projectile_speed=10
 
 auntie_clone_speed = 3
+auntie_projectile_speed = 13
+auntie_speed = 7

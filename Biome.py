@@ -7,6 +7,7 @@ from Player2 import *
 from Monster import *
 from items.Ladoo import *
 from items.Ingredient import *
+from Auntieji import *
 
 class Biome(Room):
     
@@ -26,11 +27,11 @@ class Biome(Room):
         self.text = text
     
     def get_image(self):
-        img = pygame.image.load(os.path.join("Assets/rooms/floor1", self.file_path))
+        img = pygame.image.load(os.path.join("Assets/rooms", self.file_path))
         image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     
-    def render(self, x_pos:int, y_pos:int, player:Player2, screen:pygame.display, no_no_attack: bool):
+    def render(self, x_pos:int, y_pos:int, player:Player2, screen:pygame.display):
         # render the screen
         image = self.get_image()
         screen.blit(image, (x_pos, y_pos))
@@ -41,8 +42,10 @@ class Biome(Room):
         # render the monsters
         for m in self.monsters:
             if m.alive:
-                if not no_no_attack:
-                    m.attack(player, screen)
+                # if isinstance(m, Auntieji):
+                #     if m.are_clones:
+                        
+                m.attack(player, screen)
                 #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
                 #m.charge_and_hit(player)
                 #m.start_moving(player)
