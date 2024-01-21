@@ -86,8 +86,7 @@ class Player2:
             self.die_and_begone(screen)
 
     def attack(self, monsters):
-        self.attacking = True
-        self.attackingtime = time.time()
+        
         for monster in monsters:
             if (self.player_rectangle.colliderect(monster.monster_rectangle)):
                 monster.get_hit(self.currentitem.power)                    

@@ -59,8 +59,8 @@ class Monster:
 
     # Monster walks towards player- this is kinda buggy so ignore for time being
         
-    def move_towards_player(self, player, speed, screen):
-        self.current_attack_damage=1
+    def move_towards_player(self, player, speed, screen, attack_damage=1):
+        self.current_attack_damage=attack_damage
 
         distance = [player.player_rectangle.x - self.monster_rectangle.x, player.player_rectangle.y - self.monster_rectangle.y]
         
@@ -196,7 +196,7 @@ class Monster:
     
     # Checks to see if player is directly facing the monster and fires a projectile
             
-    def check_if_in_line_with_player_and_shoot(self, projectile_speed, player, screen):
+    def check_if_in_line_with_player_and_shoot(self, projectile_speed, player, screen, rot=False):
 
         # If stop moving is already true, the projectile is midflight, so it continues to shoot with the same end destination
         # If stop moving is false, the monster should be moving
@@ -219,6 +219,8 @@ class Monster:
                 self.last_fired = now
                 self.stop_moving=True
                 self.realign_projectile()
+                if rot:
+                    self.projectile.rotate_towards_player(player)
                 self.shoot_straight(projectile_speed, screen)
                 self.first_time_shooting=False
 
@@ -233,9 +235,9 @@ class Monster:
         
     # Shoots a projectile in the direction of shoot_coords, which is the projectile's end destination
     
-    def walk_towards_player_and_shoot(self, player, speed, projectile_speed, screen):
+    def walk_towards_player_and_shoot(self, player, speed, projectile_speed, screen, rot=False):
         self.current_attack_damage=1
-        self.check_if_in_line_with_player_and_shoot(projectile_speed, player, screen)        
+        self.check_if_in_line_with_player_and_shoot(projectile_speed, player, screen, rot)        
         if not self.stop_moving:
             self.move_towards_player(player, speed, screen)
 

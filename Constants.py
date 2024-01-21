@@ -44,3 +44,8 @@ kohli_projectile_speed=13
 
 npc_cricker_player_speed=3
 npc_cricker_player_projectile_speed=10
+
+puri_speed=3
+puri_projectile_speed=15
+
+csp_kid_speed=6

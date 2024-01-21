@@ -1,4 +1,6 @@
 import pygame
+from Player2 import *
+import math
 
 class Projectile:
 
@@ -14,7 +16,12 @@ class Projectile:
         self.projectile_rectangle.topleft = (x_pos, y_pos)
         self.started_shooting=True
         self.shoot_coords=(0,0)
+        self.rot_img = pygame.transform.rotate(self.img,0)
     
+    def rotate_towards_player(self, player:Player2):
+        angle = 360-math.atan2(player.player_rectangle.y-300,player.player_rectangle.x-400)*180/math.pi
+        self.rot_img = pygame.transform.rotate(self.img,angle)
+        self.projectile_rectangle=self.rot_img.get_rect(center=(self.projectile_rectangle.x, self.projectile_rectangle.y))
 
     def render(self, x:float, y:float, screen:pygame.display):
         # self.x_pos=x
@@ -26,7 +33,7 @@ class Projectile:
         self.projectile_rectangle.x = x
         self.projectile_rectangle.y = y
         #pygame.draw.rect(screen, (0, 255, 0), self.projectile_rectangle)
-        screen.blit(self.img, self.projectile_rectangle)
+        screen.blit(self.rot_img, self.projectile_rectangle)
 
 
     

@@ -13,6 +13,8 @@ from CricketNPC import *
 from Exit import *
 from items.Ladoo import *
 from items.Key import *
+from Puri import *
+from Bugle import *
 
 class Overworld(Room):
     
@@ -119,6 +121,7 @@ class Overworld(Room):
 
         npc_cricker_player_7=CricketNPC(10.0, 9.0, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
+        
         
         
         
@@ -301,6 +304,8 @@ class Overworld(Room):
         self.schoolroom4.add_exits([Exit(0, screen_height//2, self.schoolroom5, "left", self.left_width, self.H_height)])
         self.schoolroom7.add_exits([Exit(screen_width, screen_height//2, self.schoolroom8, "right", self.right_width, self.H_height)])
 
+        puri=Puri(10.0,"Puri", 800, 100)
+        self.schoolroom2.add_monsters([puri])
 
 
 
@@ -411,6 +416,7 @@ class Overworld(Room):
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], y_pos)
     
     def monster_attack(self, curr_biome:Biome, player:Player2, screen:pygame.display):
+        
         monsters = curr_biome.monsters
         mon_alive = 0
 
@@ -437,6 +443,20 @@ class Overworld(Room):
                                     
                                     player.get_attacked(m.current_attack_damage, screen)
                                     m.first_time_attacking=False
+                    
+                    if isinstance(m, Puri):
+                        if not m.in_normal_cooldown:
+                            
+                            # Calculating the time between attacks again as a cooldown
+
+                            now = pygame.time.get_ticks()
+                            if now - m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                                if not m.in_hit_cooldown:
+                                    m.last_damage = now
+                                    
+                                    player.get_attacked(m.current_attack_damage, screen)
+                                    m.first_time_attacking=False
+
                     else:
 
                         # Same cooldown logic if not Kohli
@@ -450,7 +470,7 @@ class Overworld(Room):
                     
                 # Projectile is realigned and player takes damage if player gets hit by projectile
 
-                if player.player_rectangle.colliderect(m.projectile.projectile_rectangle) and m.stop_moving:
+                if player.player_rectangle.colliderect(m.projectile.projectile_rectangle):
                     m.realign_projectile()
                     m.current_attack_damage=m.projectile.damage
                     player.get_attacked(m.current_attack_damage, screen)
