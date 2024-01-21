@@ -6,7 +6,7 @@ class CricketNPC(MiniBoss):
     def __init__(self, attack_power:float, health:float, test_monster_name:str, start_pos_x:float, start_pos_y:float, main_attack:str):
         
         img=pygame.image.load(os.path.join("Assets", "cricketer" + str(random.randint(1,10)) + ".png"))
-        super().__init__(attack_power, health, img, "Cricket NPC", start_pos_x, start_pos_y, 125, 75, "cricket_ball.png", 25, 25)
+        super().__init__(attack_power, health, img, "Cricket NPC", start_pos_x, start_pos_y, 125, 75, "cricket_ball.png", 25, 25, "shoot and follow path")
         self.test_monster_name=test_monster_name
         self.main_attack=main_attack
     

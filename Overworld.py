@@ -10,17 +10,20 @@ from TestMonsterMedium import *
 from TestMonster import *
 from Kohli import *
 from CricketNPC import *
+from Auntieji import *
 from Exit import *
 from items.Ladoo import *
 from items.Key import *
 from Puri import *
 from Bugle import *
-
+from Auntieji import *
 class Overworld(Room):
     
     def __init__(self):
         super().__init__(0, 0, 0)
-        
+        global auntie_clone1
+        global auntie_clone2
+        global auntie_clone3
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
         
@@ -69,13 +72,14 @@ class Overworld(Room):
         self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
-        self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
+        self.block_key = Obstacles("test_object1.png", 0, 0, screen_width, 150)
+        self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18, self.block_key])
         self.cricketroom2.add_key(Key(self.cricketroom3, 800, 400, 800, 100))
 
         self.cricketroom4 = Biome("cricketroom4", "floor1/cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", self.V_width, self.down_height)], [], False)
         self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
-        self.cricketroom5 = Biome("cricketroom5", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom4, "down", self.V_width, self.down_height)], [], False)
+        self.cricketroom5 = Biome("cricketroom5", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom4, "down", self.V_width, self.down_height)], [], True, screen_width//2, 650)
         self.cricketroom5.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         self.room1.add_exits([Exit(screen_width, 380, self.room2, "right", self.right_width, self.H_height)])
@@ -85,8 +89,8 @@ class Overworld(Room):
         self.cricketroom4.add_exits([Exit(800, 0, self.cricketroom5, "up", self.V_width, self.up_height)])
         
         # create a monster
-        monster1=Kohli(10.0,"Kohli", 800, 100)
-        self.cricketroom4.add_monsters([monster1])
+        self.monster1=Kohli(10.0,"Kohli", 800, 100)
+        self.cricketroom4.add_monsters([self.monster1])
 
         npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
         npc_cricker_player_1.path_coords=[(npc_cricker_player_1.start_pos_x, npc_cricker_player_1.start_pos_y), 
@@ -125,7 +129,7 @@ class Overworld(Room):
         
         
         
-        
+    
         # initialize the second level
         
         # create the rooms with obstacles
@@ -178,8 +182,10 @@ class Overworld(Room):
         self.houseroom5.add_exits([Exit(0, 380, self.houseroom6, "left", self.left_width, self.H_height)])
         self.houseroom6.add_exits([Exit(0, 380, self.houseroom7, "left", self.left_width, self.H_height)])
         
-        
-        
+        #auntie monsters
+        auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
+        self.houseroom6.add_monsters([auntie1])
+
         
         # initialize the third level
         
@@ -306,7 +312,26 @@ class Overworld(Room):
 
         puri=Puri(10.0,"Puri", 800, 100)
         self.schoolroom2.add_monsters([puri])
-
+        
+        
+    auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
+    auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0)
+    auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0)
+    #add clones when auntie is at half health
+    def add_clones(self, player, clones = [auntie_clone1, auntie_clone2, auntie_clone3]):
+        self.set_auntie_clone_coords(player, clones)
+        self.houseroom6.add_monsters(clones)
+    #set auntie coordinates based on player
+    def set_auntie_coordinates(self, player: Player2, auntie: Auntieji):
+        auntie.start_pos_x, auntie.start_pos_y = player.player_rectangle.x + 450, player.player_rectangle.y
+    
+    def set_auntie_clone_coords(self, player:Player2, clones: list[AuntieClone]):
+        coord_modifiers = [(0,-450), (450,0), (-450,0)]
+        i = 0
+        for clone in clones:
+            clone.monster_rectangle.x, clone.monster_rectangle.y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
+            i+=1
+    
 
 
     def game_over(self, screen:pygame.display):
@@ -315,26 +340,36 @@ class Overworld(Room):
         screen.blit(image, (0, 0))
         pygame.display.update()
         
-    def going_to_dungeon(self, player:Player2, biome:Biome, screen:pygame.display):
-        if biome.dungeon:
-            if (player.player_rectangle.topleft[0] < biome.dungeon_x + 10 and player.player_rectangle.topleft[0] > biome.dungeon_x - 10) and (player.player_rectangle.topleft[1] < biome.dungeon_y + 10 and player.player_rectangle.topleft[1] > biome.dungeon_y - 10):
-                image = self.dungeon.get_image()
+    def transition_next_level(self, player:Player2, curr_screen:Biome, screen:pygame.display):
+        if curr_screen.last_room:
+            monster = None
+            if curr_screen == self.cricketroom5:
+                monster = self.monster1
+                next_screen = self.houseroom1
+            if not monster.alive:
+                image = next_screen.get_image()
                 screen.fill((0, 0, 0))
                 pygame.display.update()
                 pygame.time.wait(500)
+                """
                 for i in range(30, 1, -2):
-                    screen.blit(image, (int((screen_width - screen_width/i)/2), 0), (int((screen_width - screen_width/i)/2), 0, int(screen_width/i), screen_height))
+                    screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
                     pygame.display.update()
-                    pygame.time.wait(100)
-                # player.player_rectangle.topleft(dungeon_x_pos, dungeon_y_pos)
-                player.player_rectangle.topleft = (1200, 250)
-                return self.dungeon
+                    pygame.time.wait(150)
+                """
+                for i in range(1, 11):
+                    screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
+                    pygame.display.update()
+                    pygame.time.wait(300)
+                player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
+                return next_screen
         return None
     
     def going_to_next_biome(self, player:Player2, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
         curr_biome = biome
         for exit in curr_biome.exits:
             if (player.player_rectangle.topleft[0] < exit.x + exit.width and player.player_rectangle.topleft[0] > exit.x - exit.width) and (player.player_rectangle.topleft[1] < exit.y + exit.height and player.player_rectangle.topleft[1] > exit.y - exit.height):
+                curr_health = player.health_bar
                 # moving down or up
                 if (exit.player_direction == "down" or exit.player_direction == "up"):
                     if exit.player_direction == "down":
@@ -395,6 +430,7 @@ class Overworld(Room):
                     if curr_biome == self.galaroom3 and exit.player_direction == "left":
                         player.player_rectangle.topleft = (1140, player.player_rectangle.topleft[1])
                 exit.next_room.render(0, 0, player, screen)
+                player.health_bar = curr_health
                 return exit.next_room
         return None
     
@@ -425,6 +461,11 @@ class Overworld(Room):
                 
                 mon_alive+=1
 
+                #find auntie
+                if isinstance(m, Auntieji):
+                    if m.are_clones:
+                        self.add_clones(player)
+                        m.are_clones = False
                 # If the player isn't attacking and they touch monster, they should take damage
 
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
@@ -525,6 +566,8 @@ class Overworld(Room):
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
+                del biome.obstacles[-1]
+                del biome.obstacles_rect[-1]
                 break
 
     def flykey(self, biome, player, key, screen, i):

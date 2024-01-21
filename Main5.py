@@ -132,6 +132,7 @@ def init_home_screen():
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
     test_mode = False
+    test_mode = False
     overworld = Overworld()
     curr_screen = overworld.schoolroom1
     if test_mode:
@@ -160,6 +161,8 @@ def init_home_screen():
     text_index = 0
     texts = []
     display_count = 0
+
+    timestart = time.time()
 
 
     while gameLoop:
@@ -198,9 +201,9 @@ def init_home_screen():
                 curr_screen_y_pos = 0
                 keep_text_displayed = False
                 
-            dungeon = overworld.going_to_dungeon(player1, curr_screen, screen)
-            if dungeon != None:
-                curr_screen = dungeon
+            new_level = overworld.transition_next_level(player1, curr_screen, screen)
+            if new_level != None:
+                curr_screen = new_level
                 keep_text_displayed = False
                 text_index = 0
                 
