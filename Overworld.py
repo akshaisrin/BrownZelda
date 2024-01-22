@@ -74,7 +74,6 @@ class Overworld(Room):
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.block_key = Obstacles("test_object1.png", 0, 0, screen_width, 150)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18, self.block_key])
-        self.cricketroom2.add_key(Key(self.cricketroom3, 800, 400, 800, 100))
 
         self.cricketroom4 = Biome("cricketroom4", "floor1/cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", self.V_width, self.down_height)], [], False)
         self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
@@ -127,7 +126,7 @@ class Overworld(Room):
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
         
-        
+        self.floor1rooms = [self.room1, self.room2, self.cricketroom1, self.cricketroom2, self.cricketroom3, self.cricketroom4, self.cricketroom5]
         
     
         # initialize the second level
@@ -186,6 +185,7 @@ class Overworld(Room):
         auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
         self.houseroom6.add_monsters([auntie1])
 
+        self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
         # initialize the third level
         
@@ -239,7 +239,7 @@ class Overworld(Room):
         self.galaroom4.add_exits([Exit(0, screen_height//2, self.galaroom5, "left", self.left_width, self.H_height), Exit(screen_width, screen_height//2, self.galaroom6, "right", self.right_width, self.H_height)])
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
-        
+        self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]
         
         
         # initialize the fourth level
@@ -312,6 +312,8 @@ class Overworld(Room):
 
         puri=Puri(10.0,"Puri", 800, 100)
         self.schoolroom2.add_monsters([puri])
+
+        self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         
         
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
@@ -580,5 +582,60 @@ class Overworld(Room):
         biome.render(0, 0, player, screen)
         key.render(screen)
         pygame.display.update()
-        pygame.time.wait(300)
+        pygame.time.wait(200)
+    
+    def nomonstersalive(self, biome):
+        for m in biome.monsters:
+            if m.alive:
+                return False
+        return True
+
+    def monsterkeydrop(self, player, biome):
+        for m in biome.monsters:
+            if m.alive:
+                return
+            if m.monster_type == "Mini Boss":
+                if len(player.key_inventory) == 0 and biome.name.startswith("cricket"):
+                    if random.randint(0, 9) > 7:
+                        biome.add_key(Key(self.cricketroom3, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
+                elif len(player.key_inventory) == 0 and biome.name.startswith("house"):
+                    if random.randint(0, 9) > 7:
+                        biome.add_key(Key(self.houseroom4, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
+                elif len(player.key_inventory) == 0 and biome.name.startswith("gala"):
+                    if random.randint(0, 9) > 7:
+                        biome.add_key(Key(self.galaroom4, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
+                elif len(player.key_inventory) == 0 and biome.name.startswith("schoolroom6"):
+                    if random.randint(0, 9) > 7:
+                        biome.add_key(Key(self.schoolroom7, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
+                elif len(player.key_inventory) == 0 and biome.name.startswith("school"):
+                    if random.randint(0, 9) > 7:
+                        biome.add_key(Key(self.schoolroom3, m.monster_rectangle.x, m.monster_rectangle.y, 100, 400))
+            else:
+                if biome.name.startswith("cricket"):
+                    biome.add_key(Key(self.cricketroom4, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
+                elif biome.name.startswith("house"):
+                    biome.add_key(Key(self.houseroom6, m.monster_rectangle.x, m.monster_rectangle.y, 100, 400))
+                elif biome.name.startswith("gala"):
+                    biome.add_key(Key(self.galaroom6, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
+
+
+    def keydrop(self, player, biome):
+        if biome in self.floor1rooms:
+            if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
+                if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3):
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
+            elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
+                if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4):
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
+            elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4":
+                if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4):
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
+            elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
+                if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7):
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x, player.player_rectangle.y, 100, 400))
+            elif biome.name == "schoolroom6":
+                if self.nomonstersalive(self.schoolroom6):
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
+
+
         

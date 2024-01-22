@@ -8,6 +8,7 @@ from Monster import *
 from items.Ladoo import *
 from items.Ingredient import *
 from Auntieji import *
+from items.Key import *
 
 class Biome(Room):
     

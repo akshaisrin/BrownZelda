@@ -171,6 +171,7 @@ def init_home_screen():
         overworld.picksupitems(player1, curr_screen)
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
+        overworld.keydrop(player1, curr_screen)
 
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
@@ -267,6 +268,7 @@ def init_home_screen():
                 pygame.quit()
                 sys.exit()
 
+        overworld.monsterkeydrop(player1, curr_screen)
         player1.handlemove(direction, framecounter, firstchange)
         player1.renderhealth(10, 10, screen)
         firstchange = False
