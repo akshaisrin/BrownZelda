@@ -257,7 +257,7 @@ def init_home_screen():
                 elif event.key == pygame.K_DOWN:
                     player1.current_frame = 9
                     direction = None
-                elif (event.key == pygame.K_SPACE) and not sword.attacking:
+                elif (event.key == pygame.K_SPACE) and not player1.attacking:
                     player1.attacking = True
                     player1.attackingtime = time.time()
                     player1.attack(curr_screen.monsters) 

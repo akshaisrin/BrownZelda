@@ -27,6 +27,16 @@ class Monster:
         self.patrol_constant=Constants.reg_patrol_constant
         self.projectile_constant=Constants.reg_projectile_constant
 
+        self.attacked = False
+        self.attacktime = None
+        #create a version of the image that is fused white within pygame
+        rect = self.img.get_rect()
+        dsurface = self.img.copy()
+        wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
+        wsurface.fill((255, 255, 255, 128))
+        dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
+        self.attackimg = dsurface
+
         # Stuff for patrolling/path following
 
         self.patrol_vector=(0,0)
@@ -260,6 +270,12 @@ class Monster:
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         
         image = pygame.transform.scale(self.img, (width, height))
+        if self.attacked:
+            elapsedTime = time.time() - self.attacktime
+            if elapsedTime > 0.25:
+                self.attacked = False
+            if elapsedTime % 0.1 <= 0.05:
+                image = pygame.transform.scale(self.attackimg, (width, height))
         self.monster_rectangle = image.get_rect()
         self.monster_rectangle.topleft = (x_pos, y_pos)
         #pygame.draw.rect(screen, (0,255,0), self.monster_rectangle)
@@ -268,6 +284,8 @@ class Monster:
     def get_hit(self, damage:float):
         
         self.health-=damage
+        self.attacked = True
+        self.attacktime = time.time()
         print("got hit")
         if self.health<=0:
             self.die()
