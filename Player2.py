@@ -100,6 +100,7 @@ class Player2:
             if (self.health_bar>self.original_health):
                 self.health_bar=self.original_health
             item.used=True
+    
 
     def get_key(self, key):
         if (self.player_rectangle.colliderect(key.key_rectangle)):

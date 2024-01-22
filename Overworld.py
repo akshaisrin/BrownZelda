@@ -552,7 +552,8 @@ class Overworld(Room):
 
     def picksupitems(self, player:Player2, biome:Biome):
         for item in biome.items:
-            if item.item_type == "ingredient":
+            if item.used = False and item.item_type == "ingredient" and player.player_rectangle.colliderect(item.item_rectangle):
+                item.used = True
                 player.teleport()
             else: player.get_healed(item)
 
