@@ -3,8 +3,8 @@ import os
 from items.Item import Item
 
 class Ingredient(Item):
-    def __init__(self, x_pos, y_pos) -> None:
-        ingredientimg=pygame.image.load(os.path.join("Assets", "ladoo.png"))
+    def __init__(self, file_path, x_pos, y_pos) -> None:
+        ingredientimg=pygame.image.load(os.path.join("Assets", file_path))
         self.x_pos = x_pos
         self.y_pos = y_pos
         #adjust the item rectangle to the xpos and ypos

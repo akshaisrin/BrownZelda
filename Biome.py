@@ -94,8 +94,8 @@ class Biome(Room):
                         break
             self.items.append(Ladoo(x_pos, y_pos))
     
-    def add_ingredient(self, x_pos, y_pos):
-        self.items.append(Ingredient(x_pos, y_pos))
+    def add_ingredient(self, ingredient):
+        self.items.append(ingredient)
 
     def is_valid_spawn(self, x_pos, y_pos):
         for obstacle in self.obstacles_rect:

@@ -80,6 +80,7 @@ class Overworld(Room):
         
         self.cricketroom5 = Biome("cricketroom5", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom4, "down", self.V_width, self.down_height)], [], True, screen_width//2, 650)
         self.cricketroom5.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
+        self.cricketroom5.add_ingredient(Ingredient("chutney.png", 800, 400))
         
         self.room1.add_exits([Exit(screen_width, 380, self.room2, "right", self.right_width, self.H_height)])
         self.room2.add_exits([Exit(1000, 185, self.cricketroom1, "up", self.V_width, self.down_height)])
@@ -180,6 +181,7 @@ class Overworld(Room):
         self.houseroom4.add_exits([Exit(770, 0, self.houseroom5, "up", self.V_width, self.up_height)])
         self.houseroom5.add_exits([Exit(0, 380, self.houseroom6, "left", self.left_width, self.H_height)])
         self.houseroom6.add_exits([Exit(0, 380, self.houseroom7, "left", self.left_width, self.H_height)])
+        self.houseroom6.add_ingredient(Ingredient("flour.png", 800, 400))
         
         #auntie monsters
         auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
@@ -232,6 +234,7 @@ class Overworld(Room):
         self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [], False)    
         self.V_right_band3 = Obstacles("test_object1.png", screen_width-105, 0, 105, screen_height)
         self.galaroom7.add_obstacles([self.H_top_band3, self.V_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
+        self.galaroom7.add_ingredient(Ingredient("potato.png", 800, 400))
         
         self.galaroom1.add_exits([Exit(screen_width//2, 0, self.galaroom2, "up", 500, self.up_height)])
         self.galaroom2.add_exits([Exit(1231, screen_height//2, self.galaroom3, "right", self.right_width, self.H_height)])
@@ -549,7 +552,9 @@ class Overworld(Room):
 
     def picksupitems(self, player:Player2, biome:Biome):
         for item in biome.items:
-            player.get_healed(item)
+            if item.item_type == "ingredient":
+                player.teleport()
+            else: player.get_healed(item)
 
     def pickupkeys(self, player:Player2, biome:Biome):
         for key in biome.keys:
