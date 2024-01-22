@@ -5,6 +5,7 @@ import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
 from screens.InstructionsScreen import InstructionsScreen
+from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
 from TestMonster import *
@@ -122,8 +123,6 @@ def init_instructions_screen():
             current_screen.display(elapsedTime)
         pygame.display.update()
         
-def slowtextdisplay():
-    pass
         
 def init_home_screen():
     clock = pygame.time.Clock()
@@ -274,8 +273,37 @@ def init_home_screen():
         firstchange = False
         
         pygame.display.update()
+    
+def init_final_screen():
+    current_screen = FinalScreen(screen)
+    finalscreenstarttime = time.time()
+
+    pygame.mixer.music.load(os.path.join("Assets", "originalzeldatitlemusic.mp3"))  
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play()
+
+    gameLoop = True
+    while gameLoop:
+        elapsedTime = time.time() - finalscreenstarttime
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                gameLoop = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pygame.mixer.music.stop()
+                    gameLoop = False
+
+        if elapsedTime > 59:
+            pygame.mixer.music.stop()
+            gameLoop = False
+        elif elapsedTime > 55:
+            current_screen.displayfade(elapsedTime - 55)
+        else:
+            current_screen.display(elapsedTime)
+        pygame.display.update()
         
 # init_loading_screen()
 # init_instructions_screen()
 init_home_screen()
+# init_final_screen()
 
