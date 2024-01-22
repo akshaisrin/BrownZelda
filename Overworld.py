@@ -561,9 +561,14 @@ class Overworld(Room):
         for key in biome.keys:
             player.get_key(key)
 
+    def notunlocked(self, biome):
+        if biome.file_path[-12:-4] != "unlocked":
+            return True
+        return False
+
     def unlockroom(self, player, biome, screen):
-        for key in player.key_inventory:
-            if not key.used and key.biomeunlock == biome:
+        for key in player.key_inventory:            
+            if not key.used and key.biomeunlock == biome and self.notunlocked(biome):
                 #reset biome.file_path to unlocked version (should be initial file path + unlocked)
                 player.key_inventory.remove(key)
                 key.used = True
@@ -604,16 +609,16 @@ class Overworld(Room):
                 if len(player.key_inventory) == 0 and biome.name.startswith("cricket"):
                     if random.randint(0, 9) > 7:
                         biome.add_key(Key(self.cricketroom3, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
-                elif len(player.key_inventory) == 0 and biome.name.startswith("house"):
+                elif len(player.key_inventory) == 0 and biome.name.startswith("house") and self.notunlocked(self.cricketroom3):
                     if random.randint(0, 9) > 7:
                         biome.add_key(Key(self.houseroom4, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
-                elif len(player.key_inventory) == 0 and biome.name.startswith("gala"):
+                elif len(player.key_inventory) == 0 and biome.name.startswith("gala") and self.notunlocked(self.galaroom4):
                     if random.randint(0, 9) > 7:
                         biome.add_key(Key(self.galaroom4, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
-                elif len(player.key_inventory) == 0 and biome.name.startswith("schoolroom6"):
+                elif len(player.key_inventory) == 0 and biome.name.startswith("schoolroom6") and self.notunlocked(self.schoolroom6):
                     if random.randint(0, 9) > 7:
                         biome.add_key(Key(self.schoolroom7, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
-                elif len(player.key_inventory) == 0 and biome.name.startswith("school"):
+                elif len(player.key_inventory) == 0 and biome.name.startswith("school") and self.notunlocked(self.schoolroom3):
                     if random.randint(0, 9) > 7:
                         biome.add_key(Key(self.schoolroom3, m.monster_rectangle.x, m.monster_rectangle.y, 100, 400))
             else:
@@ -628,19 +633,19 @@ class Overworld(Room):
     def keydrop(self, player, biome):
         if biome in self.floor1rooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
-                if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3):
+                if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
                     biome.add_key(Key(self.cricketroom3, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
-                if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4):
+                if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
                     biome.add_key(Key(self.houseroom4, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4":
-                if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4):
+                if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.notunlocked(self.galaroom4):
                     biome.add_key(Key(self.galaroom4, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
-                if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7):
+                if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
                     biome.add_key(Key(self.schoolroom3, player.player_rectangle.x, player.player_rectangle.y, 100, 400))
             elif biome.name == "schoolroom6":
-                if self.nomonstersalive(self.schoolroom6):
+                if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
 
 
