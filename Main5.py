@@ -130,7 +130,7 @@ def init_home_screen():
     
     test_mode = True
     overworld = Overworld()
-    curr_screen = overworld.cricketroom4
+    curr_screen = overworld.cricketroom1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -202,6 +202,12 @@ def init_home_screen():
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
                 
+        if player1.check_checkpoint():
+            screen_before_death = curr_screen
+            curr_screen = overworld.game_over_screen
+            player1.checkpoint = False
+            respawn = True
+                
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
         # player contorls
@@ -243,19 +249,19 @@ def init_home_screen():
                     direction = "down"
                     firstchange = True
                 elif event.key == pygame.K_k:
-                    if player1.check_checkpoint():
-                        if curr_screen.name[0:4] == "cric":
+                    if respawn:
+                        if screen_before_death.name[0:4] == "cric":
                             curr_screen = overworld.room1
-                        elif curr_screen.name[0:4] == "hous":
+                        elif screen_before_death.name[0:4] == "hous":
                             curr_screen = overworld.houseroom1
-                        elif curr_screen.name[0:4] == "gala":
+                        elif screen_before_death.name[0:4] == "gala":
                             curr_screen = overworld.galaroom1
                         else:
                             curr_screen = overworld.schoolroom1
                         keep_text_displayed = False
                         text_index = 0
                         player1.health_bar = 5
-                        player1.checkpoint = False
+                        respawn = False
                         
             
             elif event.type == pygame.KEYUP:

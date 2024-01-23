@@ -26,8 +26,12 @@ class Overworld(Room):
         global auntie_clone1
         global auntie_clone2
         global auntie_clone3
+        
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
+        
+        # game over screen
+        self.game_over_screen = Biome("game_over", "game_over_screen.png", [], [], False)
         
         # create exit constants
         self.left_width = 10
@@ -35,8 +39,7 @@ class Overworld(Room):
         self.H_height = 150
         self.V_width = 150
         self.up_height = 10
-        self.down_height = 35
-        
+        self.down_height = 35        
         
         # initialize the first level
         
@@ -447,7 +450,7 @@ class Overworld(Room):
     burnie2 = Obstacles("burnie_sanders.png", 300, 300, 100, 100)
     burnie3 = Obstacles("burnie_sanders.png", 100, 500, 100, 100)
         
-    def add_burnie_sanders(self, screen, burnies: list[Obstacles] = [burnie1, burnie2, burnie3]):
+    def add_burnie_sanders(self, screen, burnies:list = [burnie1, burnie2, burnie3]):
         self.galaroom3.add_obstacles_with_img(burnies, screen)
     
     
@@ -463,7 +466,7 @@ class Overworld(Room):
             if curr_screen == self.cricketroom5:
                 monster = self.monster1
                 next_screen = self.houseroom1
-            if curr_screen == self.houseroom1:
+            elif curr_screen == self.houseroom1:
                 next_screen = self.galaroom1
             else:
                 next_screen = self.schoolroom1
@@ -695,7 +698,6 @@ class Overworld(Room):
                 return next_screen
             else: 
                 player.get_healed(item)
-                return None
 
     def pickupkeys(self, player:Player2, biome:Biome):
         for key in biome.keys:
