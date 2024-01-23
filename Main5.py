@@ -8,8 +8,6 @@ from screens.InstructionsScreen import InstructionsScreen
 from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
-from TestMonster import *
-from TestMonsterMedium import *
 #from inputs import get_gamepad
 #from XBoxController import *
 from Player2 import *
@@ -148,7 +146,6 @@ def init_home_screen():
     except:
         controller_detected=False
     # Establishing game loop to keep screen running
-    
     """
 
     gameLoop = True

@@ -6,8 +6,6 @@ from Biome import *
 from Player2 import *
 from Obstacles import *
 from Monster import *
-from TestMonsterMedium import *
-from TestMonster import *
 from Kohli import *
 from CricketNPC import *
 from Auntieji import *
