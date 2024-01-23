@@ -130,7 +130,7 @@ def init_home_screen():
     sword = Sword()
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
-    test_mode = False
+    test_mode = True
     overworld = Overworld()
     curr_screen = overworld.schoolroom9
     if test_mode:
@@ -167,7 +167,7 @@ def init_home_screen():
         clock.tick(30)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_screen)
-        overworld.picksupitems(player1, curr_screen)
+        overworld.picksupitems(player1, curr_screen, screen)
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
         overworld.keydrop(player1, curr_screen)
