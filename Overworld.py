@@ -19,6 +19,7 @@ from Bugle import *
 from Auntieji import *
 from CSPKid import *
 
+from SRK import *
 class Overworld(Room):
     
     def __init__(self):
@@ -190,7 +191,6 @@ class Overworld(Room):
         #auntie monsters
         auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
         self.houseroom6.add_monsters([auntie1])
-
         self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
         # initialize the third level
@@ -247,9 +247,11 @@ class Overworld(Room):
         self.galaroom4.add_exits([Exit(0, screen_height//2, self.galaroom5, "left", self.left_width, self.H_height), Exit(screen_width, screen_height//2, self.galaroom6, "right", self.right_width, self.H_height)])
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
-        self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]
+        self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
+        shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
+        self.galaroom3.add_monsters([shah_rukh])
         
-        
+
         # initialize the fourth level
         
         # create the rooms with obstacles
@@ -411,6 +413,8 @@ class Overworld(Room):
         self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         
         
+        
+
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
     auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0)
     auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0)
@@ -429,8 +433,15 @@ class Overworld(Room):
             clone.monster_rectangle.x, clone.monster_rectangle.y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
             i+=1
     
-
-
+    # add burnie obstacles
+    burnie1 = Obstacles("burnie_sanders.png", 100, 200, 100, 100)
+    burnie2 = Obstacles("burnie_sanders.png", 300, 300, 100, 100)
+    burnie3 = Obstacles("burnie_sanders.png", 100, 500, 100, 100)
+        
+    def add_burnie_sanders(self, screen, burnies: list[Obstacles] = [burnie1, burnie2, burnie3]):
+        self.galaroom3.add_obstacles_with_img(burnies, screen)
+    
+    
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.png"))
         image = pygame.transform.scale(img, (screen_width, screen_height))
@@ -564,6 +575,27 @@ class Overworld(Room):
                     if m.are_clones:
                         self.add_clones(player)
                         m.are_clones = False
+
+                # #find SRK
+                if isinstance(m, SRK):
+                    if m.add_burnie:
+                        self.add_burnie_sanders(screen)
+                        print("burnies have been added")
+                        m.add_burnie = False
+
+                # check if paralyzing to spam SRK shirtless image
+                    if m.paralyzing:
+                        srk_img = pygame.image.load(os.path.join("Assets/", "funny_SRK_img.png"))
+                        image = pygame.transform.scale(srk_img, (100, 100))
+                        screen.blit(image, (0,0))
+                        screen.blit(image, (0, 400))
+                        screen.blit(image, (600, 0))
+                        screen.blit(image, (0,400))
+
+                #if player kills srk while in paralyze, unparalyze
+                    if not m.alive:
+                        m.paralyzing = False
+
                 # If the player isn't attacking and they touch monster, they should take damage
 
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:

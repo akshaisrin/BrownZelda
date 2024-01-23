@@ -66,7 +66,7 @@ class Player2:
         self.original_health=health_bar
         self.health_bar = self.original_health
         self.wealth = wealth
-    
+        self.is_paralyzed = False
         
     def select_item(self, item:str):
         if item in self.inventory:
@@ -131,6 +131,8 @@ class Player2:
         # self.z_pos = self.curr_checkpoint[2]
 
     def handlemove(self, direction, framecounter, firstchange): 
+        if self.is_paralyzed:
+            return
         if self.attacking: 
             return
         self.direction = direction

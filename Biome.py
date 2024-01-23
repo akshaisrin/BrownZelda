@@ -22,6 +22,7 @@ class Biome(Room):
         self.new_level_y = new_level_y # where the player should start after transitioning to next level (y position)
         self.obstacles = []
         self.obstacles_rect = []
+        self.obstacles_with_img = []
         self.monsters = []
         self.items = []
         self.keys = []
@@ -37,6 +38,8 @@ class Biome(Room):
         image = self.get_image()
         screen.blit(image, (x_pos, y_pos))
         # render the obstacles
+        for o in self.obstacles_with_img:
+            screen.blit(o.get_image(), (o.x, o.y))
         #for o in self.obstacles:
             #screen.blit(o.get_image(), (o.x, x_pos + o.y))
         # render the player
@@ -73,7 +76,24 @@ class Biome(Room):
             rect[0] = o.x
             rect[1] = o.y
             self.obstacles_rect.append(rect)
-            
+
+    def add_obstacles_with_img(self, obstacles_with_img:list, screen):
+        # for o in obstacles_with_img:
+        #     self.obstacles.append(o)
+        #     img = o.get_image()
+        #     rect = o.get_image().get_rect()
+        #     rect[0] = o.x
+        #     rect[1] = o.y
+        #     if render_img:
+        #         screen.blit(img, (rect[0], rect[1]))
+        for o in obstacles_with_img:
+            self.obstacles_with_img.append(o)
+            rect = o.get_image().get_rect()
+            rect[0] = o.x
+            rect[1] = o.y
+            self.obstacles_rect.append(rect)
+
+
     def add_monsters(self, monsters:list):
         self.monsters += monsters
         

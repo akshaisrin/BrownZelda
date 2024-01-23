@@ -98,7 +98,7 @@ def init_loading_screen():
 
 
 def init_instructions_screen():
-    current_screen = InstructionsScreen(screen)
+    current_screen = InstructionsScreen(screen) 
     instructionsscreenstarttime = time.time()
 
     gameLoop = True
@@ -132,7 +132,7 @@ def init_home_screen():
     
     test_mode = True
     overworld = Overworld()
-    curr_screen = overworld.schoolroom9
+    curr_screen = overworld.galaroom3
     if test_mode:
         curr_screen = overworld.cricketroom1
     if curr_screen == overworld.schoolroom1:
@@ -186,7 +186,7 @@ def init_home_screen():
                 screen.blit(t[0], t[1])
             if display_count == 1:
                 display_count = 0
-                text_index += 1
+                text_index += 1 
                 display_text = True
         
         if curr_screen != None:
