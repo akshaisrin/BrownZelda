@@ -8,8 +8,6 @@ from screens.InstructionsScreen import InstructionsScreen
 from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
-from TestMonster import *
-from TestMonsterMedium import *
 #from inputs import get_gamepad
 #from XBoxController import *
 from Player2 import *
@@ -98,7 +96,7 @@ def init_loading_screen():
 
 
 def init_instructions_screen():
-    current_screen = InstructionsScreen(screen)
+    current_screen = InstructionsScreen(screen) 
     instructionsscreenstarttime = time.time()
 
     gameLoop = True
@@ -132,9 +130,11 @@ def init_home_screen():
     
     test_mode = True
     overworld = Overworld()
+    curr_screen = overworld.cricketroom1
     curr_screen = overworld.room1
     if test_mode:
         curr_screen = overworld.cricketroom1
+        overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
     if curr_screen == overworld.schoolroom1:
         player1.player_rectangle.topleft = (750, 700)
         
@@ -147,7 +147,6 @@ def init_home_screen():
     except:
         controller_detected=False
     # Establishing game loop to keep screen running
-    
     """
 
     gameLoop = True
@@ -167,7 +166,12 @@ def init_home_screen():
         clock.tick(30)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_screen)
-        overworld.picksupitems(player1, curr_screen, screen)
+        next_screen = overworld.picksupitems(player1, curr_screen, screen)
+        if next_screen != None:
+            curr_screen = next_screen
+            keep_text_displayed = False
+            text_index = 0
+            texts = []
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
         overworld.keydrop(player1, curr_screen)
@@ -186,7 +190,7 @@ def init_home_screen():
                 screen.blit(t[0], t[1])
             if display_count == 1:
                 display_count = 0
-                text_index += 1
+                text_index += 1 
                 display_text = True
         
         if curr_screen != None:
@@ -198,13 +202,12 @@ def init_home_screen():
                 curr_screen = new_screen
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
-                keep_text_displayed = False
                 
-            new_level = overworld.transition_next_level(player1, curr_screen, screen)
-            if new_level != None:
-                curr_screen = new_level
-                keep_text_displayed = False
-                text_index = 0
+        if player1.check_checkpoint():
+            screen_before_death = curr_screen
+            curr_screen = overworld.game_over_screen
+            player1.checkpoint = False
+            respawn = True
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -246,6 +249,21 @@ def init_home_screen():
                 elif event.key == pygame.K_DOWN: 
                     direction = "down"
                     firstchange = True
+                elif event.key == pygame.K_k:
+                    if respawn:
+                        if screen_before_death.name[0:4] == "cric":
+                            curr_screen = overworld.room1
+                        elif screen_before_death.name[0:4] == "hous":
+                            curr_screen = overworld.houseroom1
+                        elif screen_before_death.name[0:4] == "gala":
+                            curr_screen = overworld.galaroom1
+                        else:
+                            curr_screen = overworld.schoolroom1
+                        keep_text_displayed = False
+                        text_index = 0
+                        player1.health_bar = 5
+                        respawn = False
+                        
             
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:

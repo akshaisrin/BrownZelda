@@ -64,4 +64,8 @@ auntie_clone_speed = 3
 auntie_projectile_speed = 13
 auntie_speed = 7
 
+SRK_speed = 6
+SRK_projectile_speed = 13
 
+paparazzi_speed = 3
+paparazzi_proj_speed = 12

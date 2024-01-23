@@ -49,7 +49,7 @@ class Auntieji(MediumBoss):
     # clone1.render(ac1_x, ac1_y, 100, 100, screen)
     
     def attack(self, player, screen):
-        self.walk_towards_player_and_shoot(player, auntie_speed, auntie_projectile_speed, screen)
+        self.walk_towards_player_and_shoot(player, Constants.auntie_speed, Constants.auntie_projectile_speed, screen)
 
         if self.health== self.og_health//2 and self.clone_happened == False:
             self.are_clones = True

@@ -206,7 +206,7 @@ class Monster:
     
     # Checks to see if player is directly facing the monster and fires a projectile
             
-    def check_if_in_line_with_player_and_shoot(self, projectile_speed, player, screen, rot=False):
+    def check_if_in_line_with_player_and_shoot(self, projectile_speed, player, screen, rot=False, SRK_paralyze = False):
 
         # If stop moving is already true, the projectile is midflight, so it continues to shoot with the same end destination
         # If stop moving is false, the monster should be moving
@@ -216,12 +216,12 @@ class Monster:
 
         # Checks to see if the player is directly facing the monster
 
-        elif (abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=player.player_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2) and not self.stop_moving:
+        elif ((abs(player.player_rectangle.centery-self.monster_rectangle.centery)<=player.player_rectangle.height/2 or abs(player.player_rectangle.centerx-self.monster_rectangle.centerx)<=self.monster_rectangle.width/2) or SRK_paralyze) and not self.stop_moving:
             now = pygame.time.get_ticks()
             
             # Sets the projectile's new end destination as the player's updated location
             
-            self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
+            self.projectile.shoot_coords=(player.player_rectangle.centerx, player.player_rectangle.centery)
 
             # Calculates the time interval between when it last shot a projectile as an shooting cooldown to make it easier for player
 
@@ -237,17 +237,21 @@ class Monster:
         # Checks to see if projectile is at edge of screen
 
         if self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.y<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height:
-            
+            if SRK_paralyze:
+                return True
             # If stop moving is false, the monster can stop shooting and continue patrolling/following its path
 
             self.stop_moving=False
             self.realign_projectile()
+        if self.projectile.projectile_rectangle.colliderect(player.player_rectangle):
+            if SRK_paralyze:
+                return True
         
     # Shoots a projectile in the direction of shoot_coords, which is the projectile's end destination
     
-    def walk_towards_player_and_shoot(self, player, speed, projectile_speed, screen, rot=False):
+    def walk_towards_player_and_shoot(self, player, speed, projectile_speed, screen, rot=False, SRK_paralyze = False):
         self.current_attack_damage=1
-        self.check_if_in_line_with_player_and_shoot(projectile_speed, player, screen, rot)        
+        self.check_if_in_line_with_player_and_shoot(projectile_speed, player, screen, rot, SRK_paralyze)        
         if not self.stop_moving:
             self.move_towards_player(player, speed, screen)
 

@@ -6,8 +6,6 @@ from Biome import *
 from Player2 import *
 from Obstacles import *
 from Monster import *
-from TestMonsterMedium import *
-from TestMonster import *
 from Kohli import *
 from CricketNPC import *
 from Auntieji import *
@@ -19,6 +17,8 @@ from Bugle import *
 from Auntieji import *
 from CSPKid import *
 
+from SRK import *
+from Paparazzi import *
 class Overworld(Room):
     
     def __init__(self):
@@ -26,8 +26,12 @@ class Overworld(Room):
         global auntie_clone1
         global auntie_clone2
         global auntie_clone3
+        
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
+        
+        # game over screen
+        self.game_over_screen = Biome("game_over", "game_over_screen.png", [], [], False)
         
         # create exit constants
         self.left_width = 10
@@ -35,8 +39,7 @@ class Overworld(Room):
         self.H_height = 150
         self.V_width = 150
         self.up_height = 10
-        self.down_height = 35
-        
+        self.down_height = 35        
         
         # initialize the first level
         
@@ -177,7 +180,7 @@ class Overworld(Room):
         self.block_key2_2 = Obstacles("test_object1.png", 0, 0, 75, screen_height)
         self.houseroom6.add_obstacles([self._24, self._212, self._26, self._27, self._28, self._29, self.block_key2_2])
         
-        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], False)
+        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 650)
         self.houseroom7.add_obstacles([self._24, self._212, self._28, self._29, self._213])
         
         self.houseroom1.add_exits([Exit(screen_width//2, 380, self.houseroom2, "up", self.V_width, self.up_height)])
@@ -190,7 +193,6 @@ class Overworld(Room):
         #auntie monsters
         auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
         self.houseroom6.add_monsters([auntie1])
-
         self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
         # initialize the third level
@@ -236,7 +238,7 @@ class Overworld(Room):
         self.galaroom6 = Biome("galaroom6", "floor3/galaroom6.png", [Exit(0, screen_height//2, self.galaroom4, "left", self.left_width, self.H_height)], [("THE FAMOUS ACTOR IS SHAH RUKH KHAN!", 420, 40)], False)    
         self.galaroom6.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.block_key3_1])
         
-        self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [("YOU HAVE COLLECTED THE THIRD SPECIAL INGREDIENT, THE FILLING!", 200, 60)], False)    
+        self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [("YOU HAVE COLLECTED THE THIRD SPECIAL INGREDIENT, THE FILLING!", 200, 60)], True, screen_width//2, 700)    
         self.V_right_band3 = Obstacles("test_object1.png", screen_width-105, 0, 105, screen_height)
         self.galaroom7.add_obstacles([self.H_top_band3, self.V_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
         self.galaroom7.add_ingredient(Ingredient("potato.png", 800, 400))
@@ -247,9 +249,21 @@ class Overworld(Room):
         self.galaroom4.add_exits([Exit(0, screen_height//2, self.galaroom5, "left", self.left_width, self.H_height), Exit(screen_width, screen_height//2, self.galaroom6, "right", self.right_width, self.H_height)])
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
-        self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]
-        
-        
+        self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
+        shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
+        self.galaroom6.add_monsters([shah_rukh])
+
+        #add paparazzi minibosses to all other rooms
+        pap1 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap2 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        self.galaroom3.add_monsters([pap1,pap2])
+        pap3 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap4 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        self.galaroom4.add_monsters([pap3, pap4])
+        pap5 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap6 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
+        self.galaroom5.add_monsters([pap5, pap6])
+
         # initialize the fourth level
         
         # create the rooms with obstacles
@@ -411,6 +425,8 @@ class Overworld(Room):
         self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         
         
+        
+
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
     auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0)
     auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0)
@@ -429,8 +445,15 @@ class Overworld(Room):
             clone.monster_rectangle.x, clone.monster_rectangle.y = player.player_rectangle.x + coord_modifiers[i][0], player.player_rectangle.y + coord_modifiers[i][1]
             i+=1
     
-
-
+    # add burnie obstacles
+    burnie1 = Obstacles("burnie_sanders.png", 100, 200, 100, 100)
+    burnie2 = Obstacles("burnie_sanders.png", 300, 300, 100, 100)
+    burnie3 = Obstacles("burnie_sanders.png", 100, 500, 100, 100)
+        
+    def add_burnie_sanders(self, screen, burnies:list = [burnie1, burnie2, burnie3]):
+        self.galaroom3.add_obstacles_with_img(burnies, screen)
+    
+    
     def game_over(self, screen:pygame.display):
         img = pygame.image.load(os.path.join("Assets", "game_over_screen.png"))
         image = pygame.transform.scale(img, (screen_width, screen_height))
@@ -443,24 +466,27 @@ class Overworld(Room):
             if curr_screen == self.cricketroom5:
                 monster = self.monster1
                 next_screen = self.houseroom1
-            if not monster.alive:
-                image = next_screen.get_image()
-                screen.fill((0, 0, 0))
+            elif curr_screen == self.houseroom1:
+                next_screen = self.galaroom1
+            else:
+                next_screen = self.schoolroom1
+            image = next_screen.get_image()
+            screen.fill((0, 0, 0))
+            pygame.display.update()
+            pygame.time.wait(500)
+            """
+            for i in range(30, 1, -2):
+                screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
                 pygame.display.update()
-                pygame.time.wait(500)
-                """
-                for i in range(30, 1, -2):
-                    screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
-                    pygame.display.update()
-                    pygame.time.wait(150)
-                """
-                for i in range(1, 11):
-                    screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
-                    pygame.display.update()
-                    pygame.time.wait(300)
-                player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
-                player.health_bar = 5
-                return next_screen
+                pygame.time.wait(150)
+            """
+            for i in range(1, 11):
+                screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
+                pygame.display.update()
+                pygame.time.wait(300)
+            player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
+            player.health_bar = 5
+            return next_screen
         return None
     
     def going_to_next_biome(self, player:Player2, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
@@ -564,6 +590,27 @@ class Overworld(Room):
                     if m.are_clones:
                         self.add_clones(player)
                         m.are_clones = False
+
+                # #find SRK
+                if isinstance(m, SRK):
+                    if m.add_burnie:
+                        self.add_burnie_sanders(screen)
+                        print("burnies have been added")
+                        m.add_burnie = False
+
+                # check if paralyzing to spam SRK shirtless image
+                    if m.paralyzing:
+                        srk_img = pygame.image.load(os.path.join("Assets/", "funny_SRK_img.png"))
+                        image = pygame.transform.scale(srk_img, (100, 100))
+                        screen.blit(image, (0,0))
+                        screen.blit(image, (0, 400))
+                        screen.blit(image, (600, 0))
+                        screen.blit(image, (0,400))
+
+                #if player kills srk while in paralyze, unparalyze
+                    if not m.alive:
+                        m.paralyzing = False
+
                 # If the player isn't attacking and they touch monster, they should take damage
 
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
@@ -647,8 +694,10 @@ class Overworld(Room):
         for item in biome.items:
             if item.used == False and item.item_type == "ingredient" and player.player_rectangle.colliderect(item.item_rectangle):
                 item.used = True
-                self.transition_next_level(player, biome, screen)
-            else: player.get_healed(item)
+                next_screen = self.transition_next_level(player, biome, screen)
+                return next_screen
+            else: 
+                player.get_healed(item)
 
     def pickupkeys(self, player:Player2, biome:Biome):
         for key in biome.keys:
