@@ -3,7 +3,6 @@ import Constants
 import os
 import sys
 import time
-from items.Sword import Sword
 
 class Player2:
 
@@ -57,7 +56,6 @@ class Player2:
         self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (32, 32))
         self.heart_spacing = 40
     
-        self.username = username
         self.key_inventory = []
         self.inventory = inventory
         self.curr_level = curr_level
@@ -65,7 +63,6 @@ class Player2:
         self.lives_remaining = lives_remaining
         self.original_health=health_bar
         self.health_bar = self.original_health
-        self.wealth = wealth
         self.is_paralyzed = False
         self.checkpoint = False
     
@@ -77,18 +74,18 @@ class Player2:
     def use_item(self):
         self.curr_item.use() #use function will be defined in Item classes
 
+    # gets attacked by monster - sets render settings and decreases health bar
     def get_attacked(self, damage:int, screen):
         self.attacked = True
         self.attacktime = time.time()
         self.health_bar -= damage
 
         if (self.health_bar<=0):
-            print("player just lost all their health")
             self.lives_remaining-=1
             self.die_and_begone(screen)
 
-    def attack(self, monsters):
-        
+    # runs when player attacks - checks if monster is in range and calls get_hit function
+    def attack(self, monsters):  
         for monster in monsters:
             if (self.player_rectangle.colliderect(monster.monster_rectangle)):
                 monster.get_hit(self.currentitem.power)                    
@@ -96,6 +93,8 @@ class Player2:
                     monster.in_hit_cooldown=True
                     monster.last_hit=pygame.time.get_ticks()
 
+                    
+    # checks if player is close to healing items and heals player if it is
     def get_healed(self, item):
         if (self.player_rectangle.colliderect(item.item_rectangle)) and not item.used:
             self.health_bar+=item.power
@@ -103,24 +102,40 @@ class Player2:
                 self.health_bar=self.original_health
             item.used=True
     
-
+    # picks up key off ground and adds it to inventory if player is in range
     def get_key(self, key):
         if (self.player_rectangle.colliderect(key.key_rectangle)):
             self.key_inventory.append(key)
             key.pickedup = True
-        
-        
+    
+
     def die_and_begone(self, screen):
-        self.checkpoint = True
-        pygame.display.update()            
+        if self.lives_remaining <= 0:
+            game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.png"))
+            game_over_img = pygame.transform.scale(game_over_img, (Constants.screen_width, Constants.screen_height))
+            screen.blit(game_over_img, (0, 0))
             
+            self.checkpoint = True
+
+            pygame.display.update()
             
+            if not self.checkpoint:
+                time.sleep(3)
+                sys.exit()
+        else:
+            self.respawn() 
+            
+    
     def check_checkpoint(self):
         if self.checkpoint:
             return True
         return False
-    
 
+    # when player respawns resets health bar
+    def respawn(self):
+        self.health_bar=self.original_health
+
+    # handles player movement - changes player rectangle position and changes current frame
     def handlemove(self, direction, framecounter, firstchange): 
         if self.is_paralyzed:
             return
@@ -182,6 +197,7 @@ class Player2:
         
         self.player_rectangle.move_ip(Constants.directions[self.direction][0], Constants.directions[self.direction][1])
         
+    # renders player on screen - handles attacking and getting attacked animation (damage and extension)
     def render(self, x_pos:float, y_pos:float, screen:pygame.display) -> None:
         image = None
         adjustx = 0
@@ -230,6 +246,7 @@ class Player2:
         
         self.player_rectangle.topleft = (x_pos, y_pos)
     
+    # renders health bar on screen
     def renderhealth(self, x_pos, y_pos, screen):
         for i in range(self.original_health):
             heart_image = self.full_heart_img if i < self.health_bar else self.empty_heart_img
