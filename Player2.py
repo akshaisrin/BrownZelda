@@ -110,7 +110,7 @@ class Player2:
     def die_and_begone(self, screen, overworld=None):
         if self.lives_remaining <= 0:
             print("GAME OVER")
-            game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.jpg"))
+            game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.png"))
             game_over_img = pygame.transform.scale(game_over_img, (Constants.screen_width, Constants.screen_height))
             screen.blit(game_over_img, (0, 0))
 
