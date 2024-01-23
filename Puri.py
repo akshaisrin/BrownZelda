@@ -26,6 +26,9 @@ class Puri(MediumBoss):
         self.normal_cooldown_count=3500
         self.normal_cooldown_timer = pygame.time.get_ticks()
         self.in_normal_cooldown=False
+
+        self.csp_speech_bubble=pygame.image.load(os.path.join("Assets", "csp_kids_speech_bubble.png"))
+        self.csp_speech_bubble=pygame.transform.scale(self.csp_speech_bubble, (150, 50))
         
     def attack(self, player, screen):
         # self.bugle.rotate_towards_player_and_render(player, self.monster_rectangle, screen)
@@ -58,6 +61,7 @@ class Puri(MediumBoss):
                 self.in_normal_cooldown=False
 
         elif self.current_attack=="csp_mob":
+            screen.blit(self.csp_speech_bubble, (self.monster_rectangle.topright[0]-20, self.monster_rectangle.topright[1]+5))
             if self.render_csp_mob:
                 self.reset_csp_mob()
                 self.render_csp_mob=False
@@ -98,14 +102,14 @@ class Puri(MediumBoss):
             self.move_towards_player(player, speed, screen)
 
     def reset_csp_mob(self):
-        self.csp_kids=[CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery, "walk"), 
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery, "walk"),
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx, self.monster_rectangle.centery-100, "walk"),
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx, self.monster_rectangle.centery+100, "walk"),
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery+100, "walk"),
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery+100, "walk"),
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery+100, "walk"), 
-                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery-100, "walk")]
+        self.csp_kids=[CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery, "walk", True), 
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery, "walk", True),
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx, self.monster_rectangle.centery-100, "walk", True),
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx, self.monster_rectangle.centery+100, "walk", True),
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery+100, "walk", True),
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery+100, "walk", True),
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery+100, "walk", True), 
+                        CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery-100, "walk", True)]
 
     def rapid_fire(self, projectile_speed, player, screen):
         

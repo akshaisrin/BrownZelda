@@ -54,8 +54,14 @@ csp_kid_speed=6
 puri_speed=3
 puri_projectile_speed=15
 
-csp_kid_speed=6
+csp_kid_clone_speed=6
+
+csp_kid_speed=10
+csp_projectile_speed=18
+csp_kid_walk_towards_player_speed=4.5
 
 auntie_clone_speed = 3
 auntie_projectile_speed = 13
 auntie_speed = 7
+
+

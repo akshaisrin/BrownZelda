@@ -17,6 +17,8 @@ from items.Key import *
 from Puri import *
 from Bugle import *
 from Auntieji import *
+from CSPKid import *
+
 class Overworld(Room):
     
     def __init__(self):
@@ -255,6 +257,7 @@ class Overworld(Room):
         self.left_school_side4 = Obstacles("test_object1.png", 0, 0, 660, 430)
         self.right_school_side4 = Obstacles("test_object1.png", 880, 0, screen_width-880, 430)
         self.schoolroom1.add_obstacles([self.left_side4, self.right_side4, self.bottom4, self.left_school_side4, self.right_school_side4])
+
         
         self.schoolroom2 = Biome("schoolroom2", "floor4/schoolroom2.png", [Exit(screen_width//2, screen_height, self.schoolroom1, "down", self.V_width, self.down_height)], [], False)
         self.H_top_band4 = Obstacles("test_object1.png", 0, 0, screen_width, 100)
@@ -266,6 +269,17 @@ class Overworld(Room):
         self.stairs4 = Obstacles("test_object1.png", 950, 190, screen_width-950, 530-190)
         self.schoolroom2.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.stairs4])
         
+        csp_kid_1=CSP_Kid(1, 1, 200, 120, "shoot and patrol")
+        csp_kid_1.patrol_direction="x"
+        csp_kid_1.patrol_distance=700
+        self.schoolroom2.add_monsters([csp_kid_1])
+
+        csp_kid_2=CSP_Kid(1, 1, 900, 120, "shoot and patrol")
+        csp_kid_2.patrol_direction="x"
+        csp_kid_2.patrol_distance=-700
+        self.schoolroom2.add_monsters([csp_kid_2])
+
+
         self.schoolroom3 = Biome("schoolroom3", "floor4/schoolroom3.png", [Exit(screen_width, screen_height//2, self.schoolroom2, "right", self.right_width, self.H_height)], [], False)
         self.H_left_top_band4 = Obstacles("test_object1.png", 0, 0, 660, 100)
         self.H_right_top_band4 = Obstacles("test_object1.png", 880, 0, screen_width-880, 100)
@@ -275,9 +289,38 @@ class Overworld(Room):
         self.bottom_crowd4 = Obstacles("test_object1.png", 910, 370, 340, 250)
         self.schoolroom3.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_crowd4, self.bottom_crowd4])
         
+        csp_kid_3=CSP_Kid(1, 1, 200, 120, "hit")
+        self.schoolroom3.add_monsters([csp_kid_3])
+
+
+        csp_kid_4=CSP_Kid(1, 1, 800, 120, "hit")
+        self.schoolroom3.add_monsters([csp_kid_4])
+
+        csp_kid_5=CSP_Kid(1, 1, 200, 500, "hit")
+        self.schoolroom3.add_monsters([csp_kid_5])
+
+        # csp_kid_3=CSP_Kid(1, 1, 900, 120, "shoot and patrol")
+        # csp_kid_3.patrol_direction="x"
+        # csp_kid_3.patrol_distance=-700
+        # self.schoolroom3.add_monsters([csp_kid_3])
+
+
+
+
         self.schoolroom4 = Biome("schoolroom4", "floor4/schoolroom4.png", [Exit(screen_width//2, screen_height, self.schoolroom3, "down", self.V_width, self.down_height)], [], False)
         self.crowd4 = Obstacles("test_object1.png", 940, 150, 310, 360)
         self.schoolroom4.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.crowd4])
+        
+        csp_kid_6=CSP_Kid(1, 1, 200, 120, "shoot and patrol")
+        csp_kid_6.patrol_direction="y"
+        csp_kid_6.patrol_distance=550
+        self.schoolroom4.add_monsters([csp_kid_6])
+
+        csp_kid_7=CSP_Kid(1, 1, 200, 120, "shoot and patrol")
+        csp_kid_7.patrol_direction="x"
+        csp_kid_7.patrol_distance=700
+        self.schoolroom4.add_monsters([csp_kid_7])
+
         
         self.schoolroom5 = Biome("schoolroom5", "floor4/schoolroom5.png", [Exit(screen_width, screen_height//2, self.schoolroom4, "right", self.right_width, self.H_height)], [], False)
         self.H_bottom_band4 = Obstacles("test_object1.png", 0, screen_height-100, screen_width, 100)
@@ -287,23 +330,67 @@ class Overworld(Room):
         self.right_bookcase4 = Obstacles("test_object1.png", 1060, 290, 140, 200)
         self.schoolroom5.add_obstacles([self.H_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_bookcase4, self.middle_bookcase4, self.right_bookcase4])
         
+
+        csp_kid_8=CSP_Kid(1, 1, 200, 120, "shoot and follow path")
+        csp_kid_8.path_coords=[(csp_kid_8.start_pos_x, csp_kid_8.start_pos_y), 
+                                          (csp_kid_8.start_pos_x+400, csp_kid_8.start_pos_y), 
+                                          (csp_kid_8.start_pos_x+400, csp_kid_8.start_pos_y+550), 
+                                          (csp_kid_8.start_pos_x, csp_kid_8.start_pos_y+550),
+                                          (csp_kid_8.start_pos_x, csp_kid_8.start_pos_y)]
+        self.schoolroom5.add_monsters([csp_kid_8])
+
+        csp_kid_9=CSP_Kid(1, 1, 570, 120, "shoot and follow path")
+        csp_kid_9.path_coords=[(csp_kid_9.start_pos_x, csp_kid_9.start_pos_y), 
+                                          (csp_kid_9.start_pos_x+400, csp_kid_9.start_pos_y), 
+                                          (csp_kid_9.start_pos_x+400, csp_kid_9.start_pos_y+550), 
+                                          (csp_kid_9.start_pos_x, csp_kid_9.start_pos_y+550),
+                                          (csp_kid_9.start_pos_x, csp_kid_9.start_pos_y)]
+        self.schoolroom5.add_monsters([csp_kid_9])
+
         self.schoolroom6 = Biome("schoolroom6", "floor4/schoolroom6.png", [Exit(screen_width, screen_height//2, self.schoolroom3, "right", self.right_width, self.H_height)], [], False)
         self.bookcases4 = Obstacles("test_object1.png", 0, 350, 710, 90)
         self.top_bookcase4 = Obstacles("test_object1.png", 1000, 150, 300, 80)
         self.bottom_bookcase4 = Obstacles("test_object1.png", 1000, 560, 300, 80)
         self.schoolroom6.add_obstacles([self.H_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.bookcases4, self.top_bookcase4, self.bottom_bookcase4])
         
+        csp_kid_10=CSP_Kid(1, 1, 200, 120, "shoot and patrol")
+        csp_kid_10.patrol_direction="x"
+        csp_kid_10.patrol_distance=700
+        self.schoolroom6.add_monsters([csp_kid_10])
+
+        csp_kid_11=CSP_Kid(1, 1, 200, 550, "shoot and patrol")
+        csp_kid_11.patrol_direction="x"
+        csp_kid_11.patrol_distance=700
+        self.schoolroom6.add_monsters([csp_kid_11])
+
+
         self.schoolroom7 = Biome("schoolroom7", "floor4/schoolroom7.png", [Exit(screen_width//2, 0, self.schoolroom3, "up", self.V_width, self.up_height)], [], False)
         self.left_crowd4 = Obstacles("test_object1.png", 220, 210, 310, 240)
         self.right_crowd4 = Obstacles("test_object1.png", 860, 370, 190, 240)
         self.schoolroom7.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_crowd4, self.right_crowd4])
         
+        csp_kid_12=CSP_Kid(1, 1, 1300, 120, "shoot and patrol")
+        csp_kid_12.patrol_direction="y"
+        csp_kid_12.patrol_distance=500
+        self.schoolroom7.add_monsters([csp_kid_12])
+
+        csp_kid_13=CSP_Kid(1, 1, 900, 600, "hit")
+        self.schoolroom7.add_monsters([csp_kid_13])
+
+        csp_kid_14=CSP_Kid(1, 1, 1300, 600, "hit")
+        self.schoolroom7.add_monsters([csp_kid_14])
+
+
         self.schoolroom8 = Biome("schoolroom8", "floor4/schoolroom8.png", [Exit(0, screen_height//2, self.schoolroom7, "left", self.left_width, self.H_height)], [], False)
         self.top_computers4 = Obstacles("test_object1.png", 220, 120, 900, 180)
         self.bottom_computers4 = Obstacles("test_object1.png", 220, 470, 900, 180)
         self.teacher4 = Obstacles("test_object1.png", 1240, 170, screen_width-1240, 370)
         self.schoolroom8.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_computers4, self.bottom_computers4, self.teacher4])
         
+
+        csp_kid_15=CSP_Kid(1, 1, 1000, 300, "walk")
+        self.schoolroom8.add_monsters([csp_kid_15])
+
         self.schoolroom9 = Biome("schoolroom9", "floor4/schoolroom9.png", [], [], False)
         self.schoolroom9.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_bottom_band4, self.V_left_band4])
         
@@ -314,7 +401,7 @@ class Overworld(Room):
         self.schoolroom7.add_exits([Exit(screen_width, screen_height//2, self.schoolroom8, "right", self.right_width, self.H_height)])
 
         puri=Puri(10.0,"Puri", 800, 100)
-        self.schoolroom2.add_monsters([puri])
+        self.schoolroom9.add_monsters([puri])
 
         self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         

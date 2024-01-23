@@ -132,7 +132,7 @@ def init_home_screen():
     
     test_mode = False
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.schoolroom9
     if test_mode:
         curr_screen = overworld.cricketroom1
     if curr_screen == overworld.schoolroom1:
