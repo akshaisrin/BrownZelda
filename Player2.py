@@ -24,7 +24,7 @@ class Player2:
             rect = frame.get_rect()
             dsurface = frame.copy()
             wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
-            wsurface.fill('white')
+            #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
         self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
@@ -40,7 +40,7 @@ class Player2:
             rect = frame.get_rect()
             dsurface = frame.copy()
             wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
-            wsurface.fill('white')
+            #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_adframes.append(dsurface)
 
@@ -67,6 +67,8 @@ class Player2:
         self.health_bar = self.original_health
         self.wealth = wealth
         self.is_paralyzed = False
+        self.checkpoint = False
+    
         
     def select_item(self, item:str):
         if item in self.inventory:
@@ -107,19 +109,28 @@ class Player2:
             self.key_inventory.append(key)
             key.pickedup = True
         
-    def die_and_begone(self, screen, overworld=None):
+    def die_and_begone(self, screen):
         if self.lives_remaining <= 0:
             print("GAME OVER")
             game_over_img=pygame.image.load(os.path.join("Assets", "game_over_screen.png"))
             game_over_img = pygame.transform.scale(game_over_img, (Constants.screen_width, Constants.screen_height))
             screen.blit(game_over_img, (0, 0))
+            
+            self.checkpoint = True
 
             pygame.display.update()
-            time.sleep(3)
-            sys.exit()
-            #overworld.game_over()
+            
+            if not self.checkpoint:
+                time.sleep(3)
+                sys.exit()
         else:
             self.respawn() 
+            
+            
+    def check_checkpoint(self):
+        if self.checkpoint:
+            return True
+        return False
 
 
     def respawn(self):

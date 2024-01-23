@@ -179,7 +179,7 @@ class Overworld(Room):
         self.block_key2_2 = Obstacles("test_object1.png", 0, 0, 75, screen_height)
         self.houseroom6.add_obstacles([self._24, self._212, self._26, self._27, self._28, self._29, self.block_key2_2])
         
-        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], False)
+        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 650)
         self.houseroom7.add_obstacles([self._24, self._212, self._28, self._29, self._213])
         
         self.houseroom1.add_exits([Exit(screen_width//2, 380, self.houseroom2, "up", self.V_width, self.up_height)])
@@ -237,7 +237,7 @@ class Overworld(Room):
         self.galaroom6 = Biome("galaroom6", "floor3/galaroom6.png", [Exit(0, screen_height//2, self.galaroom4, "left", self.left_width, self.H_height)], [("THE FAMOUS ACTOR IS SHAH RUKH KHAN!", 420, 40)], False)    
         self.galaroom6.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.block_key3_1])
         
-        self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [("YOU HAVE COLLECTED THE THIRD SPECIAL INGREDIENT, THE FILLING!", 200, 60)], False)    
+        self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [("YOU HAVE COLLECTED THE THIRD SPECIAL INGREDIENT, THE FILLING!", 200, 60)], True, screen_width//2, 700)    
         self.V_right_band3 = Obstacles("test_object1.png", screen_width-105, 0, 105, screen_height)
         self.galaroom7.add_obstacles([self.H_top_band3, self.V_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
         self.galaroom7.add_ingredient(Ingredient("potato.png", 800, 400))
@@ -465,24 +465,27 @@ class Overworld(Room):
             if curr_screen == self.cricketroom5:
                 monster = self.monster1
                 next_screen = self.houseroom1
-            if not monster.alive:
-                image = next_screen.get_image()
-                screen.fill((0, 0, 0))
+            if curr_screen == self.houseroom1:
+                next_screen = self.galaroom1
+            else:
+                next_screen = self.schoolroom1
+            image = next_screen.get_image()
+            screen.fill((0, 0, 0))
+            pygame.display.update()
+            pygame.time.wait(500)
+            """
+            for i in range(30, 1, -2):
+                screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
                 pygame.display.update()
-                pygame.time.wait(500)
-                """
-                for i in range(30, 1, -2):
-                    screen.blit(image, ((screen_width - screen_width/i)//2, 0), ((screen_width - screen_width/i)//2, 0, screen_width//i, screen_height))
-                    pygame.display.update()
-                    pygame.time.wait(150)
-                """
-                for i in range(1, 11):
-                    screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
-                    pygame.display.update()
-                    pygame.time.wait(300)
-                player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
-                player.health_bar = 5
-                return next_screen
+                pygame.time.wait(150)
+            """
+            for i in range(1, 11):
+                screen.blit(image, ((screen_width - screen_width//10*i)//2, 0), ((screen_width - screen_width//10*i)//2, 0, screen_width//10*i, screen_height))
+                pygame.display.update()
+                pygame.time.wait(300)
+            player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
+            player.health_bar = 5
+            return next_screen
         return None
     
     def going_to_next_biome(self, player:Player2, biome:Biome, curr_screen_x_pos:int, curr_screen_y_pos:int, screen:pygame.display):    
@@ -690,8 +693,11 @@ class Overworld(Room):
         for item in biome.items:
             if item.used == False and item.item_type == "ingredient" and player.player_rectangle.colliderect(item.item_rectangle):
                 item.used = True
-                self.transition_next_level(player, biome, screen)
-            else: player.get_healed(item)
+                next_screen = self.transition_next_level(player, biome, screen)
+                return next_screen
+            else: 
+                player.get_healed(item)
+                return None
 
     def pickupkeys(self, player:Player2, biome:Biome):
         for key in biome.keys:

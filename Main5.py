@@ -130,9 +130,9 @@ def init_home_screen():
     sword = Sword()
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
-    test_mode = True
+    test_mode = False
     overworld = Overworld()
-    curr_screen = overworld.houseroom6
+    curr_screen = overworld.cricketroom4
     if test_mode:
         curr_screen = overworld.cricketroom1
     if curr_screen == overworld.schoolroom1:
@@ -167,7 +167,12 @@ def init_home_screen():
         clock.tick(30)
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_screen)
-        overworld.picksupitems(player1, curr_screen, screen)
+        next_screen = overworld.picksupitems(player1, curr_screen, screen)
+        if next_screen != None:
+            curr_screen = next_screen
+            keep_text_displayed = False
+            text_index = 0
+            texts = []
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
         overworld.keydrop(player1, curr_screen)
@@ -198,20 +203,6 @@ def init_home_screen():
                 curr_screen = new_screen
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
-                keep_text_displayed = False
-                
-            new_level = overworld.transition_next_level(player1, curr_screen, screen)
-            if new_level != None:
-                curr_screen = new_level
-                keep_text_displayed = False
-                text_index = 0
-
-        for m in curr_screen.monsters:
-            if isinstance(m, SRK):
-                if not m.paralyzing:
-                    pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
-                    pygame.mixer.music.set_volume(0.3)
-                    pygame.mixer.music.play(-1)
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -253,6 +244,21 @@ def init_home_screen():
                 elif event.key == pygame.K_DOWN: 
                     direction = "down"
                     firstchange = True
+                elif event.key == pygame.K_k:
+                    if player1.check_checkpoint():
+                        if curr_screen.name[0:4] == "cric":
+                            curr_screen = overworld.room1
+                        elif curr_screen.name[0:4] == "hous":
+                            curr_screen = overworld.houseroom1
+                        elif curr_screen.name[0:4] == "gala":
+                            curr_screen = overworld.galaroom1
+                        else:
+                            curr_screen = overworld.schoolroom1
+                        keep_text_displayed = False
+                        text_index = 0
+                        player1.health_bar = 5
+                        player1.checkpoint = False
+                        
             
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
