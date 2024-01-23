@@ -51,7 +51,7 @@ class SRK(MediumBoss):
         if not self.in_paralyze_cooldown and not self.in_post_paralyze_cooldown and not self.paralyzing:
             self.walk_towards_player_and_shoot(player, Constants.SRK_speed, Constants.SRK_projectile_speed, screen)
 
-        if self.health== 3*self.og_health//4 and self.burnies_added == False:
+        if self.health== self.og_health//2 and self.burnies_added == False:
             self.add_burnie = True
             print("add_burnie is True")
             self.burnies_added = True

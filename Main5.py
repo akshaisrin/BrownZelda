@@ -132,7 +132,7 @@ def init_home_screen():
     
     test_mode = True
     overworld = Overworld()
-    curr_screen = overworld.galaroom3
+    curr_screen = overworld.houseroom6
     if test_mode:
         curr_screen = overworld.cricketroom1
     if curr_screen == overworld.schoolroom1:
@@ -205,6 +205,13 @@ def init_home_screen():
                 curr_screen = new_level
                 keep_text_displayed = False
                 text_index = 0
+
+        for m in curr_screen.monsters:
+            if isinstance(m, SRK):
+                if not m.paralyzing:
+                    pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
+                    pygame.mixer.music.set_volume(0.3)
+                    pygame.mixer.music.play(-1)
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 

@@ -20,6 +20,7 @@ from Auntieji import *
 from CSPKid import *
 
 from SRK import *
+from Paparazzi import *
 class Overworld(Room):
     
     def __init__(self):
@@ -249,8 +250,18 @@ class Overworld(Room):
         
         self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
         shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
-        self.galaroom3.add_monsters([shah_rukh])
-        
+        self.galaroom6.add_monsters([shah_rukh])
+
+        #add paparazzi minibosses to all other rooms
+        pap1 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap2 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        self.galaroom3.add_monsters([pap1,pap2])
+        pap3 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap4 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        self.galaroom4.add_monsters([pap3, pap4])
+        pap5 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap6 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
+        self.galaroom5.add_monsters([pap5, pap6])
 
         # initialize the fourth level
         
