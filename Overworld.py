@@ -94,7 +94,7 @@ class Overworld(Room):
         self.monster1=Kohli(10.0,"Kohli", 800, 100)
         self.cricketroom4.add_monsters([self.monster1])
 
-        npc_cricker_player_1=CricketNPC(10.0, 9.0, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
+        npc_cricker_player_1=CricketNPC(10.0, 1, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
         npc_cricker_player_1.path_coords=[(npc_cricker_player_1.start_pos_x, npc_cricker_player_1.start_pos_y), 
                                           (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y), 
                                           (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y+450), 
@@ -102,30 +102,30 @@ class Overworld(Room):
         self.cricketroom1.add_monsters([npc_cricker_player_1])
 
 
-        npc_cricker_player_2=CricketNPC(10.0, 9.0, "NPC Cricket Player 2", 700, 500, "hit")
+        npc_cricker_player_2=CricketNPC(10.0, 1, "NPC Cricket Player 2", 700, 500, "hit")
         self.cricketroom1.add_monsters([npc_cricker_player_2])
 
-        npc_cricker_player_3=CricketNPC(10.0, 9.0, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
+        npc_cricker_player_3=CricketNPC(10.0, 1, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
         npc_cricker_player_3.patrol_direction="x"
         npc_cricker_player_3.patrol_distance=1220
         self.cricketroom2.add_monsters([npc_cricker_player_3])
 
-        npc_cricker_player_4=CricketNPC(10.0, 9.0, "NPC Cricket Player 4", 700, 150, "hit")
+        npc_cricker_player_4=CricketNPC(10.0, 1, "NPC Cricket Player 4", 700, 150, "hit")
         self.cricketroom2.add_monsters([npc_cricker_player_4])
 
-        npc_cricker_player_5=CricketNPC(10.0, 9.0, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
+        npc_cricker_player_5=CricketNPC(10.0, 1, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
         npc_cricker_player_5.patrol_direction="y"
         npc_cricker_player_5.patrol_distance=520
         self.cricketroom2.add_monsters([npc_cricker_player_5])
 
-        npc_cricker_player_6=CricketNPC(10.0, 9.0, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
+        npc_cricker_player_6=CricketNPC(10.0, 1, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
         npc_cricker_player_6.path_coords=[(npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
                                           (npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y+470)]
         self.cricketroom3.add_monsters([npc_cricker_player_6])
 
-        npc_cricker_player_7=CricketNPC(10.0, 9.0, "NPC Cricket Player 7", 190, 600, "hit")
+        npc_cricker_player_7=CricketNPC(10.0, 1, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
         
