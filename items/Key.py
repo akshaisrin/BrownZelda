@@ -1,6 +1,7 @@
 import pygame
 import os
 
+#standard item class - just renders keys, most of functionality taken care of elsewhere
 class Key:
     def __init__(self, biomeunlock, x_pos, y_pos, k_x_pos, k_y_pos) -> None:
         self.img = pygame.image.load(os.path.join("Assets", "key.png"))

@@ -27,17 +27,15 @@ current_screen = None
 
 
 def init_loading_screen():
+    #set screen to initial loading screen
     current_screen = InitialLoadingScreen(screen)
     loadingscreenstarttime = time.time()
+    #load in title music
     pygame.mixer.music.load(os.path.join("Assets", "originalzeldatitlemusic.mp3"))  
     pygame.mixer.music.set_volume(0.6)
     pygame.mixer.music.play()
-    
-    # first, start default music and loading screen
-    # then, have it start fading to black, and cut the music
-    # then, pause for a second, and start the chotta bheem music
-    # then, quickly have it come to the new screen
 
+    #initialize loading screen booleans - when each section of loading screen is complete will turn them to true
     gameLoop = True
     initialLoadingScreenDone = False
     newLoadingScreenDone = False
@@ -50,13 +48,16 @@ def init_loading_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
+            #when loading screen animation is complete - user can move onto story with space
             elif newLoadingScreenDone and not instructionsScreenStarted and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.mixer.music.set_volume(0.2)
                     loadingscreenstarttime = time.time()
                     instructionsScreenStarted = True
 
+        #fades out of original zelda loading screen to new brown zelda loading screen - adds music
         if not initialLoadingScreenDone:
+            #sets how long it has been since loading screen started
             elapsedTime = time.time() - loadingscreenstarttime
             if elapsedTime > 20:
                 initialLoadingScreenDone = True
@@ -67,6 +68,7 @@ def init_loading_screen():
                 pygame.mixer.music.set_volume(0.55)
                 thirdSongSet = True
             elif elapsedTime > 16 and not secondSongSet:
+                #swap to chotta bheem music
                 pygame.mixer.music.load(os.path.join("Assets", "chottabheemtitlesong.mp3"))  
                 pygame.mixer.music.set_volume(0.3)
                 pygame.mixer.music.play(-1)
@@ -96,6 +98,7 @@ def init_loading_screen():
 
 
 def init_instructions_screen():
+    #sets screen to instructions screen - also tracks time since screen started
     current_screen = InstructionsScreen(screen) 
     instructionsscreenstarttime = time.time()
 
@@ -105,11 +108,13 @@ def init_instructions_screen():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameLoop = False
+            #allows player to skip instructions screen if they wish by hitting space
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     pygame.mixer.music.stop()
                     gameLoop = False
 
+        #scrolls down instructions screen - tracking elapsed time to know how far down to scroll
         if elapsedTime > 72:
             pygame.mixer.music.stop()
             gameLoop = False
@@ -123,11 +128,14 @@ def init_instructions_screen():
         
         
 def init_home_screen():
+    #creates clock to make fps consistent across machines
     clock = pygame.time.Clock()
     controller_detected=True
     sword = Sword()
+    #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
     
+    #test mode variable to skip slower parts of gameplay
     test_mode = True
     overworld = Overworld()
     curr_screen = overworld.cricketroom1
@@ -149,6 +157,8 @@ def init_home_screen():
     # Establishing game loop to keep screen running
     """
 
+    #adds gameloop variable and direction variable to keep track of player movement
+    #also adds in text variables to keep track of text display
     gameLoop = True
     direction = None
     framecounter = 0
@@ -163,7 +173,9 @@ def init_home_screen():
 
 
     while gameLoop:
+        #sets fps to 30 frames
         clock.tick(30)
+        #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
         overworld.obstacles_in_biome(player1, curr_screen)
         next_screen = overworld.picksupitems(player1, curr_screen, screen)
@@ -172,12 +184,15 @@ def init_home_screen():
             keep_text_displayed = False
             text_index = 0
             texts = []
+        #checks if player is in a room with a key and if they have picked it up - also unlocks rooms if player has key
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
         overworld.keydrop(player1, curr_screen)
 
+        #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         
+        #renders text if necessary
         if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
             new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, text_index, texts, screen)
             texts.append(new_text)
@@ -193,6 +208,7 @@ def init_home_screen():
                 text_index += 1 
                 display_text = True
         
+        #checks if player is going to next biome
         if curr_screen != None:
             new_screen = overworld.going_to_next_biome(player1, curr_screen, curr_screen_x_pos, curr_screen_y_pos, screen)
             if new_screen != None:
@@ -234,7 +250,8 @@ def init_home_screen():
             attacktime = time.time()
             sword.attack(curr_screen.monsters[0])
         """
-    
+ 
+        #controls movement - sets direction variable
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:                   
                 if event.key == pygame.K_LEFT: 
@@ -264,7 +281,7 @@ def init_home_screen():
                         player1.health_bar = 5
                         respawn = False
                         
-            
+            #stops movement if key is released - sets direction to None
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     player1.current_frame = 10
@@ -285,18 +302,21 @@ def init_home_screen():
                 pygame.quit()
                 sys.exit()
 
+        #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
+        #handles player movement and renders health
         player1.handlemove(direction, framecounter, firstchange)
         player1.renderhealth(10, 10, screen)
         firstchange = False
         
         pygame.display.update()
-    
+
+#final screen method - follows similar logic to instructions sceen
 def init_final_screen():
     current_screen = FinalScreen(screen)
     finalscreenstarttime = time.time()
 
-    pygame.mixer.music.load(os.path.join("Assets", "originalzeldatitlemusic.mp3"))  
+    pygame.mixer.music.load(os.path.join("Assets", "chottabheemtitlesong.mp3"))  
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play()
 
