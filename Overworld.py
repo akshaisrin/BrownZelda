@@ -26,6 +26,9 @@ class Overworld(Room):
         global auntie_clone1
         global auntie_clone2
         global auntie_clone3
+
+        #check if a key has been dropped currently
+        self.key_dropped = False
         
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
@@ -744,6 +747,10 @@ class Overworld(Room):
         return True
 
     def monsterkeydrop(self, player, biome):
+        #if biome.keys is not empty, then return
+        if len(biome.keys) > 0:
+            return
+
         for m in biome.monsters:
             if m.alive:
                 return
@@ -773,6 +780,9 @@ class Overworld(Room):
 
 
     def keydrop(self, player, biome):
+        #if biome.keys is not empty, then return
+        if len(biome.keys) > 0:
+            return
         if biome in self.floor1rooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
