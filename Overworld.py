@@ -16,9 +16,10 @@ from Puri import *
 from Bugle import *
 from Auntieji import *
 from CSPKid import *
-
+from copy import deepcopy
 from SRK import *
 from Paparazzi import *
+
 class Overworld(Room):
     
     def __init__(self):
@@ -503,7 +504,11 @@ class Overworld(Room):
 
         self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         
-        
+        self.allrooms = self.floor1rooms + self.floor2rooms + self.floor3rooms + self.floor4rooms
+
+        for room in self.allrooms:
+            #copy all room.monsters list to room.monstersremoved
+            room.monstersremoved = room.monsters.copy()
         
 
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0, True)

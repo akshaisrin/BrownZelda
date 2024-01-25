@@ -24,6 +24,7 @@ class Biome(Room):
         self.obstacles_rect = []
         self.obstacles_with_img = [] # store obstacles that you want to show on the screen
         self.monsters = []
+        self.monstersremoved = []
         self.items = []
         self.keys = []
         self.text = text
@@ -74,9 +75,11 @@ class Biome(Room):
                 m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
                 #m.shoot(screen, player)
             else:
+                if m in self.monstersremoved:
+                    continue
                 if random.randint(0, 9) > 5:
                     self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)
-                self.monsters.remove(m)
+                self.monstersremoved.remove(m)
                 
         # render player
         if self.name != "game_over":
