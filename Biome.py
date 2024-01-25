@@ -23,6 +23,8 @@ class Biome(Room):
         self.obstacles = [] # store obstacles that you don't want shown on screen (just used for collision with player)
         self.obstacles_rect = []
         self.obstacles_with_img = [] # store obstacles that you want to show on the screen
+        self.key_obstacles = []
+        self.key_obstacles_rect = []
         self.monsters = []
         self.monstersremoved = []
         self.items = []
@@ -86,23 +88,33 @@ class Biome(Room):
             player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
 
     
+    # get obstacle rect
+    def get_obstacle_rect(self, o):
+        rect = o.get_image().get_rect()
+        rect[0] = o.x
+        rect[1] = o.y
+        return rect        
+    
     # add obstacles and their rects that don't want to be shown to the room
     def add_obstacles(self, obstacles:list):
         for o in obstacles:
             self.obstacles.append(o)
-            rect = o.get_image().get_rect()
-            rect[0] = o.x
-            rect[1] = o.y
+            rect = self.get_obstacle_rect(o)
             self.obstacles_rect.append(rect) 
             
     # add obstacles and their rects that should be shown to the room
     def add_obstacles_with_img(self, obstacles_with_img:list, screen):
         for o in obstacles_with_img:
             self.obstacles_with_img.append(o)
-            rect = o.get_image().get_rect()
-            rect[0] = o.x
-            rect[1] = o.y
+            rect = self.get_obstacle_rect(o)
             self.obstacles_rect.append(rect)
+    
+    # add obstacles for places where there is a lock preventing the player from exiting the room
+    def add_key_obstacles(self, obstacles:list):
+        for o in obstacles:
+            self.key_obstacles.append(o)
+            rect = self.get_obstacle_rect(o)
+            self.key_obstacles_rect.append(rect)            
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters
@@ -110,7 +122,7 @@ class Biome(Room):
     def add_exits(self, exits:list):
         # Combines the list of exits
         self.exits += exits
-
+        
 
     def add_items(self, amount, x_pos = None, y_pos = None):
         for i in range(amount):

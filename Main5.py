@@ -139,8 +139,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.galaroom1
-    curr_screen = overworld.schoolroom1 
+    curr_screen = overworld.houseroom3
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -179,8 +178,6 @@ def init_home_screen():
         clock.tick(30)
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
-        # prevents player and obstacle collision
-        overworld.obstacles_in_biome(player1, curr_screen)
         # checks if it's time to transition to the next level
         next_screen = overworld.picksupitems(player1, curr_screen, screen)
         if next_screen != None:
@@ -191,6 +188,8 @@ def init_home_screen():
         #checks if player is in a room with a key and if they have picked it up - also unlocks rooms if player has key
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
+        # prevents player and obstacle collision
+        overworld.obstacles_in_biome(player1, curr_screen)
 
         #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
@@ -301,7 +300,7 @@ def init_home_screen():
                             player1.player_rectangle.topleft = (screen_width//2, 700)
                         player1.health_bar = 5
                         player1.lives_remaining = 5
-                        overworld.revive_monsters(level)
+                        overworld.restore_keys_monsters(level, player1)
                         keep_text_displayed = False
                         text_index = 0
                         respawn = False

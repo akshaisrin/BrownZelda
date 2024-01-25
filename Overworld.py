@@ -88,12 +88,14 @@ class Overworld(Room):
         self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
+        self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
         self.block_key1 = Obstacles("test_object1.png", 0, 0, screen_width, 150)
-        self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18, self.block_key1])
+        self.cricketroom2.add_key_obstacles([self.block_key1])
 
         # create the sixth room with obstacles in level 1 which is a Biome object
         self.cricketroom4 = Biome("cricketroom4", "floor1/cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", self.V_width, self.down_height)], [], False)
-        self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16, self.block_key1])
+        self.cricketroom4.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
+        self.cricketroom4.add_key_obstacles([self.block_key1])
         
         # create the seventh (last) room with obstacles in level 1 which is a Biome object
         self.cricketroom5 = Biome("cricketroom5", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom4, "down", self.V_width, self.down_height)], [("YOU HAVE COLLECTED THE FIRST SPECIAL INGREDIENT, THE CHUTNEY!", 180, 200)], True, screen_width//2, 650)
@@ -185,8 +187,9 @@ class Overworld(Room):
         self._218 = Obstacles("test_object1.png", screen_width//2+150, 0, screen_width//2-150, 75) # H top right band
         self._219 = Obstacles("test_object1.png", screen_width-75, 0, 75, screen_height) # V right band
         self._220 = Obstacles("test_object1.png", 550, 280, 430, 520) # TV + couch
+        self.houseroom4.add_obstacles([self._212, self._217, self._218, self._219, self._26, self._27, self._220])
         self.block_key2_1 = Obstacles("test_object1.png", 0, 0, screen_width, 75)
-        self.houseroom4.add_obstacles([self._212, self._217, self._218, self._219, self._26, self._27, self._220, self.block_key2_1])
+        self.houseroom4.add_key_obstacles([self.block_key2_1])
         
         # create the fifth room in level 2 which is a Biome object
         self.houseroom5 = Biome("houseroom5", "floor2/houseroom5.png", [Exit(770, screen_height, self.houseroom4, "down", self.V_width, self.down_height)], [], False)
@@ -196,8 +199,9 @@ class Overworld(Room):
         
         # create the sixth room in level 2 which is a Biome object
         self.houseroom6 = Biome("houseroom6", "floor2/houseroom6.png", [Exit(screen_width, 380, self.houseroom5, "right", self.right_width, self.H_height)], [], False)
+        self.houseroom6.add_obstacles([self._24, self._212, self._26, self._27, self._28, self._29])
         self.block_key2_2 = Obstacles("test_object1.png", 0, 0, 75, screen_height)
-        self.houseroom6.add_obstacles([self._24, self._212, self._26, self._27, self._28, self._29, self.block_key2_2])
+        self.houseroom6.add_key_obstacles([self.block_key2_2])
         
         # create the seventh (last) room in level 2 which is a Biome object
         self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 650)
@@ -310,8 +314,9 @@ class Overworld(Room):
         self.H_right_bottom_band3 = Obstacles("test_object1.png", 1010, screen_height-110, screen_width-1010, 110)
         self.left_table3 = Obstacles("test_object1.png", 230, 180, 215, 190)
         self.right_table3 = Obstacles("test_object1.png", 1040, 390, 215, 190)
+        self.galaroom4.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_right_bottom_band3, self.H_left_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.left_table3, self.right_table3])
         self.block_key3_1 = Obstacles("test_object1.png", screen_width-105, 0, 105, screen_height)
-        self.galaroom4.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_right_bottom_band3, self.H_left_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.left_table3, self.right_table3, self.block_key3_1])
+        self.galaroom4.add_key_obstacles([self.block_key3_1])
         
         # create the fifth room in level 3 which is a Biome object
         self.galaroom5 = Biome("galaroom5", "floor3/galaroom5.png", [Exit(screen_width, screen_height//2, self.galaroom4, "right", self.right_width, self.H_height)], [], False)    
@@ -322,7 +327,8 @@ class Overworld(Room):
         
         # create the sixth room in level 3 which is a Biome object
         self.galaroom6 = Biome("galaroom6", "floor3/galaroom6.png", [Exit(0, screen_height//2, self.galaroom4, "left", self.left_width, self.H_height)], [("THE FAMOUS ACTOR IS SHAH RUKH KHAN!", 420, 40)], False)    
-        self.galaroom6.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3, self.block_key3_1])
+        self.galaroom6.add_obstacles([self.H_top_band3, self.V_top_right_band3, self.V_bottom_right_band3, self.H_bottom_band3, self.V_bottom_left_band3, self.V_top_left_band3])
+        self.galaroom6.add_key_obstacles([self.block_key3_1])
         
         # create the seventh (last) room in level 3 which is a Biome object
         self.galaroom7 = Biome("galaroom7", "floor3/galaroom7.png", [Exit(0, screen_height//2, self.galaroom6, "left", self.left_width, self.H_height)], [("YOU HAVE COLLECTED THE THIRD SPECIAL INGREDIENT, THE FILLING!", 200, 60)], True, screen_width//2, 700)    
@@ -392,9 +398,10 @@ class Overworld(Room):
         self.V_bottom_right_band4 = Obstacles("test_object1.png", screen_width-100, 490, 100, screen_height-490)
         self.top_crowd4 = Obstacles("test_object1.png", 230, 130, 240, 230)
         self.bottom_crowd4 = Obstacles("test_object1.png", 910, 370, 340, 250)
+        self.schoolroom3.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_crowd4, self.bottom_crowd4])
         self.block_key4_1 = Obstacles("test_object1.png", 0, 0, 100, screen_height)
-        self.schoolroom3.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_crowd4, self.bottom_crowd4, self.block_key4_1])
-
+        self.schoolroom3.add_key_obstacles([self.block_key4_1])
+        
         # add 3 monsters to third room in level 4
         csp_kid_3=CSP_Kid(1, 2, 200, 120, "hit")
         csp_kid_4=CSP_Kid(1, 2, 800, 120, "hit")
@@ -463,8 +470,9 @@ class Overworld(Room):
         self.schoolroom7 = Biome("schoolroom7", "floor4/schoolroom7.png", [Exit(screen_width//2, 0, self.schoolroom3, "up", self.V_width, self.up_height)], [], False)
         self.left_crowd4 = Obstacles("test_object1.png", 220, 210, 310, 240)
         self.right_crowd4 = Obstacles("test_object1.png", 860, 370, 190, 240)
+        self.schoolroom7.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_crowd4, self.right_crowd4])
         self.block_key4_2 = Obstacles("test_object1.png", screen_width-100, 0, 100, screen_height)
-        self.schoolroom7.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_crowd4, self.right_crowd4, self.block_key4_2])
+        self.schoolroom7.add_key_obstacles([self.block_key4_2])
         
         # add 3 monsters to seventh room in level 4
         csp_kid_12=CSP_Kid(1, 2, 1300, 120, "shoot and patrol")
@@ -547,10 +555,12 @@ class Overworld(Room):
         # determine what the next level is based on current room
         if curr_screen == self.cricketroom5:
             next_screen = self.houseroom1
-        elif curr_screen == self.houseroom1:
+        elif curr_screen == self.houseroom7:
             next_screen = self.galaroom1
-        else:
+        elif curr_screen == self.galaroom7:
             next_screen = self.schoolroom1
+        else:
+            next_screen = self.schoolroom9
             
         # display the image for the next room
         image = next_screen.get_image()
@@ -656,6 +666,7 @@ class Overworld(Room):
     # prevent collision between the player and any obstacles in the current room
     def obstacles_in_biome(self, player:Player2, biome:Biome):
         obstacle_rects = biome.obstacles_rect
+        obstacle_rects += biome.key_obstacles_rect
         # go through each obstacle in the room and check if the player is touching it
         for obstacle_rect in obstacle_rects:
             if player.player_rectangle.colliderect(obstacle_rect):
@@ -666,6 +677,8 @@ class Overworld(Room):
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
                 elif player.direction == "right":
                     x_pos = obstacle_rect[0] - player.player_rectangle[2]
+                    if player.attacking:
+                        x_pos -= 64
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
                 elif player.direction == "up":
                     y_pos = obstacle_rect[1] + obstacle_rect[3]
@@ -842,8 +855,8 @@ class Overworld(Room):
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
-                del biome.obstacles[-1]
-                del biome.obstacles_rect[-1]
+                del biome.key_obstacles[0]
+                del biome.key_obstacles_rect [0]
                 break
 
     def flykey(self, biome, player, key, screen, i):
@@ -920,8 +933,8 @@ class Overworld(Room):
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
                     
     
-    # after respawning, revive all the monsters in the current level
-    def revive_monsters(self, level:int):
+    # after respawning, revive all the monsters in the current level and delete all keys already received
+    def restore_keys_monsters(self, level:int, player:Player2):
         if level == 1:
             curr_level = self.floor1rooms
         elif level == 2:
@@ -931,6 +944,7 @@ class Overworld(Room):
         else:
             curr_level = self.floor4rooms
         for room in curr_level:
+            room.keys = []
             for m in room.monsters:
                 m.alive = True
-       
+        player.key_inventory = []
