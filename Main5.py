@@ -136,7 +136,7 @@ def init_home_screen():
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
      
     #test mode variable to skip slower parts of gameplay
-    test_mode = True
+    test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
     curr_screen = overworld.galaroom6
@@ -239,7 +239,7 @@ def init_home_screen():
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
-        # player contorls
+        # player controls
         """
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())

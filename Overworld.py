@@ -930,10 +930,11 @@ class Overworld(Room):
         else:
             curr_level = self.floor4rooms
         for room in curr_level:
-            print(room.monsters)
             for m in room.monsters:
                 m.alive = True
+        """
                 m.attack_power = 10.0
                 if not isinstance(m, Kohli):
                     m.health = 1
-            
+        """
+        
