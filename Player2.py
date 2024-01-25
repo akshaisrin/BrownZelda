@@ -100,7 +100,7 @@ class Player2:
     def attack(self, monsters):  
         for monster in monsters:
             if (self.player_rectangle.colliderect(monster.monster_rectangle)):
-                
+                self.attacking = True
                 monster.get_hit(self.currentitem.power)                    
                 if not monster.in_hit_cooldown:
                     monster.in_hit_cooldown=True
