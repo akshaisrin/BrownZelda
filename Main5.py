@@ -134,16 +134,19 @@ def init_home_screen():
     sword = Sword()
     #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
-    
+     
+    #test mode variable to skip slower parts of gameplay
     test_mode = False
+    # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.galaroom6
+    curr_screen = overworld.houseroom1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
     if curr_screen == overworld.schoolroom1:
         player1.player_rectangle.topleft = (750, 700)
-        
+    
+    # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
@@ -161,11 +164,11 @@ def init_home_screen():
     direction = None
     framecounter = 0
     firstchange = False
-    display_text = True
-    keep_text_displayed = True
-    text_index = 0
-    texts = []
-    display_count = 0
+    
+    display_text = True # if text should be rendered
+    keep_text_displayed = True # if text should continue to be displayed after rendering
+    text_index = 0 # what text sentence should be rendered
+    texts = [] # the list of all the text that needs to be rendered
 
     timestart = time.time()
 
@@ -175,7 +178,9 @@ def init_home_screen():
         clock.tick(30)
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
+        # prevents player and obstacle collision
         overworld.obstacles_in_biome(player1, curr_screen)
+        # checks if it's time to transition to the next level
         next_screen = overworld.picksupitems(player1, curr_screen, screen)
         if next_screen != None:
             curr_screen = next_screen
@@ -189,6 +194,7 @@ def init_home_screen():
 
         #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
+        curr_screen.render_characters(player1, screen)
         
         #renders text if necessary
         if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
@@ -197,18 +203,14 @@ def init_home_screen():
             keep_text_displayed = True
             display_text = False
         
-        curr_screen.render_characters(player1, screen)
-            
+        # keeps the rendered text on the screen if necessary
         if keep_text_displayed:
-            display_count += 1
             for t in texts:
                 screen.blit(t[0], t[1])
-            if display_count == 1:
-                display_count = 0
-                text_index += 1 
-                display_text = True
+            text_index += 1 
+            display_text = True
         
-        #checks if player is going to next biome
+        #checks if player is going to next room
         if curr_screen != None:
             new_screen = overworld.going_to_next_biome(player1, curr_screen, curr_screen_x_pos, curr_screen_y_pos, screen)
             if new_screen != None:
@@ -218,7 +220,8 @@ def init_home_screen():
                 curr_screen = new_screen
                 curr_screen_x_pos = 0
                 curr_screen_y_pos = 0
-                
+        
+        # checks if the player has died
         if player1.check_checkpoint():
             screen_before_death = curr_screen
             curr_screen = overworld.game_over_screen
@@ -270,19 +273,32 @@ def init_home_screen():
                 elif event.key == pygame.K_DOWN: 
                     direction = "down"
                     firstchange = True
+                # lets the player respawn to the beginning of the current level
                 elif event.key == pygame.K_k:
                     if respawn:
+                        print("here")
+                        # determine what the current level is
                         if screen_before_death.name[0:4] == "cric":
                             curr_screen = overworld.room1
+                            level = 1
+                            player1.player_rectangle.topleft = (screen_width//2, screen_height//2)
                         elif screen_before_death.name[0:4] == "hous":
                             curr_screen = overworld.houseroom1
+                            level = 2
+                            player1.player_rectangle.topleft = (screen_width//2, 650)
                         elif screen_before_death.name[0:4] == "gala":
                             curr_screen = overworld.galaroom1
+                            level = 3
+                            player1.player_rectangle.topleft = (screen_width//2, 650)
                         else:
                             curr_screen = overworld.schoolroom1
+                            level = 4
+                            player1.player_rectangle.topleft = (screen_width//2, 700)
+                        player1.health_bar = 5
+                        player1.lives_remaining = 5
+                        overworld.revive_monsters(level)
                         keep_text_displayed = False
                         text_index = 0
-                        player1.health_bar = 5
                         respawn = False
                         
             #stops movement if key is released - sets direction to None

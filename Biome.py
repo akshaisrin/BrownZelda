@@ -20,14 +20,16 @@ class Biome(Room):
         self.last_room = last_room # whether the room is the last in the level
         self.new_level_x = new_level_x # where the player should start after transitioning to next level (x position)
         self.new_level_y = new_level_y # where the player should start after transitioning to next level (y position)
-        self.obstacles = []
+        self.obstacles = [] # store obstacles that you don't want shown on screen (just used for collision with player)
         self.obstacles_rect = []
-        self.obstacles_with_img = []
+        self.obstacles_with_img = [] # store obstacles that you want to show on the screen
         self.monsters = []
         self.items = []
         self.keys = []
         self.text = text
     
+    
+    # get the image for the room (which is needed for rendering)
     def get_image(self):
         if self.name != "game_over":
             img = pygame.image.load(os.path.join("Assets/rooms", self.file_path))
@@ -36,37 +38,40 @@ class Biome(Room):
         image = pygame.transform.scale(img, (screen_width, screen_height))
         return image
     
+    
+    # render the image, items, keys, and obstacles for the room
     def render(self, x_pos:int, y_pos:int, player:Player2, screen:pygame.display):
-        # render the screen
+        
+        # render the room image
         image = self.get_image()
         screen.blit(image, (x_pos, y_pos))
+        
         # render the obstacles
         for o in self.obstacles_with_img:
             screen.blit(o.get_image(), (o.x, o.y))
             
-        #for o in self.obstacles:
-            #screen.blit(o.get_image(), (o.x, x_pos + o.y))
-        # render the player
+        # render the items
         for i in self.items:
             i.render(screen)
-
+            
+        # render the keys
         for i in self.keys:
             i.render(screen)
+            
     
-    
+    # render the player and monsters for the room
     def render_characters(self, player:Player2, screen:pygame.display):
+        
         # render the monsters
         for m in self.monsters:
             if m.alive:
                 # if isinstance(m, Auntieji):
-                #     if m.are_clones:
-                           
+                #     if m.are_clones:       
                 m.attack(player, screen)
                 #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
                 #m.charge_and_hit(player)
                 #m.start_moving(player)
                 m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
-                
                 #m.shoot(screen, player)
             else:
                 if random.randint(0, 9) > 5:
@@ -75,42 +80,34 @@ class Biome(Room):
                 
         # render player
         if self.name != "game_over":
-            player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
+            player.render(player.player_rectangle.topleft[0], player.player_rectangle.topleft[1], screen)
 
     
+    # add obstacles and their rects that don't want to be shown to the room
     def add_obstacles(self, obstacles:list):
         for o in obstacles:
             self.obstacles.append(o)
             rect = o.get_image().get_rect()
             rect[0] = o.x
             rect[1] = o.y
-            self.obstacles_rect.append(rect)
-
+            self.obstacles_rect.append(rect) 
+            
+    # add obstacles and their rects that should be shown to the room
     def add_obstacles_with_img(self, obstacles_with_img:list, screen):
-        # for o in obstacles_with_img:
-        #     self.obstacles.append(o)
-        #     img = o.get_image()
-        #     rect = o.get_image().get_rect()
-        #     rect[0] = o.x
-        #     rect[1] = o.y
-        #     if render_img:
-        #         screen.blit(img, (rect[0], rect[1]))
         for o in obstacles_with_img:
             self.obstacles_with_img.append(o)
             rect = o.get_image().get_rect()
             rect[0] = o.x
             rect[1] = o.y
             self.obstacles_rect.append(rect)
-
-
+            
     def add_monsters(self, monsters:list):
         self.monsters += monsters
         
     def add_exits(self, exits:list):
-
         # Combines the list of exits
-
         self.exits += exits
+
 
     def add_items(self, amount, x_pos = None, y_pos = None):
         for i in range(amount):
@@ -134,3 +131,4 @@ class Biome(Room):
     
     def add_key(self, key):
         self.keys.append(key)
+        
