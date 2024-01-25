@@ -26,6 +26,9 @@ class Overworld(Room):
         global auntie_clone1
         global auntie_clone2
         global auntie_clone3
+
+        #check if a key has been dropped currently
+        self.key_dropped = False
         
         # set font
         self.font = pygame.font.Font('freesansbold.ttf', 32)
@@ -250,8 +253,8 @@ class Overworld(Room):
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
         self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
-        shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
-        self.galaroom6.add_monsters([shah_rukh])
+        self.shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
+        self.galaroom6.add_monsters([self.shah_rukh])
 
         #add paparazzi minibosses to all other rooms
         pap1 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
@@ -486,6 +489,7 @@ class Overworld(Room):
                 pygame.time.wait(300)
             player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
             player.health_bar = 5
+            self.shah_rukh.paralyzing = False
             return next_screen
         return None
     
@@ -750,6 +754,10 @@ class Overworld(Room):
         return True
 
     def monsterkeydrop(self, player, biome):
+        #if biome.keys is not empty, then return
+        if len(biome.keys) > 0:
+            return
+
         for m in biome.monsters:
             if m.alive:
                 return
@@ -779,6 +787,9 @@ class Overworld(Room):
 
 
     def keydrop(self, player, biome):
+        #if biome.keys is not empty, then return
+        if len(biome.keys) > 0:
+            return
         if biome in self.floor1rooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):

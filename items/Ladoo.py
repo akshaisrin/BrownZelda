@@ -2,6 +2,7 @@ import pygame
 import os
 from items.Item import Item
 
+#healing item class - just renders ladoos, most of functionality taken care of elsewhere
 class Ladoo(Item):
     def __init__(self, x_pos, y_pos) -> None:
         ladooimg=pygame.image.load(os.path.join("Assets", "ladoo.png"))

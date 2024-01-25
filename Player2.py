@@ -7,17 +7,22 @@ import time
 class Player2:
 
     def __init__(self, username: str, inventory:dict, curr_item:str, curr_level:int, curr_checkpoint:tuple, lives_remaining: int, health_bar: int, wealth: int, img:str, start_x, start_y, start_z):
+        #loads standard spritesheet
         self.spritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-spritesheet.png"))
         self.spritesheet=pygame.transform.scale(self.spritesheet, (576, 192))
+        #frame of spritesheet player is currently using
         self.current_frame = 9
+        #splits standard spritesheet
         self.spritesheet_frames = [self.spritesheet.subsurface((i * 64, j * 64, 64, 64)) for j in range(3) for i in range(9)]
         self.player_rectangle=self.spritesheet_frames[self.current_frame].get_rect()
         self.player_rectangle.topleft = (start_x, start_y)
+        #defines variables for animation
         self.flipped = False
         self.lastup = None
         self.lastleft = None
         self.direction = None
         self.framegap = 10
+        #defines spritesheet for being attacked
         self.spritesheet_dframes = []
         for frame in self.spritesheet_frames:
             rect = frame.get_rect()
@@ -26,6 +31,7 @@ class Player2:
             #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
+        #defines spritesheet for attacking
         self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
         self.attackspritesheet=pygame.transform.scale(self.attackspritesheet, (576, 192))
         self.spritesheet_aframes = [self.attackspritesheet.subsurface((i * 64, j * 64, 64, 64)) for j in range(3) for i in range(9)]
@@ -35,6 +41,7 @@ class Player2:
         self.spritesheet_aframes[15] = (self.attackspritesheet2.subsurface((144, 30, 64, 104)))
         self.spritesheet_aframes[17] = (self.attackspritesheet2.subsurface((208, 0, 64, 104)))
         self.spritesheet_adframes = []
+        #defines spritesheet for being attacked and attacking at the same time
         for frame in self.spritesheet_aframes:
             rect = frame.get_rect()
             dsurface = frame.copy()
@@ -43,19 +50,21 @@ class Player2:
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_adframes.append(dsurface)
 
+        #variables needed to animate being attacked and attacking
         self.attacked = False
         self.attacktime = time.time()
-
         self.currentitem = curr_item
         self.attacking = False
         self.attackingtime = time.time()
 
+        #images for rendering health
         self.full_heart_img = pygame.image.load(os.path.join("Assets", "full_heart.png"))
         self.empty_heart_img = pygame.image.load(os.path.join("Assets", "empty_heart.png"))
         self.full_heart_img = pygame.transform.scale(self.full_heart_img, (32, 32))
         self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (32, 32))
         self.heart_spacing = 40
-    
+
+        #tracks keys held by player, health of player and checkpoint player is at
         self.key_inventory = []
         self.inventory = inventory
         self.curr_level = curr_level
@@ -66,11 +75,12 @@ class Player2:
         self.is_paralyzed = False
         self.checkpoint = False
     
-        
+    # not currently in use, feature scrapped due to time
     def select_item(self, item:str):
         if item in self.inventory:
             self.curr_item = item
 
+    # not currently in use, feature scrapped due to time
     def use_item(self):
         self.curr_item.use() #use function will be defined in Item classes
 

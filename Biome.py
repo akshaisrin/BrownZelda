@@ -44,36 +44,40 @@ class Biome(Room):
         for o in self.obstacles_with_img:
             screen.blit(o.get_image(), (o.x, o.y))
             
+        #for o in self.obstacles:
+            #screen.blit(o.get_image(), (o.x, x_pos + o.y))
+        # render the player
+        for i in self.items:
+            i.render(screen)
+
+        for i in self.keys:
+            i.render(screen)
+    
+    
+    def render_characters(self, player:Player2, screen:pygame.display):
+        # render the monsters
+        for m in self.monsters:
+            if m.alive:
+                # if isinstance(m, Auntieji):
+                #     if m.are_clones:
+                           
+                m.attack(player, screen)
+                #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
+                #m.charge_and_hit(player)
+                #m.start_moving(player)
+                m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
+                
+                #m.shoot(screen, player)
+            else:
+                if random.randint(0, 9) > 5:
+                    self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)
+                self.monsters.remove(m)
+                
+        # render player
         if self.name != "game_over":
-            #for o in self.obstacles:
-                #screen.blit(o.get_image(), (o.x, x_pos + o.y))
-            # render the player
-            # render the monsters
-            for m in self.monsters:
-                if m.alive:
-                    # if isinstance(m, Auntieji):
-                    #     if m.are_clones:
-                            
-                    m.attack(player, screen)
-                    #m.patrol_and_shoot(player, 500, 300, 500, 500, screen)
-                    #m.charge_and_hit(player)
-                    #m.start_moving(player)
-                    m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
-
-                    #m.shoot(screen, player)
-                else:
-                    if random.randint(0, 9) > 5:
-                        self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)
-                    self.monsters.remove(m)
-
-            for i in self.items:
-                i.render(screen)
-
-            for i in self.keys:
-                i.render(screen)
-
             player.render(player.player_rectangle.topleft[0],player.player_rectangle.topleft[1], screen)
-        
+
+    
     def add_obstacles(self, obstacles:list):
         for o in obstacles:
             self.obstacles.append(o)

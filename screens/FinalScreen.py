@@ -15,16 +15,20 @@ class FinalScreen(Screen):
         self.img_x = 0
         self.img_y = 0
         
+        #time needed to scroll through the image        
         self.scrolltime = 66
         self.screen_height = -2064
+        #time needed to fade in and out of image * 2.55 because the alpha value is 0-255
         self.fadetime = 1.5
     
+    #slowlly scrolls through the image based on the passed in elapsed time
     def display(self, elapsedTime):
         percentage_complete = elapsedTime / self.scrolltime
         self.img_y = self.screen_height * percentage_complete
 
         self.screen.blit(self.img, (self.img_x, self.img_y))
-        
+    
+    #slowly fades out of the image based on the passed in elapsed time
     def displayfade(self, elapsedTime):
         percentage_complete = (elapsedTime  / self.fadetime) * 100
 
@@ -35,6 +39,7 @@ class FinalScreen(Screen):
         self.screen.fill((0, 0, 0))
         self.screen.blit(current_image, (self.img_x, self.img_y))
     
+    #slowly fades into the image based on the passed in elapsed time
     def displayfadein(self, elapsedTime):
         percentage_complete = (elapsedTime  / self.fadetime) * 100
 

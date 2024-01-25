@@ -2,6 +2,7 @@ import pygame
 import os
 from items.Item import Item
 
+#standard item class - just renders ingredients, most of functionality taken care of elsewhere
 class Ingredient(Item):
     def __init__(self, file_path, x_pos, y_pos) -> None:
         ingredientimg=pygame.image.load(os.path.join("Assets", file_path))
