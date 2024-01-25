@@ -6,7 +6,7 @@ class Auntieji(MediumBoss):
     def __init__(self, attack_power:float, health:float, test_monster_name:str, height:int, width:int, start_pos_x:float, start_pos_y:float):
 
         img=pygame.image.load(os.path.join("Assets", "auntiji_mediumBoss.png"))
-        super().__init__(attack_power, health, img, "Auntie Ji", start_pos_x, start_pos_y, height, width, ["charge_and_hit", "shoot_attack"], "auntie_chapal (2).png", 30, 40)
+        super().__init__(attack_power, health, img, "Auntie Ji", start_pos_x, start_pos_y, height, width, ["charge_and_hit", "shoot_attack"], "auntie_chapal (2).png", 50, 60)
         self.test_monster_name=test_monster_name
         self.og_health = health
 

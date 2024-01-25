@@ -8,7 +8,7 @@ from Obstacles import *
 class SRK(MediumBoss):
     def __init__(self, attack_power: float, health: float, img, medium_boss_name: str, start_pos_x: int, start_pos_y: int, height: int, width: int, attacks, proj_img, proj_height, proj_width):
         img=pygame.image.load(os.path.join("Assets", "SRK_sprite.png"))
-        super().__init__(attack_power, health, img, "SRK", start_pos_x, start_pos_y, height, width, attacks, proj_img, proj_height, proj_width)
+        super().__init__(attack_power, health, img, "SRK", start_pos_x, start_pos_y, height, width, attacks, proj_img, 50, 60)
         self.paralyze_cooldown_started=False
         self.in_paralyze_cooldown=False
         self.paralyze_cooldown_timer = pygame.time.get_ticks()

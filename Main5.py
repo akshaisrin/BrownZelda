@@ -4,7 +4,7 @@ import time
 import pygame
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
-from screens.InstructionsScreen import InstructionsScreen
+from screens.InstructionsScreen import *
 from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
@@ -139,6 +139,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
+    curr_screen = overworld.galaroom1
     curr_screen = overworld.schoolroom1 
     if test_mode:
         curr_screen = overworld.cricketroom1
