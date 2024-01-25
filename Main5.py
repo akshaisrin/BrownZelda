@@ -137,8 +137,7 @@ def init_home_screen():
     
     test_mode = False
     overworld = Overworld()
-    curr_screen = overworld.cricketroom4
-    
+    curr_screen = overworld.galaroom6
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))

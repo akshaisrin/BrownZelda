@@ -198,6 +198,64 @@ class Overworld(Room):
         self.houseroom6.add_monsters([auntie1])
         self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
+        #add auntie minibosses
+        auntie_mini1 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini1", 100, 50, 300, 450, False, "shoot and follow path")
+        auntie_mini1.path_coords = [(auntie_mini1.start_pos_x, auntie_mini1.start_pos_y), 
+                                          (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y), 
+                                          (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y+550), 
+                                          (auntie_mini1.start_pos_x, auntie_mini1.start_pos_y+550),
+                                          (auntie_mini1.start_pos_x, auntie_mini1.start_pos_y)]
+        
+        auntie_mini2 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and patrol")
+        auntie_mini2.patrol_direction = "x"
+        auntie_mini2.patrol_distance = 700
+
+        auntie_mini3 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
+        self.houseroom2.add_monsters([auntie_mini1, auntie_mini2, auntie_mini3])
+       
+        auntie_mini4 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False, "shoot and patrol")
+        auntie_mini4.patrol_direction = "y"
+        auntie_mini4.patrol_distance = 700
+
+        auntie_mini5 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False)
+
+        auntie_mini6 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and follow path")
+        auntie_mini6.path_coords = [(auntie_mini6.start_pos_x, auntie_mini6.start_pos_y), 
+                                          (auntie_mini6.start_pos_x+400, auntie_mini6.start_pos_y), 
+                                          (auntie_mini6.start_pos_x+400, auntie_mini6.start_pos_y+550), 
+                                          (auntie_mini6.start_pos_x, auntie_mini6.start_pos_y+550),
+                                          (auntie_mini6.start_pos_x, auntie_mini6.start_pos_y)]
+        
+        self.houseroom3.add_monsters([auntie_mini4, auntie_mini5, auntie_mini6])
+       
+        auntie_mini7 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False)
+        auntie_mini8 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and follow path")
+        auntie_mini8.path_coords = [(auntie_mini8.start_pos_x, auntie_mini8.start_pos_y), 
+                                          (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y), 
+                                          (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y+550), 
+                                          (auntie_mini8.start_pos_x, auntie_mini8.start_pos_y+550),
+                                          (auntie_mini8.start_pos_x, auntie_mini8.start_pos_y)]
+        
+        auntie_mini9 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and patrol")
+        auntie_mini9.patrol_direction = "x"
+        auntie_mini9.patrol_distance = 700
+
+        self.houseroom4.add_monsters([auntie_mini7, auntie_mini8, auntie_mini9])
+
+        auntie_mini10 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False, "shoot and patrol")
+        auntie_mini10.patrol_direction = "y"
+        auntie_mini10.patrol_distance = 700
+
+        auntie_mini11 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and follow path")
+        auntie_mini11.path_coords = [(auntie_mini11.start_pos_x, auntie_mini11.start_pos_y), 
+                                          (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y), 
+                                          (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y+550), 
+                                          (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y+550),
+                                          (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y)]
+        
+        auntie_mini12 = AuntieClone(1.0, 5.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
+        self.houseroom5.add_monsters([auntie_mini10, auntie_mini11, auntie_mini12])
+
         # initialize the third level
         
         # create the rooms with obstacles
@@ -430,9 +488,9 @@ class Overworld(Room):
         
         
 
-    auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0)
-    auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0)
-    auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0)
+    auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0, True)
+    auntie_clone2 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone2.png")), "auntie_clone 1", 100, 50, 0, 0, True)
+    auntie_clone3 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone3.png")), "auntie_clone 1", 100, 50, 0, 0, True)
     #add clones when auntie is at half health
     def add_clones(self, player, clones = [auntie_clone1, auntie_clone2, auntie_clone3]):
         self.set_auntie_clone_coords(player, clones)
@@ -453,8 +511,8 @@ class Overworld(Room):
     burnie2 = Obstacles("burnie_sanders.png", 300, 300, 100, 100)
     burnie3 = Obstacles("burnie_sanders.png", 100, 500, 100, 100)
         
-    def add_burnie_sanders(self, screen, burnies:list = [burnie1, burnie2, burnie3]):
-        self.galaroom3.add_obstacles_with_img(burnies, screen)
+    def add_burnie_sanders(self, screen, burnies: list[Obstacles] = [burnie1, burnie2, burnie3]):
+        self.galaroom6.add_obstacles_with_img(burnies, screen)
     
     
     def game_over(self, screen:pygame.display):
@@ -603,7 +661,7 @@ class Overworld(Room):
                         m.add_burnie = False
 
                 # check if paralyzing to spam SRK shirtless image
-                    if m.paralyzing:
+                    if m.paralyzing:    
                         srk_img = pygame.image.load(os.path.join("Assets/", "funny_SRK_img.png"))
                         image = pygame.transform.scale(srk_img, (100, 100))
                         screen.blit(image, (0,0))
@@ -611,8 +669,13 @@ class Overworld(Room):
                         screen.blit(image, (600, 0))
                         screen.blit(image, (0,400))
 
+                        #change srk image to smolder mode
+                        m.img = pygame.image.load(os.path.join("Assets/", "smolder_mode_flynn_rider.png"))
+
+
                 #if player kills srk while in paralyze, unparalyze
                     if not m.alive:
+                        print("srk is dead")
                         m.paralyzing = False
 
                 # If the player isn't attacking and they touch monster, they should take damage
