@@ -253,8 +253,8 @@ class Overworld(Room):
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
         self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
-        shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
-        self.galaroom6.add_monsters([shah_rukh])
+        self.shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
+        self.galaroom6.add_monsters([self.shah_rukh])
 
         #add paparazzi minibosses to all other rooms
         pap1 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
@@ -489,6 +489,7 @@ class Overworld(Room):
                 pygame.time.wait(300)
             player.player_rectangle.topleft = (curr_screen.new_level_x, curr_screen.new_level_y)
             player.health_bar = 5
+            self.shah_rukh.paralyzing = False
             return next_screen
         return None
     

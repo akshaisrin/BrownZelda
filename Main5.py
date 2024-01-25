@@ -198,6 +198,8 @@ def init_home_screen():
             texts.append(new_text)
             keep_text_displayed = True
             display_text = False
+        
+        curr_screen.render_characters(player1, screen)
             
         if keep_text_displayed:
             display_count += 1
@@ -224,6 +226,10 @@ def init_home_screen():
             curr_screen = overworld.game_over_screen
             player1.checkpoint = False
             respawn = True
+            keep_text_displayed = False
+            text_index = 0
+            texts = []
+            overworld.shah_rukh.paralyzing = False
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -344,4 +350,3 @@ def init_final_screen():
 # init_instructions_screen()
 init_home_screen()
 # init_final_screen()
-
