@@ -235,7 +235,7 @@ def init_home_screen():
         if not overworld.shah_rukh.paralyzing:
             pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)
+            pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
