@@ -16,7 +16,7 @@ class Auntieji(MediumBoss):
 
         # Post-charge attack cooldown duration
 
-        self.cooldown=Constants.cooldown
+        self.cooldown=Constants.auntieji_cooldown
         self.in_cooldown=False
         self.started_charging=True
 
@@ -29,7 +29,7 @@ class Auntieji(MediumBoss):
         self.projectile.damage=2
         self.projectile_constant=Constants.auntie_projectile_speed
         self.current_attack=""
-        self.exclamation=pygame.image.load(os.path.join("Assets", "exclamationmark.png"))
+        self.exclamation=pygame.image.load(os.path.join("Assets", "exclamation_point.png"))
         self.exclamation=pygame.transform.scale(self.exclamation, (25, 25))
 
         self.are_clones = False

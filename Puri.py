@@ -93,14 +93,6 @@ class Puri(MediumBoss):
         if not self.stop_moving:
             self.move_towards_player(player, speed, screen)
 
-    def sound_wave(self, player, speed, projectile_speed, screen):
-        if not self.sound_wave_proj:
-            self.projectile = Projectile(1, self.bugle.bugle_rectangle.centerx, self.bugle.bugle_rectangle.centery, 250, 75, pygame.image.load(os.path.join("Assets", "sonic_wave.png")))
-            self.sound_wave_proj=True
-        self.rapid_fire(projectile_speed, player, screen)        
-        if not self.stop_moving:
-            self.move_towards_player(player, speed, screen)
-
     def reset_csp_mob(self):
         self.csp_kids=[CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery, "walk", True), 
                         CSP_Kid(1, 1, self.monster_rectangle.centerx+100, self.monster_rectangle.centery, "walk", True),

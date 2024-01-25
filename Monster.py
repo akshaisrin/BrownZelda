@@ -21,15 +21,13 @@ class Monster:
         self.alive = True
         self.monster_rectangle=self.img.get_rect()
         self.monster_rectangle.x, self.monster_rectangle.y = start_pos_x, start_pos_y
-        self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, proj_height, proj_width, pygame.image.load(os.path.join("Assets", proj_img)))
+        self.projectile = Projectile(0.5, self.monster_rectangle.x, self.monster_rectangle.y, proj_height, proj_width, pygame.image.load(os.path.join("Assets", proj_img)))
         self.current_increment=1
         self.total_increments=0
         self.patrol_constant=Constants.reg_patrol_constant
         self.projectile_constant=Constants.reg_projectile_constant
-
         self.attacked = False
         self.attacktime = None
-        #create a version of the image that is fused white within pygame
         rect = self.img.get_rect()
         dsurface = self.img.copy()
         wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
@@ -55,9 +53,7 @@ class Monster:
         self.first_time_shooting=True
         self.last_damage = pygame.time.get_ticks()
         self.last_fired=pygame.time.get_ticks()
-        self.attack_cooldown=3500
 
-        self.hit_cooldown_count=1500
         self.in_hit_cooldown=False
         self.last_hit=pygame.time.get_ticks()
 
@@ -71,7 +67,6 @@ class Monster:
         
     def move_towards_player(self, player, speed, screen, attack_damage=1):
         self.current_attack_damage=attack_damage
-
         distance = [player.player_rectangle.x - self.monster_rectangle.x, player.player_rectangle.y - self.monster_rectangle.y]
         
         norm = math.sqrt(distance[0] ** 2 + distance[1] ** 2)
@@ -86,7 +81,7 @@ class Monster:
 
         if self.monster_rectangle.colliderect(player.player_rectangle) and not player.attacking:
             now = pygame.time.get_ticks()
-            if now -self.last_damage >= self.attack_cooldown or self.first_time_attacking:
+            if now -self.last_damage >= Constants.monster_attack_cooldown_count or self.first_time_attacking:
                 self.last_damage = now
                 player.get_attacked(self.current_attack_damage, screen)
                 self.first_time_attacking=False
@@ -225,7 +220,7 @@ class Monster:
 
             # Calculates the time interval between when it last shot a projectile as an shooting cooldown to make it easier for player
 
-            if now - self.last_fired >= self.attack_cooldown or self.first_time_shooting:
+            if now - self.last_fired >= Constants.monster_attack_cooldown_count or self.first_time_shooting:
                 self.last_fired = now
                 self.stop_moving=True
                 self.realign_projectile()
@@ -243,6 +238,8 @@ class Monster:
 
             self.stop_moving=False
             self.realign_projectile()
+      
+
         if self.projectile.projectile_rectangle.colliderect(player.player_rectangle):
             if SRK_paralyze:
                 return True
@@ -290,7 +287,6 @@ class Monster:
         self.health-=damage
         self.attacked = True
         self.attacktime = time.time()
-        print("got hit")
         if self.health<=0:
             self.die()
 
@@ -301,5 +297,3 @@ class Monster:
         self.alive = False
 
         #have a 50% chance to drop a ladoo
-
-        print(f"Monster: {self.monster_type} has been killed") 

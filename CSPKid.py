@@ -6,7 +6,7 @@ class CSP_Kid(MiniBoss):
     def __init__(self, attack_power:float, health:float, start_pos_x:float, start_pos_y:float, main_attack:str, clone=False):
         
         img=pygame.image.load(os.path.join("Assets", "csp_kid_" + str(random.randint(1,3)) + ".png"))
-        super().__init__(attack_power, health, img, "CSP Kid", start_pos_x, start_pos_y, 125, 75, "computer.png", 75, 75, main_attack)
+        super().__init__(attack_power, health, img, "CSP Kid", start_pos_x, start_pos_y, 100, 50, "computer.png", 75, 75, main_attack)
         self.clone=clone
         #self.main_attack=main_attack
     

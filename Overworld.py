@@ -94,7 +94,7 @@ class Overworld(Room):
         self.cricketroom4.add_exits([Exit(800, 0, self.cricketroom5, "up", self.V_width, self.up_height)])
         
         # create a monster
-        self.monster1=Kohli(10.0,"Kohli", 800, 100)
+        self.monster1=Kohli(1.0,"Kohli", 800, 100)
         self.cricketroom4.add_monsters([self.monster1])
 
         npc_cricker_player_1=CricketNPC(10.0, 1, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
@@ -105,30 +105,30 @@ class Overworld(Room):
         self.cricketroom1.add_monsters([npc_cricker_player_1])
 
 
-        npc_cricker_player_2=CricketNPC(10.0, 1, "NPC Cricket Player 2", 700, 500, "hit")
+        npc_cricker_player_2=CricketNPC(1, 1, "NPC Cricket Player 2", 700, 500, "hit")
         self.cricketroom1.add_monsters([npc_cricker_player_2])
 
-        npc_cricker_player_3=CricketNPC(10.0, 1, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
+        npc_cricker_player_3=CricketNPC(1.0, 1, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
         npc_cricker_player_3.patrol_direction="x"
         npc_cricker_player_3.patrol_distance=1220
         self.cricketroom2.add_monsters([npc_cricker_player_3])
 
-        npc_cricker_player_4=CricketNPC(10.0, 1, "NPC Cricket Player 4", 700, 150, "hit")
+        npc_cricker_player_4=CricketNPC(1.0, 1, "NPC Cricket Player 4", 700, 150, "hit")
         self.cricketroom2.add_monsters([npc_cricker_player_4])
 
-        npc_cricker_player_5=CricketNPC(10.0, 1, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
+        npc_cricker_player_5=CricketNPC(1.0, 1, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
         npc_cricker_player_5.patrol_direction="y"
         npc_cricker_player_5.patrol_distance=520
         self.cricketroom2.add_monsters([npc_cricker_player_5])
 
-        npc_cricker_player_6=CricketNPC(10.0, 1, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
+        npc_cricker_player_6=CricketNPC(1.0, 1, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
         npc_cricker_player_6.path_coords=[(npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
                                           (npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y+470)]
         self.cricketroom3.add_monsters([npc_cricker_player_6])
 
-        npc_cricker_player_7=CricketNPC(10.0, 1, "NPC Cricket Player 7", 190, 600, "hit")
+        npc_cricker_player_7=CricketNPC(1.0, 1, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
         
@@ -254,14 +254,14 @@ class Overworld(Room):
         self.galaroom6.add_monsters([shah_rukh])
 
         #add paparazzi minibosses to all other rooms
-        pap1 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap2 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        pap1 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap2 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
         self.galaroom3.add_monsters([pap1,pap2])
-        pap3 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap4 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        pap3 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap4 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
         self.galaroom4.add_monsters([pap3, pap4])
-        pap5 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap6 = Paparazzi(1.0, 20.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
+        pap5 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap6 = Paparazzi(1.0, 1.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
         self.galaroom5.add_monsters([pap5, pap6])
 
         # initialize the fourth level
@@ -623,7 +623,7 @@ class Overworld(Room):
                             # Calculating the time between attacks again as a cooldown
 
                             now = pygame.time.get_ticks()
-                            if now - m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                            if now - m.last_damage >= Constants.monster_attack_cooldown_count or m.first_time_attacking:
                                 if not m.in_hit_cooldown:
                                     m.last_damage = now
                                     
@@ -636,7 +636,7 @@ class Overworld(Room):
                             # Calculating the time between attacks again as a cooldown
 
                             now = pygame.time.get_ticks()
-                            if now - m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                            if now - m.last_damage >= Constants.monster_attack_cooldown_count or m.first_time_attacking:
                                 if not m.in_hit_cooldown:
                                     m.last_damage = now
                                     
@@ -648,7 +648,7 @@ class Overworld(Room):
                         # Same cooldown logic if not Kohli
 
                         now = pygame.time.get_ticks()
-                        if now -m.last_damage >= m.attack_cooldown or m.first_time_attacking:
+                        if now -m.last_damage >= Constants.monster_attack_cooldown_count or m.first_time_attacking:
                             if not m.in_hit_cooldown:
                                 m.last_damage = now
                                 player.get_attacked(m.current_attack_damage, screen)
@@ -657,10 +657,16 @@ class Overworld(Room):
                 # Projectile is realigned and player takes damage if player gets hit by projectile
 
                 if player.player_rectangle.colliderect(m.projectile.projectile_rectangle):
-                    m.realign_projectile()
-                    m.current_attack_damage=m.projectile.damage
-                    player.get_attacked(m.current_attack_damage, screen)
-                    m.stop_moving=False    
+                    if isinstance(m, Puri) or m.stop_moving:
+                        now = pygame.time.get_ticks()
+                        if now -m.last_damage >= Constants.monster_attack_cooldown_count or m.first_time_attacking:
+                            if not m.in_hit_cooldown:
+                                m.last_damage = now
+                                m.realign_projectile()
+                                m.current_attack_damage=m.projectile.damage
+                                player.get_attacked(m.current_attack_damage, screen)
+                                m.stop_moving=False
+                                m.first_time_attacking=False    
                 
                 
             return False, monsters

@@ -14,7 +14,7 @@ class Projectile:
         self.img=pygame.transform.scale(self.img, (self.height, self.width))
         self.projectile_rectangle=self.img.get_rect()
         self.projectile_rectangle.topleft = (x_pos, y_pos)
-        self.started_shooting=True
+        
         self.shoot_coords=(0,0)
         self.rot_img = pygame.transform.rotate(self.img,0)
     

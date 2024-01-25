@@ -16,30 +16,13 @@ class MediumBoss(Monster):
         self.main_attack_timer = pygame.time.get_ticks()
         self.main_attack_cooldown=5000
     
+    # Realigns projectile back to monster
+
     def realign_projectile(self):
         self.projectile.projectile_rectangle.x=self.monster_rectangle.x
         self.projectile.projectile_rectangle.y=self.monster_rectangle.y
 
-    # def shoot(self, screen, player):
-        
 
-    #     # Returning projectile back to monster
-        
-    #     if (self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height or self.projectile.projectile_rectangle.y<=0):
-    #         self.realign_projectile()
-            
-    #     if (self.monster_rectangle.colliderect(self.projectile.projectile_rectangle)):
-    #         offset_x=self.projectile.projectile_rectangle.x+Constants.medium_boss_projectile_offset_x
-    #         offset_y=self.projectile.projectile_rectangle.y+Constants.medium_boss_projectile_offset_y
-
-    #         self.projectile_change_x=(player.player_rectangle.x-offset_x)/Constants.medium_boss_velocity_constant
-    #         self.projectile_change_y=(player.player_rectangle.y-offset_y)/Constants.medium_boss_velocity_constant
-
-
-    #     self.projectile.projectile_rectangle.x+=self.projectile_change_x
-    #     self.projectile.projectile_rectangle.y+=self.projectile_change_y
-
-    #     self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
     
 
     

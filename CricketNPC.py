@@ -10,15 +10,20 @@ class CricketNPC(MiniBoss):
         self.test_monster_name=test_monster_name
         self.main_attack=main_attack
     
-    def attack(self, player, screen):
-        if not self.in_hit_cooldown:
-            if self.main_attack=="shoot and follow path":
+    # Main attack function for mini boss
 
-                #self.patrol_and_shoot(player, 700, 500, 900, 500, Constants.npc_cricker_player_projectile_speed, screen)
-                #self.patrol(Constants.npc_cricker_player_speed, 500, 'x')
+    def attack(self, player, screen):
+
+        # Monster can only attack if it is not in a cooldown
+
+        if not self.in_hit_cooldown:
+
+            # There are three main attacks a typical monster can have, each corresponding to a different function
+            # A mini boss is only assigned one of the three attacks
+
+            if self.main_attack=="shoot and follow path":
                 
                 self.follow_path_and_shoot(self.path_coords, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, player, screen)
-                #self.follow_path(coords, Constants.npc_cricker_player_speed)
 
             elif self.main_attack=="shoot and patrol":
                 self.patrol_and_shoot(player, Constants.npc_cricker_player_speed, Constants.npc_cricker_player_projectile_speed, self.patrol_distance, self.patrol_direction, screen)
@@ -26,6 +31,8 @@ class CricketNPC(MiniBoss):
                 
                 self.move_towards_player(player,Constants.npc_cricker_player_speed, screen)
         
+        # This manages the hit cooldown and sets it to false if the timer is up
+
         if self.in_hit_cooldown:
             now = pygame.time.get_ticks()
             
