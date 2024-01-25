@@ -31,13 +31,6 @@ class Puri(MediumBoss):
         self.csp_speech_bubble=pygame.transform.scale(self.csp_speech_bubble, (150, 50))
         
     def attack(self, player, screen):
-        # self.bugle.rotate_towards_player_and_render(player, self.monster_rectangle, screen)
-        # #self.walk_towards_player_and_shoot(player, Constants.puri_speed, Constants.puri_projectile_speed, screen, True)
-        # #self.sound_wave(player, Constants.puri_speed, Constants.puri_projectile_speed, screen)
-        # #self.walk_and_rapid_fire(player, Constants.puri_speed, Constants.puri_projectile_speed, screen)
-        # #self.move_towards_player(player, Constants.puri_speed, screen)
-        # self.spawn_csp_kids_and_attack(player, screen)
-
         
         if self.current_attack=="shoot":
             if self.first_time_in_room:
@@ -60,6 +53,8 @@ class Puri(MediumBoss):
                 self.last_csp_mob=now
                 self.in_normal_cooldown=False
 
+        # This attack spawns in a mob of csp students who charge towards the player
+
         elif self.current_attack=="csp_mob":
             screen.blit(self.csp_speech_bubble, (self.monster_rectangle.topright[0]-20, self.monster_rectangle.topright[1]+5))
             if self.render_csp_mob:
@@ -69,10 +64,8 @@ class Puri(MediumBoss):
             if self.check_if_all_csp_kids_dead():
                 self.in_normal_cooldown=True
                 self.normal_cooldown_timer=pygame.time.get_ticks()
-                #self.current_attack="shoot"
-                #now = pygame.time.get_ticks()
-                #self.last_csp_mob=now
-        
+
+    # The normal cooldown is the player's chance to attack the monster           
 
     def check_normal_cooldown(self):
         now = pygame.time.get_ticks()
@@ -81,17 +74,20 @@ class Puri(MediumBoss):
             return True
         return False
     
+    # Slightly modified realign projectile function- spawns the projectile to the bugle instead of the monster
+
     def realign_projectile(self):
         self.projectile.projectile_rectangle.x,self.projectile.projectile_rectangle.y=self.bugle.bugle_rectangle.center
 
-        #self.projectile.projectile_rectangle.x=self.bugle.bugle_rectangle.topright.x
-        #self.projectile.projectile_rectangle.y=self.bugle.bugle_rectangle.topright.y
-    
+    # This attack allows the monster to walk towards the player and shoot the projectile from any angle, regardless of the player's position
+
     def walk_and_rapid_fire(self, player, speed, projectile_speed, screen):
         self.current_attack_damage=1
         self.rapid_fire(projectile_speed, player, screen)        
         if not self.stop_moving:
             self.move_towards_player(player, speed, screen)
+
+    # This reinitializes the mob of csp students with full health
 
     def reset_csp_mob(self):
         self.csp_kids=[CSP_Kid(1, 1, self.monster_rectangle.centerx-100, self.monster_rectangle.centery, "walk", True), 
@@ -105,28 +101,25 @@ class Puri(MediumBoss):
 
     def rapid_fire(self, projectile_speed, player, screen):
         
-        self.stop_moving=False    
+        self.stop_moving=False
 
         # Checks to see if projectile is at edge of screen
 
         if self.projectile.projectile_rectangle.x<=0 or self.projectile.projectile_rectangle.x>=Constants.screen_width or self.projectile.projectile_rectangle.y<=0 or self.projectile.projectile_rectangle.y>=Constants.screen_height or self.first_time_shooting or self.projectile.projectile_rectangle.colliderect(player.player_rectangle):
-            
-            # If stop moving is false, the monster can stop shooting and continue patrolling/following its path
-
-            
 
             # Sets the projectile's new end destination as the player's updated location
-            
             
             self.realign_projectile()
             self.projectile.shoot_coords=(player.player_rectangle.x, player.player_rectangle.y)
 
-            # Calculates the time interval between when it last shot a projectile as an shooting cooldown to make it easier for player
+            # Rotates horn to face the player and fires a projectile
 
             self.projectile.rotate_towards_player(player)
             self.shoot_straight(projectile_speed, screen)
             self.first_time_shooting=False
         
+        # Don't reset the shoot coordinates if the projectile is already mid-flight
+
         else:
             self.shoot_straight(projectile_speed, screen)
 
@@ -143,6 +136,8 @@ class Puri(MediumBoss):
         self.projectile.projectile_rectangle.move_ip(movement_vector[0], movement_vector[1])
         self.projectile.render(self.projectile.projectile_rectangle.x, self.projectile.projectile_rectangle.y, screen)
 
+    # Main function to control the csp kid attack
+
     def spawn_csp_kids_and_attack(self, player, screen):
         
         for csp_kid in self.csp_kids:
@@ -150,7 +145,9 @@ class Puri(MediumBoss):
                 csp_kid.attack(player, screen)
                 csp_kid.render(csp_kid.monster_rectangle.x, csp_kid.monster_rectangle.y, csp_kid.height, csp_kid.width, screen)
                 csp_kid.check_player_collision(player, screen)
-            
+    
+    # The csp kid attack is only over once all the csp kids have been killed- this function checks for this
+
     def check_if_all_csp_kids_dead(self):
         for csp_kid in self.csp_kids:
             if csp_kid.alive:
@@ -160,7 +157,7 @@ class Puri(MediumBoss):
 
 
             
-    # Overrided render function to handle bugle placement
+    # Overrided render function to handle bugle placement near the boss
         
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         
