@@ -7,7 +7,7 @@ class Kohli(MediumBoss):
     def __init__(self, attack_power:float, test_monster_name:str, start_pos_x:float, start_pos_y:float):
 
         img=pygame.image.load(os.path.join("Assets", "kohli_beard.png"))
-        super().__init__(attack_power, 30, img, "Virat Kohli", start_pos_x, start_pos_y, 175, 100, ["charge_and_hit", "shoot_attack"], "cricket_ball.png", 25, 25)
+        super().__init__(attack_power, 10, img, "Virat Kohli", start_pos_x, start_pos_y, 175, 100, ["charge_and_hit", "shoot_attack"], "cricket_ball.png", 25, 25)
         self.test_monster_name=test_monster_name
 
         # Fields for charge attack
