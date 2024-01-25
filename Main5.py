@@ -139,7 +139,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.galaroom6
+    curr_screen = overworld.schoolroom8
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -190,7 +190,6 @@ def init_home_screen():
         #checks if player is in a room with a key and if they have picked it up - also unlocks rooms if player has key
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
-        overworld.keydrop(player1, curr_screen)
 
         #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
@@ -232,10 +231,10 @@ def init_home_screen():
             texts = []
             overworld.shah_rukh.paralyzing = False
 
-        if not overworld.shah_rukh.paralyzing:
-            pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
-            pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)   
+        # if not overworld.shah_rukh.paralyzing:
+        #     pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
+        #     pygame.mixer.music.set_volume(0.3)
+        #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -329,6 +328,7 @@ def init_home_screen():
 
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
+        overworld.keydrop(player1, curr_screen)
         #handles player movement and renders health
         player1.handlemove(direction, framecounter, firstchange)
         player1.renderhealth(10, 10, screen)
