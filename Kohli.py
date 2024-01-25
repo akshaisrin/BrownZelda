@@ -124,7 +124,7 @@ class Kohli(MediumBoss):
         if (self.charge_movement_vector[1]>=0 and self.monster_rectangle.y>=self.charge_coords[1]) or (self.charge_movement_vector[1]<0 and self.monster_rectangle.y<=self.charge_coords[1]):
             y=True
         
-        return (x==True and y==True)
+        return (x==True or y==True)
 
     # Moves the monster towards the monster's charge coordinates
 
