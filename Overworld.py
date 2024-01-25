@@ -75,7 +75,6 @@ class Overworld(Room):
         self.obstacle11 = Obstacles("test_object1.png", 0, 290, 600, 200)
         self.obstacle12 = Obstacles("test_object1.png", 0, screen_height-155, 905, 155)
         self.cricketroom1.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle9, self.obstacle10, self.obstacle11, self.obstacle12])
-        self.cricketroom1.add_items(1)
         
         # create the fourth room with obstacles in level 1 which is a Biome object
         self.cricketroom2 = Biome("cricketroom2", "floor1/cricketroom2.png", [Exit(800, screen_height, self.cricketroom1, "down", self.V_width, self.down_height)], [], False)
@@ -84,7 +83,6 @@ class Overworld(Room):
         self.obstacle15 = Obstacles("test_object1.png", 0, screen_height-160, 705, 160)
         self.obstacle16 = Obstacles("test_object1.png", 0, 0, 150, screen_height)
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
-        self.cricketroom2.add_items(1)
         
         # create the fifth room with obstacles in level 1 which is a Biome object
         self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
@@ -211,7 +209,7 @@ class Overworld(Room):
         self.houseroom4.add_exits([Exit(770, 0, self.houseroom5, "up", self.V_width, self.up_height)])
         self.houseroom5.add_exits([Exit(0, 380, self.houseroom6, "left", self.left_width, self.H_height)])
         self.houseroom6.add_exits([Exit(0, 380, self.houseroom7, "left", self.left_width, self.H_height)])
-        self.houseroom6.add_ingredient(Ingredient("flour.png", 800, 400))
+        self.houseroom7.add_ingredient(Ingredient("flour.png", 800, 400))
         
         #auntie monsters
         auntie1 = Auntieji(1.0, 10.0, "OG Auntie", 200, 100, 0, 0)
@@ -509,6 +507,8 @@ class Overworld(Room):
         for room in self.allrooms:
             #copy all room.monsters list to room.monstersremoved
             room.monstersremoved = room.monsters.copy()
+            if len(room.monsters) != 0:
+                room.add_items(random.randint(1,2))
         
 
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0, True)
@@ -869,7 +869,6 @@ class Overworld(Room):
         #if biome.keys is not empty, then return
         if len(biome.keys) > 0:
             return
-
         for m in biome.monsters:
             if m.alive:
                 return
@@ -901,7 +900,7 @@ class Overworld(Room):
         #if biome.keys is not empty, then return
         if len(biome.keys) > 0:
             return
-        if biome in self.floor1rooms:
+        if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
                     biome.add_key(Key(self.cricketroom3, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
@@ -915,6 +914,7 @@ class Overworld(Room):
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
                     biome.add_key(Key(self.schoolroom3, player.player_rectangle.x, player.player_rectangle.y, 100, 400))
             elif biome.name == "schoolroom6":
+                print("hello")
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
                     
@@ -930,9 +930,9 @@ class Overworld(Room):
         else:
             curr_level = self.floor4rooms
         for room in curr_level:
-            print(room.monsters)
             for m in room.monsters:
                 m.alive = True
+        """
                 m.attack_power = 10.0
                 if not isinstance(m, Kohli):
                     m.health = 2

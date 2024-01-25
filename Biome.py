@@ -75,7 +75,7 @@ class Biome(Room):
                 m.render(m.monster_rectangle.x, m.monster_rectangle.y, m.height,m.width, screen)
                 #m.shoot(screen, player)
             else:
-                if m in self.monstersremoved:
+                if m not in self.monstersremoved:
                     continue
                 if random.randint(0, 9) > 5:
                     self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)

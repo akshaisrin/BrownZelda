@@ -190,7 +190,6 @@ def init_home_screen():
         #checks if player is in a room with a key and if they have picked it up - also unlocks rooms if player has key
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
-        overworld.keydrop(player1, curr_screen)
 
         #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
@@ -231,10 +230,15 @@ def init_home_screen():
             text_index = 0
             texts = []
             overworld.shah_rukh.paralyzing = False
+
+        # if not overworld.shah_rukh.paralyzing:
+        #     pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
+        #     pygame.mixer.music.set_volume(0.3)
+        #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
-        # player contorls
+        # player controls
         """
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
@@ -324,6 +328,7 @@ def init_home_screen():
 
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
+        overworld.keydrop(player1, curr_screen)
         #handles player movement and renders health
         player1.handlemove(direction, framecounter, firstchange)
         player1.renderhealth(10, 10, screen)
