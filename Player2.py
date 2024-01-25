@@ -256,8 +256,10 @@ class Player2:
         #pygame.draw.rect(screen, (255,0,0), self.player_rectangle)
         screen.blit(image, self.player_rectangle)
         
-        
         self.player_rectangle.topleft = (x_pos, y_pos)
+        
+        
+        
     
     # renders health bar on screen
     def renderhealth(self, x_pos, y_pos, screen):
@@ -272,5 +274,3 @@ class Player2:
                 heart_image = self.empty_heart_img
             
             screen.blit(heart_image, (x_pos + i * self.heart_spacing, y_pos))
-
-    

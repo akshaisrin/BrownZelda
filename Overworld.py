@@ -664,7 +664,7 @@ class Overworld(Room):
     
     
     # prevent collision between the player and any obstacles in the current room
-    def obstacles_in_biome(self, player:Player2, biome:Biome):
+    def obstacles_in_biome(self, player:Player2, biome:Biome, direction:str):
         obstacle_rects = biome.obstacles_rect
         obstacle_rects += biome.key_obstacles_rect
         # go through each obstacle in the room and check if the player is touching it
@@ -672,15 +672,13 @@ class Overworld(Room):
             if player.player_rectangle.colliderect(obstacle_rect):
                 # re-position the player to prevent them from hitting obstacles
                 # re-positioning is dependent on what direction the player is hitting the obstacle from
-                if player.direction == "left":
+                if direction == "left":
                     x_pos = obstacle_rect[0] + obstacle_rect[2]
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
-                elif player.direction == "right":
+                elif direction == "right":
                     x_pos = obstacle_rect[0] - player.player_rectangle[2]
-                    if player.attacking:
-                        x_pos -= 64
                     player.player_rectangle.topleft = (x_pos, player.player_rectangle.topleft[1])
-                elif player.direction == "up":
+                elif direction == "up":
                     y_pos = obstacle_rect[1] + obstacle_rect[3]
                     player.player_rectangle.topleft = (player.player_rectangle.topleft[0], y_pos)
                 else:

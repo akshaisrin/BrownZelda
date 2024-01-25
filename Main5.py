@@ -162,6 +162,7 @@ def init_home_screen():
     #also adds in text variables to keep track of text display
     gameLoop = True
     direction = None
+    direction_for_collision = None
     framecounter = 0
     firstchange = False
     
@@ -188,8 +189,6 @@ def init_home_screen():
         #checks if player is in a room with a key and if they have picked it up - also unlocks rooms if player has key
         overworld.pickupkeys(player1, curr_screen)
         overworld.unlockroom(player1, curr_screen, screen)
-        # prevents player and obstacle collision
-        overworld.obstacles_in_biome(player1, curr_screen)
 
         #renders page (items, players, background, monsters)
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
@@ -267,20 +266,23 @@ def init_home_screen():
             if event.type == pygame.KEYDOWN:                   
                 if event.key == pygame.K_LEFT: 
                     direction = "left"
+                    direction_for_collision = "left"
                     firstchange = True
                 elif event.key == pygame.K_RIGHT: 
                     direction = "right"
+                    direction_for_collision = "right"
                     firstchange = True
-                elif event.key == pygame.K_UP: 
-                    direction = "up"
+                elif event.key == pygame.K_UP:
+                    direction = "up" 
+                    direction_for_collision = "up"
                     firstchange = True
                 elif event.key == pygame.K_DOWN: 
                     direction = "down"
+                    direction_for_collision = "down"
                     firstchange = True
                 # lets the player respawn to the beginning of the current level
                 elif event.key == pygame.K_k:
                     if respawn:
-                        print("here")
                         # determine what the current level is
                         if screen_before_death.name[0:4] == "cric":
                             curr_screen = overworld.room1
@@ -326,6 +328,9 @@ def init_home_screen():
                 pygame.quit()
                 sys.exit()
 
+        # prevents player and obstacle collision
+        overworld.obstacles_in_biome(player1, curr_screen, direction_for_collision)
+        
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
         overworld.keydrop(player1, curr_screen)
@@ -365,7 +370,7 @@ def init_final_screen():
             current_screen.display(elapsedTime)
         pygame.display.update()
         
-# init_loading_screen()
-# init_instructions_screen()
+init_loading_screen()
+init_instructions_screen()
 init_home_screen()
 # init_final_screen()
