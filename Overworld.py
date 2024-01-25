@@ -705,6 +705,9 @@ class Overworld(Room):
                         #change srk image to smolder mode
                         m.img = pygame.image.load(os.path.join("Assets/", "smolder_mode_flynn_rider.png"))
 
+                    else:
+                        m.img = pygame.image.load(os.path.join("Assets/", "SRK_sprite.png"))
+
 
                 #if player kills srk while in paralyze, unparalyze
                     if not m.alive:
