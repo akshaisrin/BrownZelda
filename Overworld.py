@@ -932,8 +932,4 @@ class Overworld(Room):
         for room in curr_level:
             for m in room.monsters:
                 m.alive = True
-        """
-                m.attack_power = 10.0
-                if not isinstance(m, Kohli):
-                    m.health = 2
-            
+       
