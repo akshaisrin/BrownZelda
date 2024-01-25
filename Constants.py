@@ -56,3 +56,5 @@ paparazzi_proj_speed = 12
 monster_attack_cooldown_count=3500
 
 kohli_adjusted_charge_coords_const=30
+
+hit_cooldown_count=1500

@@ -27,7 +27,7 @@ class AuntieClone(MiniBoss):
             if self.in_hit_cooldown:
                 now = pygame.time.get_ticks()
                 
-                if now - self.last_hit>= self.hit_cooldown_count:
+                if now - self.last_hit>= Constants.hit_cooldown_count:
                     self.in_hit_cooldown=False
 
     def die(self) -> None:
