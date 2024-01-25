@@ -60,8 +60,10 @@ class Player2:
         #images for rendering health
         self.full_heart_img = pygame.image.load(os.path.join("Assets", "full_heart.png"))
         self.empty_heart_img = pygame.image.load(os.path.join("Assets", "empty_heart.png"))
+        self.half_heart_img = pygame.image.load(os.path.join("Assets", "half_heart.png"))
         self.full_heart_img = pygame.transform.scale(self.full_heart_img, (32, 32))
         self.empty_heart_img = pygame.transform.scale(self.empty_heart_img, (32, 32))
+        self.half_heart_img = pygame.transform.scale(self.half_heart_img, (32, 32))
         self.heart_spacing = 40
 
         #tracks keys held by player, health of player and checkpoint player is at
@@ -259,7 +261,16 @@ class Player2:
     
     # renders health bar on screen
     def renderhealth(self, x_pos, y_pos, screen):
+        #render health bar with half hearts for .5 health
         for i in range(self.original_health):
-            heart_image = self.full_heart_img if i < self.health_bar else self.empty_heart_img
+            heart_image = None
+            if i <= (self.health_bar - 1):
+                heart_image = self.full_heart_img
+            elif i == (self.health_bar - 0.5):
+                heart_image = self.half_heart_img 
+            else:
+                heart_image = self.empty_heart_img
+            
             screen.blit(heart_image, (x_pos + i * self.heart_spacing, y_pos))
+
     

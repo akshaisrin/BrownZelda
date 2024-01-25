@@ -136,7 +136,7 @@ def init_home_screen():
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
      
     #test mode variable to skip slower parts of gameplay
-    test_mode = False
+    test_mode = True
     # create the overworld and starting room
     overworld = Overworld()
     curr_screen = overworld.galaroom6
