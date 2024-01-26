@@ -515,7 +515,7 @@ class Overworld(Room):
         for room in self.allrooms:
             #copy all room.monsters list to room.monstersremoved
             room.monstersremoved = room.monsters.copy()
-            if len(room.monsters) != 0:
+            if len(room.monsters) != 0 and room.name != "houseroom6" and room.name != "cricketroom4" and room.name != "galaroom6" and room.name != "galaroom7" and room.name != "schoolroom8" and room.name != "schoolroom9":
                 room.add_items(random.randint(1,2))
         
 
@@ -854,8 +854,9 @@ class Overworld(Room):
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
-                del biome.key_obstacles[0]
-                del biome.key_obstacles_rect [0]
+                if len(biome.key_obstacles) > 0:
+                    del biome.key_obstacles[0]
+                    del biome.key_obstacles_rect[0]
                 break
 
     def flykey(self, biome, player, key, screen, i):
