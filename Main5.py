@@ -139,7 +139,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.cricketroom1
+    curr_screen = overworld.room1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -234,10 +234,10 @@ def init_home_screen():
             texts = []
             overworld.shah_rukh.paralyzing = False
 
-        if not overworld.shah_rukh.paralyzing:
-            pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
-            pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)   
+        # if not overworld.shah_rukh.paralyzing:
+        #     pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
+        #     pygame.mixer.music.set_volume(0.3)
+        #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -323,8 +323,12 @@ def init_home_screen():
                     #check if player 1 is within 100 pixels of any obstacle in the biome
                     for curr_obstacle in curr_screen.obstacles_rect:
                         #add  40 pixels in each direction of player for checking collision
-                        if curr_obstacle.colliderect(player1.player_rectangle[0] - 40, player1.player_rectangle[1] - 40, player1.player_rectangle.width + 80, player1.player_rectangle.height + 80):
-                            canattack = False
+                        if direction == "left" or direction == "right": 
+                            if curr_obstacle.colliderect(player1.player_rectangle[0] - 40, player1.player_rectangle[1], player1.player_rectangle.width + 80, player1.player_rectangle.height):
+                                canattack = False
+                        else:
+                            if curr_obstacle.colliderect(player1.player_rectangle[0], player1.player_rectangle[1] - 40, player1.player_rectangle.width, player1.player_rectangle.height + 80):
+                                canattack = False
                     if canattack:
                         player1.attacking = True
                         player1.attackingtime = time.time()
