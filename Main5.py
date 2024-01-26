@@ -319,9 +319,16 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not player1.attacking:
-                    player1.attacking = True
-                    player1.attackingtime = time.time()
-                    player1.attack(curr_screen.monsters) 
+                    canattack = True
+                    #check if player 1 is within 100 pixels of any obstacle in the biome
+                    for curr_obstacle in curr_screen.obstacles_rect:
+                        #add  40 pixels in each direction of player for checking collision
+                        if curr_obstacle.colliderect(player1.player_rectangle[0] - 40, player1.player_rectangle[1] - 40, player1.player_rectangle.width + 80, player1.player_rectangle.height + 80):
+                            canattack = False
+                    if canattack:
+                        player1.attacking = True
+                        player1.attackingtime = time.time()
+                        player1.attack(curr_screen.monsters)
 
             if event.type == pygame.QUIT:
                 gameLoop=False

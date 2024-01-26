@@ -3,6 +3,7 @@ import Constants
 import os
 import sys
 import time
+import random
 
 class Player2:
 
@@ -258,7 +259,21 @@ class Player2:
         
         self.player_rectangle.topleft = (x_pos, y_pos)
         
-        
+    #if player is out of bounds, randomly teleport player to new location
+    def adjustplayer(self, biome):
+        if self.player_rectangle[0] < -10 or self.player_rectangle > Constants.screen_width + 10 or self.player_rectangle[1] < -10 or self.player_rectangle[1] > Constants.screen_height + 10:
+            x_pos = None
+            y_pos = None
+            while x_pos != None and y_pos != None:
+                x_pos = random.randint(0, Constants.screen_width)
+                y_pos = random.randint(0, Constants.screen_height)
+                if len(biome.obstacles_rect) != 0:
+                    for obstacles in biome.obstacles_rect:
+                        #check if xpos,ypos collides with an obstacles
+                        if obstacles.colliderect(pygame.Rect(x_pos, y_pos, 64, 64)):
+                            x_pos = None
+                            y_pos = None
+                            break
         
     
     # renders health bar on screen
