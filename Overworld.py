@@ -667,6 +667,7 @@ class Overworld(Room):
     def obstacles_in_biome(self, player:Player2, biome:Biome, direction:str):
         obstacle_rects = biome.obstacles_rect
         obstacle_rects += biome.key_obstacles_rect
+        print(len(biome.key_obstacles_rect))
         # go through each obstacle in the room and check if the player is touching it
         for obstacle_rect in obstacle_rects:
             if player.player_rectangle.colliderect(obstacle_rect):
