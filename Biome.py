@@ -146,6 +146,11 @@ class Biome():
                 return False
         return True
     
+    def is_valid_point(self, x_pos, y_pos):
+        for obstacle in self.obstacles_rect:
+            if obstacle.collidepoint((x_pos, y_pos)):
+                return False
+        return True
     def add_key(self, key):
         print("Added a key")
         self.keys.append(key)

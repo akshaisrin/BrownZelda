@@ -135,7 +135,7 @@ def init_home_screen():
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
      
     #test mode variable to skip slower parts of gameplay
-    test_mode = False
+    test_mode = True
     # create the overworld and starting room
     overworld = Overworld()
     curr_screen = overworld.room1
@@ -176,6 +176,7 @@ def init_home_screen():
     while gameLoop:
         #sets fps to 30 frames
         clock.tick(30)
+        print("player position:" + str(player1.player_rectangle.topleft[0]) + "," + str(player1.player_rectangle.topleft[1]))
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
         # checks if it's time to transition to the next level
@@ -196,7 +197,9 @@ def init_home_screen():
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         curr_screen.render_characters(player1, screen)
         
-        
+        #if player is off the screen - put them back on the screen
+        player1.adjustplayer(curr_screen)
+
         #renders text if necessary
         if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
             new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, text_index, texts, screen)
@@ -318,16 +321,24 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not player1.attacking:
+                    print(player1.current_frame)
                     canattack = True
                     #check if player 1 is within 100 pixels of any obstacle in the biome
-                    for curr_obstacle in curr_screen.obstacles_rect:
-                        #add  40 pixels in each direction of player for checking collision
-                        if direction == "left" or direction == "right": 
-                            if curr_obstacle.colliderect(player1.player_rectangle[0] - 40, player1.player_rectangle[1], player1.player_rectangle.width + 80, player1.player_rectangle.height):
-                                canattack = False
-                        else:
-                            if curr_obstacle.colliderect(player1.player_rectangle[0], player1.player_rectangle[1] - 40, player1.player_rectangle.width, player1.player_rectangle.height + 80):
-                                canattack = False
+                    if player1.current_frame == 10 and player1.flipped: 
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] + 150, player1.player_rectangle.topleft[1]):
+                            canattack = False
+                    elif player1.current_frame == 10 and not player1.flipped:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] - 50, player1.player_rectangle.topleft[1]):
+                            canattack = False
+                    elif player1.current_frame == 9:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] + 150):
+                            canattack = False
+                    elif player1.current_frame == 11:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] - 50):
+                            canattack = False
+                    else:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1]):
+                            canattack = False
                     if canattack:
                         player1.attacking = True
                         player1.attackingtime = time.time()
