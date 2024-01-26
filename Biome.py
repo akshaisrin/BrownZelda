@@ -116,9 +116,7 @@ class Biome():
             self.key_obstacles.append(o)
             rect = self.get_obstacle_rect(o)
             self.key_obstacles_rect.append(rect)
-        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect 
-        print(self.name)
-        print(self.combined_obstacle_rects)    
+        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect   
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters

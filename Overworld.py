@@ -851,7 +851,6 @@ class Overworld():
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
-                print(biome.combined_obstacle_rects)
                 del biome.combined_obstacle_rects[-1]
                 break
 
