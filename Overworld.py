@@ -1,6 +1,5 @@
 from pygame import *
 import os
-from Room import *
 from Constants import *
 from Biome import *
 from Player2 import *
@@ -20,10 +19,9 @@ from SRK import *
 from Paparazzi import *
 import random
 
-class Overworld(Room):
+class Overworld():
     
     def __init__(self):
-        super().__init__(0, 0, 0)
         
         # create the auntie clones
         global auntie_clone1

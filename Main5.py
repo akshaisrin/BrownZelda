@@ -12,7 +12,6 @@ from Constants import *
 #from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
-from Obstacle import *
 from Overworld import *
 
 pygame.init()

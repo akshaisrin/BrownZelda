@@ -1,6 +1,5 @@
 import pygame
 import os
-from Room import *
 from Constants import *
 from Obstacles import *
 from Player2 import *
@@ -10,10 +9,9 @@ from items.Ingredient import *
 from Auntieji import *
 from items.Key import *
 
-class Biome(Room):
+class Biome():
     
     def __init__(self, name:str, file_path:str, exits:list, text:list, last_room:bool=False, new_level_x:int=None, new_level_y:int=None):
-        super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
         self.exits = exits # list of exit objects
