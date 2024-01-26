@@ -287,29 +287,24 @@ def init_home_screen():
                 # lets the player respawn to the beginning of the current level
                 elif event.key == pygame.K_k:
                     if respawn:
+                        overworld = Overworld()
                         # determine what the current level is
                         if screen_before_death.name[0:4] == "cric":
                             curr_screen = overworld.room1
-                            level = 1
                             player1.player_rectangle.topleft = (screen_width//2, screen_height//2)
                         elif screen_before_death.name[0:4] == "hous":
                             curr_screen = overworld.houseroom1
-                            level = 2
                             player1.player_rectangle.topleft = (screen_width//2, 650)
                         elif screen_before_death.name[0:4] == "gala":
                             curr_screen = overworld.galaroom1
-                            level = 3
                             player1.player_rectangle.topleft = (screen_width//2, 650)
                         else:
                             curr_screen = overworld.schoolroom1
-                            level = 4
                             player1.player_rectangle.topleft = (screen_width//2, 700)
                         player1.health_bar = 5
                         player1.lives_remaining = 5
-                        overworld.restore_keys_monsters(level, player1)
                         keep_text_displayed = False
                         text_index = 0
-                        curr_screen.combined_obstacle_rects = curr_screen.obstacles_rect + curr_screen.key_obstacles_rect
                         respawn = False
                         
             #stops movement if key is released - sets direction to None

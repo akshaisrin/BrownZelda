@@ -90,7 +90,7 @@ class Overworld(Room):
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
         self.block_key1 = Obstacles("test_object1.png", 0, 0, screen_width, 150)
-        self.cricketroom2.add_key_obstacles([self.block_key1])
+        self.cricketroom3.add_key_obstacles([self.block_key1])
 
         # create the sixth room with obstacles in level 1 which is a Biome object
         self.cricketroom4 = Biome("cricketroom4", "floor1/cricketroom4.png", [Exit(800, screen_height, self.cricketroom3, "down", self.V_width, self.down_height)], [], False)
@@ -852,6 +852,7 @@ class Overworld(Room):
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
+                print(biome.combined_obstacle_rects)
                 del biome.combined_obstacle_rects[-1]
                 break
 
@@ -927,23 +928,3 @@ class Overworld(Room):
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
-                    
-    
-    # after respawning, revive all the monsters in the current level and delete all keys already received
-    def restore_keys_monsters(self, level:int, player:Player2):
-        if level == 1:
-            curr_level = self.floor1rooms
-        elif level == 2:
-            curr_level = self.floor2rooms
-        elif level == 3:
-            curr_level = self.floor3rooms
-        else:
-            curr_level = self.floor4rooms
-        for room in curr_level:
-            room.keys = []
-            if room.file_path[-12:] == "unlocked.png":
-                room.file_path = room.file_path[-12:]
-            for m in room.monsters:
-                m.alive = True
-        player.key_inventory = []
-        

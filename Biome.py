@@ -102,6 +102,7 @@ class Biome(Room):
             self.obstacles.append(o)
             rect = self.get_obstacle_rect(o)
             self.obstacles_rect.append(rect) 
+        self.combined_obstacle_rects = self.obstacles_rect
             
     # add obstacles and their rects that should be shown to the room
     def add_obstacles_with_img(self, obstacles_with_img:list, screen):
@@ -109,14 +110,17 @@ class Biome(Room):
             self.obstacles_with_img.append(o)
             rect = self.get_obstacle_rect(o)
             self.obstacles_rect.append(rect)
+        self.combined_obstacle_rects = self.obstacles_rect
     
     # add obstacles for places where there is a lock preventing the player from exiting the room
     def add_key_obstacles(self, obstacles:list):
         for o in obstacles:
             self.key_obstacles.append(o)
             rect = self.get_obstacle_rect(o)
-            self.key_obstacles_rect.append(rect)  
-        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect        
+            self.key_obstacles_rect.append(rect)
+        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect 
+        print(self.name)
+        print(self.combined_obstacle_rects)    
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters
