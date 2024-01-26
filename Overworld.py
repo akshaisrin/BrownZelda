@@ -665,9 +665,7 @@ class Overworld(Room):
     
     # prevent collision between the player and any obstacles in the current room
     def obstacles_in_biome(self, player:Player2, biome:Biome, direction:str):
-        obstacle_rects = biome.obstacles_rect
-        obstacle_rects += biome.key_obstacles_rect
-        print(len(biome.key_obstacles_rect))
+        obstacle_rects = biome.combined_obstacle_rects
         # go through each obstacle in the room and check if the player is touching it
         for obstacle_rect in obstacle_rects:
             if player.player_rectangle.colliderect(obstacle_rect):
@@ -854,9 +852,7 @@ class Overworld(Room):
                     self.flykey(biome,  player,key, screen, i)
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
-                if len(biome.key_obstacles) > 0:
-                    del biome.key_obstacles[0]
-                    del biome.key_obstacles_rect[0]
+                del biome.combined_obstacle_rects[-1]
                 break
 
     def flykey(self, biome, player, key, screen, i):
@@ -945,6 +941,9 @@ class Overworld(Room):
             curr_level = self.floor4rooms
         for room in curr_level:
             room.keys = []
+            if room.file_path[-12:] == "unlocked.png":
+                room.file_path = room.file_path[-12:]
             for m in room.monsters:
                 m.alive = True
         player.key_inventory = []
+        

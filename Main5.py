@@ -309,6 +309,7 @@ def init_home_screen():
                         overworld.restore_keys_monsters(level, player1)
                         keep_text_displayed = False
                         text_index = 0
+                        curr_screen.combined_obstacle_rects = curr_screen.obstacles_rect + curr_screen.key_obstacles_rect
                         respawn = False
                         
             #stops movement if key is released - sets direction to None
