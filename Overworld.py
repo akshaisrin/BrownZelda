@@ -16,9 +16,9 @@ from Puri import *
 from Bugle import *
 from Auntieji import *
 from CSPKid import *
-from copy import deepcopy
 from SRK import *
 from Paparazzi import *
+import random
 
 class Overworld(Room):
     
@@ -344,7 +344,7 @@ class Overworld(Room):
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
         self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
-        self.shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "flappybird.png", 10, 10)
+        self.shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "camera_projectile.png", 20, 20)
         self.galaroom6.add_monsters([self.shah_rukh])
 
         #add paparazzi minibosses to all other rooms
@@ -541,9 +541,9 @@ class Overworld(Room):
     
     
     # add burnie obstacles
-    burnie1 = Obstacles("burnie_sanders.png", 100, 200, 100, 100)
-    burnie2 = Obstacles("burnie_sanders.png", 300, 300, 100, 100)
-    burnie3 = Obstacles("burnie_sanders.png", 100, 500, 100, 100)
+    burnie1 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
+    burnie2 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
+    burnie3 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
         
     def add_burnie_sanders(self, screen, burnies:list = [burnie1, burnie2, burnie3]):
         self.galaroom6.add_obstacles_with_img(burnies, screen)
@@ -703,6 +703,7 @@ class Overworld(Room):
 
                 # #find SRK
                 if isinstance(m, SRK):
+                    # print("is isinstance(m, SRK)")
                     if m.add_burnie:
                         self.add_burnie_sanders(screen)
                         print("burnies have been added")
@@ -724,10 +725,10 @@ class Overworld(Room):
                         m.img = pygame.image.load(os.path.join("Assets/", "SRK_sprite.png"))
 
 
-                #if player kills srk while in paralyze, unparalyze
-                    if not m.alive:
-                        print("srk is dead")
-                        player.is_paralyzed = False
+            #if player kills srk while in paralyze, unparalyze
+            if not m.alive:
+                # print("srk is dead")
+                player.is_paralyzed = False
 
                 # If the player isn't attacking and they touch monster, they should take damage
 
@@ -927,4 +928,5 @@ class Overworld(Room):
                     biome.add_key(Key(self.schoolroom3, player.player_rectangle.x, player.player_rectangle.y, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))

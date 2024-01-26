@@ -78,7 +78,7 @@ class SRK(MediumBoss):
         
     def shoot_in_paralyze(self, player, screen):
         if self.paralyzing:
-            if self.walk_towards_player_and_shoot(player, Constants.SRK_speed, Constants.SRK_projectile_speed, screen, True):
+            if self.check_if_in_line_with_player_and_shoot(Constants.SRK_projectile_speed, player, screen):
                 self.shoot_count += 1
 
             if self.shoot_count >= 2:
