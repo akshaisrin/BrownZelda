@@ -135,10 +135,10 @@ def init_home_screen():
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
      
     #test mode variable to skip slower parts of gameplay
-    test_mode = True
+    test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.galaroom6
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
