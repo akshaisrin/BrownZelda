@@ -913,18 +913,16 @@ class Overworld():
         if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
-                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
                 if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
-                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x, player.player_rectangle.y, 800, 100))
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
                 if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
-                    print("ayo")
-                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
-                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x, player.player_rectangle.y, 100, 400))
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x, player.player_rectangle.y, 1400, 400))
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 1400, 400))

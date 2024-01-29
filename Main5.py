@@ -176,7 +176,6 @@ def init_home_screen():
     while gameLoop:
         #sets fps to 30 frames
         clock.tick(30)
-        print("player position:" + str(player1.player_rectangle.topleft[0]) + "," + str(player1.player_rectangle.topleft[1]))
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
         # checks if it's time to transition to the next level
