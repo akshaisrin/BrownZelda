@@ -726,7 +726,7 @@ class Overworld(Room):
 
 
             #if player kills srk while in paralyze, unparalyze
-            if not m.alive:
+            if m.alive:
                 # print("srk is dead")
                 player.is_paralyzed = False
 
