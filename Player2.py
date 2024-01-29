@@ -3,6 +3,7 @@ import Constants
 import os
 import sys
 import time
+import random
 
 class Player2:
 
@@ -257,8 +258,14 @@ class Player2:
         screen.blit(image, self.player_rectangle)
         
         self.player_rectangle.topleft = (x_pos, y_pos)
+
         
-        
+    #if player is out of bounds, randomly teleport player to new location
+    def adjustplayer(self, biome):
+        if not biome.is_valid_point(self.player_rectangle.topleft[0], self.player_rectangle.topleft[1]) or self.player_rectangle.topleft[0] < -10 or self.player_rectangle.topleft[0] > Constants.screen_width + 10 or self.player_rectangle.topleft[1] < -10 or self.player_rectangle.topleft[1] > Constants.screen_height + 10:
+            self.player_rectangle.topleft = (random.randint(0, Constants.screen_width), random.randint(0, Constants.screen_height))
+            while not biome.is_valid_spawn(self.player_rectangle.topleft[0], self.player_rectangle.topleft[1]):
+                self.player_rectangle.topleft = (random.randint(0, Constants.screen_width), random.randint(0, Constants.screen_height))
         
     
     # renders health bar on screen

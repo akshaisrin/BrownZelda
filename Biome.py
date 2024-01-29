@@ -1,6 +1,5 @@
 import pygame
 import os
-from Room import *
 from Constants import *
 from Obstacles import *
 from Player2 import *
@@ -10,10 +9,9 @@ from items.Ingredient import *
 from Auntieji import *
 from items.Key import *
 
-class Biome(Room):
+class Biome():
     
     def __init__(self, name:str, file_path:str, exits:list, text:list, last_room:bool=False, new_level_x:int=None, new_level_y:int=None):
-        super().__init__(0, 0, 0)
         self.name = name
         self.file_path = file_path
         self.exits = exits # list of exit objects
@@ -118,9 +116,7 @@ class Biome(Room):
             self.key_obstacles.append(o)
             rect = self.get_obstacle_rect(o)
             self.key_obstacles_rect.append(rect)
-        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect 
-        print(self.name)
-        print(self.combined_obstacle_rects)    
+        self.combined_obstacle_rects = self.obstacles_rect + self.key_obstacles_rect   
             
     def add_monsters(self, monsters:list):
         self.monsters += monsters
@@ -150,6 +146,11 @@ class Biome(Room):
                 return False
         return True
     
+    def is_valid_point(self, x_pos, y_pos):
+        for obstacle in self.obstacles_rect:
+            if obstacle.collidepoint((x_pos, y_pos)):
+                return False
+        return True
     def add_key(self, key):
         print("Added a key")
         self.keys.append(key)

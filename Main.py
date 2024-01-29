@@ -12,7 +12,6 @@ from Constants import *
 #from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
-from Obstacle import *
 from Overworld import *
 
 pygame.init()
@@ -139,7 +138,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.galaroom3
+    curr_screen = overworld.galaroom6
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -177,6 +176,7 @@ def init_home_screen():
     while gameLoop:
         #sets fps to 30 frames
         clock.tick(30)
+        print("player position:" + str(player1.player_rectangle.topleft[0]) + "," + str(player1.player_rectangle.topleft[1]))
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
         # checks if it's time to transition to the next level
@@ -197,7 +197,9 @@ def init_home_screen():
         curr_screen.render(curr_screen_x_pos, curr_screen_y_pos, player1, screen)
         curr_screen.render_characters(player1, screen)
         
-        
+        #if player is off the screen - put them back on the screen
+        player1.adjustplayer(curr_screen)
+
         #renders text if necessary
         if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
             new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, text_index, texts, screen)
@@ -234,10 +236,10 @@ def init_home_screen():
             texts = []
             overworld.shah_rukh.paralyzing = False
 
-        if not overworld.shah_rukh.paralyzing:
-            pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
-            pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)   
+        # if not overworld.shah_rukh.paralyzing:
+        #     pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
+        #     pygame.mixer.music.set_volume(0.3)
+        #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -319,9 +321,28 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not player1.attacking:
-                    player1.attacking = True
-                    player1.attackingtime = time.time()
-                    player1.attack(curr_screen.monsters) 
+                    print(player1.current_frame)
+                    canattack = True
+                    #check if player 1 is within 100 pixels of any obstacle in the biome
+                    if player1.current_frame == 10 and player1.flipped: 
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] + 150, player1.player_rectangle.topleft[1]):
+                            canattack = False
+                    elif player1.current_frame == 10 and not player1.flipped:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] - 50, player1.player_rectangle.topleft[1]):
+                            canattack = False
+                    elif player1.current_frame == 9:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] + 150):
+                            canattack = False
+                    elif player1.current_frame == 11:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] - 50):
+                            canattack = False
+                    else:
+                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1]):
+                            canattack = False
+                    if canattack:
+                        player1.attacking = True
+                        player1.attackingtime = time.time()
+                        player1.attack(curr_screen.monsters)
 
             if event.type == pygame.QUIT:
                 gameLoop=False
