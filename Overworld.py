@@ -49,7 +49,7 @@ class Overworld():
         # initialize the first level (cricket themed)
         
         # create the first room in level 1 which is a Biome object
-        self.room1 = Biome("room1", "floor1/room1.png", [], [("USE ARROW KEYS TO MOVE AROUND.", (screen_width - 612) // 2, 235), ("PRESS SPACE TO ATTACK.", (screen_width - 421) // 2, 535)], False)
+        self.room1 = Biome("room1", "floor1/room1.png", [], [("USE ARROW KEYS TO MOVE AROUND.", (screen_width - 612) // 2, 235), ("PRESS SPACE TO ATTACK (X ON CONTROLLER). ", (screen_width - 721) // 2, 535)], False)
         # create the obstacles in the room
         self.obstacle1 = Obstacles("test_object1.png", 0, 0, screen_width, 290)
         self.obstacle2 = Obstacles("test_object1.png", 0, 500, screen_width, 300)
