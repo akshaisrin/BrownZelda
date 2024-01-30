@@ -417,6 +417,7 @@ def init_home_screen():
             sc = overworld.samosa_final_boss(player1, screen)
             if sc != None:
                 curr_screen = sc
+                keep_text_displayed = False
         
         #if any monsters in schoolroom9 are dead, end the game
         if overworld.nomonstersalive(overworld.schoolroom9):
