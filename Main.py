@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import pygame
-#from XBoxController import XboxController
+from XBoxController import XboxController
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
 from screens.InstructionsScreen import *
@@ -145,9 +145,8 @@ def init_home_screen():
     curr_screen_y_pos = 0
     
     
-    #joystick=XboxController()
-    #controller_detected=joystick.check_if_connected()
-    controller_detected = False
+    joystick=XboxController()
+    controller_detected=joystick.check_if_connected()
     
     
     # Establishing game loop to keep screen running
