@@ -297,6 +297,10 @@ def init_home_screen():
                         elif screen_before_death.name[0:4] == "gala":
                             curr_screen = overworld.galaroom1
                             player1.player_rectangle.topleft = (screen_width//2, 650)
+                        elif screen_before_death.name == "schoolroom9":
+                            curr_screen = overworld.schoolroom8
+                            player1.player_rectangle.topleft = (100, 400)
+                            overworld.given_samosa = False
                         else:
                             curr_screen = overworld.schoolroom1
                             player1.player_rectangle.topleft = (screen_width//2, 700)
@@ -362,7 +366,7 @@ def init_home_screen():
             
         for m in overworld.schoolroom9.monsters:
             if not m.alive:
-                return
+                init_final_screen()
         
         pygame.display.update()
 
@@ -398,4 +402,4 @@ def init_final_screen():
 # init_loading_screen()
 # init_instructions_screen()
 init_home_screen()
-init_final_screen()
+#init_final_screen()
