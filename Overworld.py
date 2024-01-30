@@ -951,8 +951,10 @@ class Overworld():
                 self.samosa.y_pos = player.player_rectangle.topleft[1]
                 for i in range(10):
                     self.flykey(self.schoolroom8, player, self.samosa, screen, i)
-                self.display_text(["OH NO! MR. PURI HATES SAMOSAS AND IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 10, 650], self.schoolroom8, player, [], screen)
-                pygame.time.wait(3000)
+                self.display_text(["OH NO! MR. PURI HATES SAMOSAS!", 500, 650], self.schoolroom8, player, [], screen)
+                pygame.time.wait(2000)
+                self.display_text(["HE IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 340, 650], self.schoolroom8, player, [], screen)
+                pygame.time.wait(2000)
                 self.given_samosa = True
                 self.schoolroom8.text = []
                 return self.transition_next_level(player, self.schoolroom8, screen)

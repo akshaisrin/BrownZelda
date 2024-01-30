@@ -135,28 +135,19 @@ def init_home_screen():
     sword = Sword()
     #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
-     
-    #test mode variable to skip slower parts of gameplay
-    test_mode = False
+    
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
-    if test_mode:
-        curr_screen = overworld.cricketroom1
-        overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
-    if curr_screen == overworld.schoolroom1:
-        player1.player_rectangle.topleft = (750, 700)
+    curr_screen = overworld.schoolroom8
     
     # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
     
-    
     joystick=XboxController()
-    
-
     controller_detected=joystick.check_if_connected()
+    
     
     # Establishing game loop to keep screen running
     
@@ -478,6 +469,7 @@ def init_final_screen():
         else:
             current_screen.display(elapsedTime)
         pygame.display.update()
+        
         
 # init_loading_screen()
 # init_instructions_screen()
