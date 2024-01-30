@@ -32,6 +32,7 @@ class Player2:
             #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
             self.spritesheet_dframes.append(dsurface)
+
         #defines spritesheet for attacking
         self.attackspritesheet=pygame.image.load(os.path.join("Assets", "chotta-bheem-attackspritesheet.png"))
         self.attackspritesheet=pygame.transform.scale(self.attackspritesheet, (576, 192))
@@ -42,6 +43,7 @@ class Player2:
         self.spritesheet_aframes[15] = (self.attackspritesheet2.subsurface((144, 30, 64, 104)))
         self.spritesheet_aframes[17] = (self.attackspritesheet2.subsurface((208, 0, 64, 104)))
         self.spritesheet_adframes = []
+
         #defines spritesheet for being attacked and attacking at the same time
         for frame in self.spritesheet_aframes:
             rect = frame.get_rect()
@@ -49,7 +51,7 @@ class Player2:
             wsurface = pygame.Surface(rect.size, pygame.SRCALPHA)
             #wsurface.fill('white')
             dsurface.blit(wsurface, (0, 0), None, pygame.BLEND_RGB_ADD)
-            self.spritesheet_adframes.append(dsurface)
+            self.spritesheet_adframes.append(dsurface)  
 
         #variables needed to animate being attacked and attacking
         self.attacked = False

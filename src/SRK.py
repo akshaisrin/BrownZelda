@@ -9,6 +9,8 @@ class SRK(MediumBoss):
     def __init__(self, attack_power: float, health: float, img, medium_boss_name: str, start_pos_x: int, start_pos_y: int, height: int, width: int, attacks, proj_img, proj_height, proj_width):
         img=pygame.image.load(os.path.join("Assets", "SRK_sprite.png"))
         super().__init__(attack_power, health, img, "SRK", start_pos_x, start_pos_y, height, width, attacks, proj_img, 50, 60)
+
+        # paralyze, pre, during, and post variables
         self.paralyze_cooldown_started=False
         self.in_paralyze_cooldown=False
         self.paralyze_cooldown_timer = pygame.time.get_ticks()
@@ -18,9 +20,11 @@ class SRK(MediumBoss):
         self.post_paralyze_cooldown_count = 3000
         self.post_paralyze_cooldown_timer = pygame.time.get_ticks()
         self.in_post_paralyze_cooldown = False
-        self.last_charged = pygame.time.get_ticks()
+
+        # variables to initiate burnie
         self.add_burnie = False
         self.burnies_added = False
+        
         self.og_health = health
         self.shoot_count = 0
 
