@@ -152,10 +152,12 @@ def init_home_screen():
     curr_screen_y_pos = 0
     
     
-    try:
-        joystick=XboxController()
-    except:
-        controller_detected=False
+    
+    joystick=XboxController()
+    
+
+    controller_detected=joystick.check_if_connected()
+    
     # Establishing game loop to keep screen running
     
 
@@ -251,6 +253,9 @@ def init_home_screen():
             # player movement with x box controller
             val=[abs(joystick.get_x_axis()), abs(joystick.get_y_axis())]
 
+            # The player can only move in one direction at a given point in time.
+            # This code takes the greater of the values in the axes, and moves the player in that directtion
+
             if val[1]>val[0]:
                 axis="y"
 
@@ -304,6 +309,7 @@ def init_home_screen():
             if joystick.A:
                 if respawn:
                     overworld = Overworld()
+
                     # determine what the current level is
                     if screen_before_death.name[0:4] == "cric":
                         curr_screen = overworld.room1
@@ -326,9 +332,12 @@ def init_home_screen():
                 if event.type == pygame.QUIT:
                     gameLoop=False
                     pygame.quit()
-                    sys.exit()     
+                    sys.exit()
+
+            player1.handlemove(direction, framecounter, firstchange)     
 
         else:   
+            
             #controls movement - sets direction variable
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:                   
@@ -385,18 +394,21 @@ def init_home_screen():
                         direction = None
                     elif (event.key == pygame.K_SPACE) and not player1.attacking:
                         manage_player_attack(player1, curr_screen)
-                        
+        
                 if event.type == pygame.QUIT:
                     gameLoop=False
                     pygame.quit()
                     sys.exit()
-        
+                
+            player1.handlemove(direction, framecounter, firstchange)
+
+
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
         overworld.keydrop(player1, curr_screen)
         
         #handles player movement and renders health
-        player1.handlemove(direction, framecounter, firstchange)
+        
         player1.renderhealth(10, 10, screen)
         firstchange = False
         

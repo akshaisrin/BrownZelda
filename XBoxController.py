@@ -1,4 +1,4 @@
-from inputs import get_gamepad
+from inputs import *
 import math
 import threading
 
@@ -33,6 +33,8 @@ class XboxController(object):
         self._monitor_thread.daemon = True
         self._monitor_thread.start()
 
+    # Gets buttons/axes
+
     def get_x_axis(self):
         return self.LeftJoystickX
     def get_y_axis(self):
@@ -62,6 +64,8 @@ class XboxController(object):
             try:
                 events = get_gamepad()
                 
+                # Maps each event to an action
+
                 for event in events:
                     if event.code == 'ABS_Y':
                         self.LeftJoystickY = event.state / XboxController.MAX_JOY_VAL # normalize between -1 and 1
@@ -105,4 +109,10 @@ class XboxController(object):
                         self.DownDPad = event.state
             except:
                 pass
-                #print("No X-Box controller detected")
+                
+    # Pretty self explanatory
+
+    def check_if_connected(self):
+        return len(devices.all_devices)==3
+       
+
