@@ -47,7 +47,7 @@ class CSP_Kid(MiniBoss):
 
             if player.player_rectangle.colliderect(self.monster_rectangle) and not player.attacking:
                 now = pygame.time.get_ticks()
-                if now -self.last_damage >= self.attack_cooldown or self.first_time_attacking:
+                if now -self.last_damage >= Constants.monster_attack_cooldown_count or self.first_time_attacking:
                     if not self.in_hit_cooldown:
                         self.last_damage = now
                         player.get_attacked(self.current_attack_damage, screen)

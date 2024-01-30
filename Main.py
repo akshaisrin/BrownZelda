@@ -138,7 +138,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.houseroom5
+    curr_screen = overworld.schoolroom8
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -170,13 +170,10 @@ def init_home_screen():
     text_index = 0 # what text sentence should be rendered
     texts = [] # the list of all the text that needs to be rendered
 
-    timestart = time.time()
-
 
     while gameLoop:
         #sets fps to 30 frames
         clock.tick(30)
-        print("player position:" + str(player1.player_rectangle.topleft[0]) + "," + str(player1.player_rectangle.topleft[1]))
         #tracks number of frames since game started for animation purposes
         framecounter = framecounter + 1
         # checks if it's time to transition to the next level
@@ -321,7 +318,6 @@ def init_home_screen():
                     player1.current_frame = 9
                     direction = None
                 elif (event.key == pygame.K_SPACE) and not player1.attacking:
-                    print(player1.current_frame)
                     canattack = True
                     #check if player 1 is within 100 pixels of any obstacle in the biome
                     if player1.current_frame == 10 and player1.flipped: 
