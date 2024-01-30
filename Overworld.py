@@ -805,7 +805,12 @@ class Overworld():
         
         
     # render text in the current room
-    def display_text(self, words_startx_starty:list, curr_biome:Biome, player:Player2, previous_text:list, screen:pygame.display):
+    def display_text(self, words_startx_starty:list, curr_biome:Biome, player:Player2, previous_text:list, screen:pygame.display):   
+        
+        # play typing music
+        pygame.mixer.music.load(os.path.join("Assets", "typing_music.mp3"))  
+        pygame.mixer.music.set_volume(0.9)
+        pygame.mixer.music.play()
         
         words = words_startx_starty[0] # the text you want to render
         start_x = words_startx_starty[1] # the x-coordinate of the point on the screen where the text should start
@@ -828,6 +833,8 @@ class Overworld():
             pygame.display.update()
             pygame.time.wait(1)
             pygame.time.wait(1)
+        
+        pygame.mixer.music.stop()
         
         # return the text and its position so that it can continue being rendered in Main
         return (text, text_rect)     

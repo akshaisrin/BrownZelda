@@ -2,7 +2,7 @@ import os
 import sys
 import time
 import pygame
-from XBoxController import XboxController
+#from XBoxController import XboxController
 from screens.loadingScreens.InitialLoadingScreen import InitialLoadingScreen
 from screens.loadingScreens.NewLoadingScreen import NewLoadingScreen
 from screens.InstructionsScreen import *
@@ -138,15 +138,16 @@ def init_home_screen():
     
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.schoolroom8
+    curr_screen = overworld.room1
     
     # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
     
-    joystick=XboxController()
-    controller_detected=joystick.check_if_connected()
+    #joystick=XboxController()
+    #controller_detected=joystick.check_if_connected()
+    controller_detected = False
     
     
     # Establishing game loop to keep screen running
