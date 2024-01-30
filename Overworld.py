@@ -83,7 +83,7 @@ class Overworld():
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         # create the fifth room with obstacles in level 1 which is a Biome object
-        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
+        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT ROOM, KILL THE MONSTERS.", 310, 670)], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
@@ -361,7 +361,7 @@ class Overworld():
         # initialize the fourth level (school themed)
         
         # create the first room in level 4 which is a Biome object
-        self.schoolroom1 = Biome("schoolroom1", "floor4/schoolroom1.png", [], [("NOW, HAVING ASSEBMLED THE", 10, 505), ("RECIPE, IT IS TIME TO DELIVER THE", 10, 555), ("SAMOSAS TO MR. PURI AT EASTLAKE.", 10, 605), ("HOPEFULLY, THE LEGENDS HOLD", 945, 505), ("TRUE AND HE CHANGES", 945, 555), ("YOUR GRADE.", 945, 605)], False)
+        self.schoolroom1 = Biome("schoolroom1", "floor4/schoolroom1.png", [], [("NOW, HAVING ASSEMBLED THE", 10, 505), ("RECIPE, IT IS TIME TO DELIVER THE", 10, 555), ("SAMOSAS TO MR. PURI AT", 10, 605), ("EASTLAKE.", 10, 655), ("HOPEFULLY, THE LEGENDS HOLD", 945, 505), ("TRUE AND HE CHANGES", 945, 555), ("YOUR GRADE.", 945, 605)], False)
         self.left_side4 = Obstacles("test_object1.png", 0, 0, 630, screen_height)
         self.right_side4 = Obstacles("test_object1.png", 925, 0, screen_width-925, screen_height)
         self.bottom4 = Obstacles("test_object1.png", 660, 790, 950-660, 10)
@@ -809,7 +809,7 @@ class Overworld():
             for t in previous_text:
                 screen.blit(t[0], t[1])
                 pygame.display.update()
-            text = self.font.render(words[0:i], True, (0, 0, 0))
+            text = self.font.render(words[0:i], True, (255, 255, 255))
             text_rect = text.get_rect()
             text_rect = (start_x, start_y)
             screen.blit(text, text_rect)
