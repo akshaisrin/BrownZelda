@@ -9,7 +9,7 @@ class Puri(MediumBoss):
     def __init__(self, attack_power:float, test_monster_name:str, start_pos_x:float, start_pos_y:float):
 
         img=pygame.image.load(os.path.join("Assets", "Puri.png"))
-        super().__init__(attack_power, 50, img, "Mr. Puri", start_pos_x, start_pos_y, 200, 125, ["charge_and_hit", "shoot_attack"], "missile.png", 100, 75)
+        super().__init__(attack_power, 40, img, "Mr. Puri", start_pos_x, start_pos_y, 200, 125, ["charge_and_hit", "shoot_attack"], "missile.png", 100, 75)
         self.test_monster_name=test_monster_name
         self.bugle=Bugle(self.monster_rectangle.centerx+30, self.monster_rectangle.centery+30, 110, 50)
         self.projectile = Projectile(1, self.bugle.bugle_rectangle.centerx, self.bugle.bugle_rectangle.centery, 75, 100, pygame.image.load(os.path.join("Assets", "missile.png")))
@@ -23,7 +23,7 @@ class Puri(MediumBoss):
         self.last_csp_mob = pygame.time.get_ticks()
         self.render_csp_mob=False
 
-        self.normal_cooldown_count=3500
+        self.normal_cooldown_count=4500
         self.normal_cooldown_timer = pygame.time.get_ticks()
         self.in_normal_cooldown=False
 
