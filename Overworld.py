@@ -730,12 +730,11 @@ class Overworld():
 
 
             #if player kills srk while in paralyze, unparalyze
-            if m.alive:
-                # print("srk is dead")
+            if not m.alive and isinstance(m, SRK):
                 player.is_paralyzed = False
-
                 # If the player isn't attacking and they touch monster, they should take damage
-
+                
+            if m.alive:
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
 
                     # Kohli has more cooldowns, so the player cannot take damage if the Kohli is in a cooldown
