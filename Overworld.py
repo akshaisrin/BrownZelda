@@ -166,9 +166,11 @@ class Overworld():
         self._27 = Obstacles("test_object1.png", 0, screen_height-325, 75, 325) # V left bottom band
         self._28 = Obstacles("test_object1.png", screen_width-75, 0, 75, 290) # V right top band
         self._29 = Obstacles("test_object1.png", screen_width-75, screen_height-325, 75, 325) # V right bottom band
-        self._210 = Obstacles("test_object1.png", screen_width//2 - 230, 100, 470, 330) # dining table
+        self._210 = Obstacles("test_object1.png", screen_width//2 - 100, 100, 215, 330) # dining table
+        self.left_chair2 = Obstacles("test_object1.png", screen_width//2 - 230, 220, 130, 130) # dining table
+        self.right_chair2 = Obstacles("test_object1.png", screen_width//2 + 110, 220, 135, 130) # dining table
         self._211 = Obstacles("test_object1.png", screen_width//2+150, screen_height-75, screen_width//2-150, 75) # H bottom right band
-        self.houseroom2.add_obstacles([self._24, self._25, self._26, self._27, self._28, self._29, self._210, self._211])
+        self.houseroom2.add_obstacles([self._24, self._25, self._26, self._27, self._28, self._29, self._210, self._211, self.left_chair2, self.right_chair2])
         
         # create the third room in level 2 which is a Biome object
         self.houseroom3 = Biome("houseroom3", "floor2/houseroom3.png", [Exit(screen_width, screen_height//2, self.houseroom2, "right", self.right_width, self.H_height)], [], False)
@@ -395,9 +397,10 @@ class Overworld():
         self.H_right_top_band4 = Obstacles("test_object1.png", 880, 0, screen_width-880, 100)
         self.V_top_right_band4 = Obstacles("test_object1.png", screen_width-100, 0, 100, 290)
         self.V_bottom_right_band4 = Obstacles("test_object1.png", screen_width-100, 490, 100, screen_height-490)
-        self.top_crowd4 = Obstacles("test_object1.png", 230, 130, 240, 230)
+        self.top_left_crowd4 = Obstacles("test_object1.png", 225, 130, 160, 180)
+        self.top_right_crowd4 = Obstacles("test_object1.png", 375, 130, 85, 240)
         self.bottom_crowd4 = Obstacles("test_object1.png", 910, 370, 340, 250)
-        self.schoolroom3.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_crowd4, self.bottom_crowd4])
+        self.schoolroom3.add_obstacles([self.H_left_top_band4, self.H_right_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_left_crowd4, self.top_right_crowd4, self.bottom_crowd4])
         self.block_key4_1 = Obstacles("test_object1.png", 0, 0, 100, screen_height)
         self.schoolroom3.add_key_obstacles([self.block_key4_1])
         
@@ -482,7 +485,7 @@ class Overworld():
         self.schoolroom7.add_monsters([csp_kid_12, csp_kid_13, csp_kid_14])
         
         # create the eighth room in level 4 which is a Biome object
-        self.schoolroom8 = Biome("schoolroom8", "floor4/schoolroom8.png", [Exit(0, screen_height//2, self.schoolroom7, "left", self.left_width, self.H_height)], [("FINALLY, YOU ARE IN MR. PURI'S ROOM. TIME TO DELIVER THE SAMOSA.", 190, 45)], True, screen_width//2, 750)
+        self.schoolroom8 = Biome("schoolroom8", "floor4/schoolroom8.png", [Exit(0, screen_height//2, self.schoolroom7, "left", self.left_width, self.H_height)], [("FINALLY, YOU ARE IN MR. PURI'S ROOM. TIME TO DELIVER THE SAMOSA.", 190, 650)], True, screen_width//2, 750)
         self.top_computers4 = Obstacles("test_object1.png", 220, 120, 900, 180)
         self.bottom_computers4 = Obstacles("test_object1.png", 220, 470, 900, 180)
         self.teacher4 = Obstacles("test_object1.png", 1240, 170, screen_width-1240, 370)
@@ -803,13 +806,17 @@ class Overworld():
         start_x = words_startx_starty[1] # the x-coordinate of the point on the screen where the text should start
         start_y = words_startx_starty[2] # the y-coordinate of the point on the screen where the text should start
         
+        color = (255, 255, 255)
+        if curr_biome.name == "cricketroom3":
+            color = (0, 255, 255)
+        
         # render each letter in the text one at a time
         for i in range(1, len(words) + 1):
             curr_biome.render(0, 0, player, screen)
             for t in previous_text:
                 screen.blit(t[0], t[1])
                 pygame.display.update()
-            text = self.font.render(words[0:i], True, (255, 255, 255))
+            text = self.font.render(words[0:i], True, color)
             text_rect = text.get_rect()
             text_rect = (start_x, start_y)
             screen.blit(text, text_rect)
@@ -939,7 +946,8 @@ class Overworld():
                 self.samosa.y_pos = player.player_rectangle.topleft[1]
                 for i in range(10):
                     self.flykey(self.schoolroom8, player, self.samosa, screen, i)
-                self.display_text(["OH NO! MR. PURI HATES SAMOSAS AND IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 10, 45], self.schoolroom8, player, [], screen)
+                self.display_text(["OH NO! MR. PURI HATES SAMOSAS AND IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 10, 650], self.schoolroom8, player, [], screen)
                 pygame.time.wait(3000)
                 self.given_samosa = True
+                self.schoolroom8.text = []
                 return self.transition_next_level(player, self.schoolroom8, screen)
