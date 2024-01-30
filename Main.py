@@ -346,8 +346,6 @@ def init_home_screen():
 
             if event.type == pygame.QUIT:
                 gameLoop=False
-                pygame.quit()
-                sys.exit()
         
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
@@ -363,13 +361,14 @@ def init_home_screen():
             sc = overworld.samosa_final_boss(player1, screen)
             if sc != None:
                 curr_screen = sc
-            
-        for m in overworld.schoolroom9.monsters:
-            if not m.alive:
-                init_final_screen()
+        
+        #if any monsters in schoolroom9 are dead, end the game
+        if overworld.nomonstersalive(overworld.schoolroom9):
+            init_final_screen()
+            gameLoop = False
         
         pygame.display.update()
-
+     
 #final screen method - follows similar logic to instructions sceen
 def init_final_screen():
     current_screen = FinalScreen(screen)
@@ -402,4 +401,4 @@ def init_final_screen():
 # init_loading_screen()
 # init_instructions_screen()
 init_home_screen()
-#init_final_screen()
+init_final_screen()
