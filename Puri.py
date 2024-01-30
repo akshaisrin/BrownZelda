@@ -162,8 +162,15 @@ class Puri(MediumBoss):
     def render(self, x_pos:float, y_pos:float, height:int, width:int, screen:pygame.display) -> None:
         
         image = pygame.transform.scale(self.img, (width, height))
+        if self.attacked:
+            elapsedTime = time.time() - self.attacktime
+            if elapsedTime > 0.25:
+                self.attacked = False
+            if elapsedTime % 0.1 <= 0.05:
+                image = pygame.transform.scale(self.attackimg, (width, height))
         self.monster_rectangle = image.get_rect()
         self.monster_rectangle.topleft = (x_pos, y_pos)
         #pygame.draw.rect(screen, (0,255,0), self.monster_rectangle)
+
         screen.blit(image, self.monster_rectangle)
         self.bugle.render(self.monster_rectangle, screen)

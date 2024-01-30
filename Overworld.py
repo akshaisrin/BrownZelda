@@ -49,7 +49,7 @@ class Overworld():
         # initialize the first level (cricket themed)
         
         # create the first room in level 1 which is a Biome object
-        self.room1 = Biome("room1", "floor1/room1.png", [], [("USE ARROW KEYS TO MOVE AROUND.", (screen_width - 612) // 2, 235), ("PRESS SPACE TO ATTACK.", (screen_width - 421) // 2, 535)], False)
+        self.room1 = Biome("room1", "floor1/room1.png", [], [("USE ARROW KEYS TO MOVE AROUND.", (screen_width - 612) // 2, 235), ("PRESS SPACE TO ATTACK (X ON CONTROLLER). ", (screen_width - 721) // 2, 535)], False)
         # create the obstacles in the room
         self.obstacle1 = Obstacles("test_object1.png", 0, 0, screen_width, 290)
         self.obstacle2 = Obstacles("test_object1.png", 0, 500, screen_width, 300)
@@ -83,7 +83,7 @@ class Overworld():
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         # create the fifth room with obstacles in level 1 which is a Biome object
-        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [], False)
+        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT ROOM, KILL THE MONSTERS.", 310, 670)], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
@@ -361,7 +361,7 @@ class Overworld():
         # initialize the fourth level (school themed)
         
         # create the first room in level 4 which is a Biome object
-        self.schoolroom1 = Biome("schoolroom1", "floor4/schoolroom1.png", [], [("NOW, HAVING ASSEBMLED THE", 10, 505), ("RECIPE, IT IS TIME TO DELIVER THE", 10, 555), ("SAMOSAS TO MR. PURI AT EASTLAKE.", 10, 605), ("HOPEFULLY, THE LEGENDS HOLD", 945, 505), ("TRUE AND HE CHANGES", 945, 555), ("YOUR GRADE.", 945, 605)], False)
+        self.schoolroom1 = Biome("schoolroom1", "floor4/schoolroom1.png", [], [("NOW, HAVING ASSEMBLED THE", 10, 505), ("RECIPE, IT IS TIME TO DELIVER THE", 10, 555), ("SAMOSAS TO MR. PURI AT", 10, 605), ("EASTLAKE.", 10, 655), ("HOPEFULLY, THE LEGENDS HOLD", 945, 505), ("TRUE AND HE CHANGES", 945, 555), ("YOUR GRADE.", 945, 605)], False)
         self.left_side4 = Obstacles("test_object1.png", 0, 0, 630, screen_height)
         self.right_side4 = Obstacles("test_object1.png", 925, 0, screen_width-925, screen_height)
         self.bottom4 = Obstacles("test_object1.png", 660, 790, 950-660, 10)
@@ -730,12 +730,11 @@ class Overworld():
 
 
             #if player kills srk while in paralyze, unparalyze
-            if m.alive:
-                # print("srk is dead")
+            if not m.alive and isinstance(m, SRK):
                 player.is_paralyzed = False
-
                 # If the player isn't attacking and they touch monster, they should take damage
-
+                
+            if m.alive:
                 if player.player_rectangle.colliderect(m.monster_rectangle) and not player.attacking:
 
                     # Kohli has more cooldowns, so the player cannot take damage if the Kohli is in a cooldown
@@ -810,7 +809,7 @@ class Overworld():
             for t in previous_text:
                 screen.blit(t[0], t[1])
                 pygame.display.update()
-            text = self.font.render(words[0:i], True, (0, 0, 0))
+            text = self.font.render(words[0:i], True, (255, 255, 255))
             text_rect = text.get_rect()
             text_rect = (start_x, start_y)
             screen.blit(text, text_rect)
@@ -918,19 +917,19 @@ class Overworld():
         if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
-                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 800, 100))
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
                 if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
-                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 800, 100))
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
                 if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
-                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 1400, 400))
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
-                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 100, 400))
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 1400, 400))
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
                     
                     
     def samosa_final_boss(self, player, screen):

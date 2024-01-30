@@ -51,7 +51,7 @@ SRK_speed = 6
 SRK_projectile_speed = 13
 
 paparazzi_speed = 3
-paparazzi_proj_speed = 12
+paparazzi_proj_speed = 14
 
 monster_attack_cooldown_count=3500
 
