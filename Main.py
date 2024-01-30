@@ -138,7 +138,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.schoolroom8
+    curr_screen = overworld.houseroom3
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -242,7 +242,7 @@ def init_home_screen():
 
         # player controls
         """
-        if controller_detected:        
+        if controller_detected:     
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
 
             # player movement with x box controller
