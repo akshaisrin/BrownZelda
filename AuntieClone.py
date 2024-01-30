@@ -6,7 +6,7 @@ import Constants
 class AuntieClone(MiniBoss):
     
     def __init__(self, attack_power: float, health: float, img: pygame.image.load(os.path.join("Assets", "auntieclone1.png")), mini_boss_name: str, height: int, width: int, start_pos_x: int, start_pos_y: int, is_clone: bool, main_attack:str = None):
-        super().__init__(attack_power, health, img, "AuntieClone", start_pos_x, start_pos_y, height, width, "auntie_chapal (2).png", 30, 40, main_attack)
+        super().__init__(attack_power, 2, img, "AuntieClone", start_pos_x, start_pos_y, height, width, "auntie_chapal (2).png", 30, 40, main_attack)
         self.is_clone = is_clone
 
     def attack(self, player, screen):

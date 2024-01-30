@@ -9,7 +9,7 @@ class Puri(MediumBoss):
     def __init__(self, attack_power:float, test_monster_name:str, start_pos_x:float, start_pos_y:float):
 
         img=pygame.image.load(os.path.join("Assets", "Puri.png"))
-        super().__init__(attack_power, 40, img, "Mr. Puri", start_pos_x, start_pos_y, 200, 125, ["charge_and_hit", "shoot_attack"], "missile.png", 100, 75)
+        super().__init__(attack_power, 30, img, "Mr. Puri", start_pos_x, start_pos_y, 200, 125, ["charge_and_hit", "shoot_attack"], "missile.png", 100, 75)
         self.test_monster_name=test_monster_name
         self.bugle=Bugle(self.monster_rectangle.centerx+30, self.monster_rectangle.centery+30, 110, 50)
         self.projectile = Projectile(1, self.bugle.bugle_rectangle.centerx, self.bugle.bugle_rectangle.centery, 75, 100, pygame.image.load(os.path.join("Assets", "missile.png")))
@@ -82,7 +82,7 @@ class Puri(MediumBoss):
     # This attack allows the monster to walk towards the player and shoot the projectile from any angle, regardless of the player's position
 
     def walk_and_rapid_fire(self, player, speed, projectile_speed, screen):
-        self.current_attack_damage=1
+        self.current_attack_damage=0.5
         self.rapid_fire(projectile_speed, player, screen)        
         if not self.stop_moving:
             self.move_towards_player(player, speed, screen)

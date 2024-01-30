@@ -343,7 +343,7 @@ class Overworld():
         self.galaroom6.add_exits([Exit(screen_width, screen_height//2, self.galaroom7, "right", self.right_width, self.H_height)])
         
         self.floor3rooms = [self.galaroom1, self.galaroom2, self.galaroom3, self.galaroom4, self.galaroom5, self.galaroom6, self.galaroom7]#add SRK monster
-        self.shah_rukh = SRK(1.0, 30.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "camera_projectile.png", 20, 20)
+        self.shah_rukh = SRK(1.0, 20.0, pygame.image.load(os.path.join("Assets", "SRK_sprite.png")), "SRK", 400, 300, 100, 50, ["paralyze"], "camera_projectile.png", 20, 20)
         self.galaroom6.add_monsters([self.shah_rukh])
 
         #add paparazzi minibosses to all other rooms
@@ -782,13 +782,18 @@ class Overworld():
                     if isinstance(m, Puri) or m.stop_moving:
                         now = pygame.time.get_ticks()
                         if now -m.last_damage >= Constants.monster_attack_cooldown_count or m.first_time_attacking:
+                            
                             if not m.in_hit_cooldown:
+                                
                                 m.last_damage = now
                                 m.realign_projectile()
                                 m.current_attack_damage=m.projectile.damage
+                                
                                 player.get_attacked(m.current_attack_damage, screen)
                                 m.stop_moving=False
-                                m.first_time_attacking=False    
+                                m.first_time_attacking=False
+
+                    
                 
                 
             return False, monsters

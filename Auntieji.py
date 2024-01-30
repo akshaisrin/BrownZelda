@@ -15,7 +15,7 @@ class Auntieji(MediumBoss):
         self.in_cooldown=False
         self.started_charging=True
 
-        self.projectile.damage=2
+        self.projectile.damage=0.5
         self.projectile_constant=Constants.auntie_projectile_speed
         self.are_clones = False
         self.clone_happened = False
