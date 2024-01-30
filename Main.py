@@ -202,7 +202,7 @@ def init_home_screen():
 
         #renders text if necessary
         if curr_screen.text != None and text_index < len(curr_screen.text) and display_text:
-            new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, text_index, texts, screen)
+            new_text = overworld.display_text(curr_screen.text[text_index], curr_screen, player1, texts, screen)
             texts.append(new_text)
             keep_text_displayed = True
             display_text = False
@@ -358,6 +358,16 @@ def init_home_screen():
         player1.renderhealth(10, 10, screen)
         firstchange = False
         
+        # check if the player has reached the final boss
+        if not overworld.given_samosa:
+            sc = overworld.samosa_final_boss(player1, screen)
+            if sc != None:
+                curr_screen = sc
+            
+        for m in overworld.schoolroom9.monsters:
+            if not m.alive:
+                return
+        
         pygame.display.update()
 
 #final screen method - follows similar logic to instructions sceen
@@ -392,4 +402,4 @@ def init_final_screen():
 # init_loading_screen()
 # init_instructions_screen()
 init_home_screen()
-# init_final_screen()
+init_final_screen()

@@ -482,7 +482,7 @@ class Overworld():
         self.schoolroom7.add_monsters([csp_kid_12, csp_kid_13, csp_kid_14])
         
         # create the eighth room in level 4 which is a Biome object
-        self.schoolroom8 = Biome("schoolroom8", "floor4/schoolroom8.png", [Exit(0, screen_height//2, self.schoolroom7, "left", self.left_width, self.H_height)], [("FINALLY, YOU ARE IN MR. PURI'S ROOM. TIME TO DELIVER THE SAMOSA.", 190, 45)], False)
+        self.schoolroom8 = Biome("schoolroom8", "floor4/schoolroom8.png", [Exit(0, screen_height//2, self.schoolroom7, "left", self.left_width, self.H_height)], [("FINALLY, YOU ARE IN MR. PURI'S ROOM. TIME TO DELIVER THE SAMOSA.", 190, 45)], True, screen_width//2, 750)
         self.top_computers4 = Obstacles("test_object1.png", 220, 120, 900, 180)
         self.bottom_computers4 = Obstacles("test_object1.png", 220, 470, 900, 180)
         self.teacher4 = Obstacles("test_object1.png", 1240, 170, screen_width-1240, 370)
@@ -506,6 +506,11 @@ class Overworld():
         self.schoolroom3.add_exits([Exit(screen_width//2, 0, self.schoolroom4, "up", self.V_width, self.up_height), Exit(0, screen_height//2, self.schoolroom6, "left", self.left_width, self.H_height), Exit(screen_width//2, screen_height, self.schoolroom7, "down", self.V_width, self.down_height)])
         self.schoolroom4.add_exits([Exit(0, screen_height//2, self.schoolroom5, "left", self.left_width, self.H_height)])
         self.schoolroom7.add_exits([Exit(screen_width, screen_height//2, self.schoolroom8, "right", self.right_width, self.H_height)])
+        
+        # add a samosa object that has similar functions to a key
+        self.samosa = Key(self.schoolroom8, 750, 400, 1330, 250)
+        self.given_samosa = False
+        self.samosa.img = pygame.image.load(os.path.join("Assets", "samosa.png"))
 
         self.floor4rooms = [self.schoolroom1, self.schoolroom2, self.schoolroom3, self.schoolroom4, self.schoolroom5, self.schoolroom6, self.schoolroom7, self.schoolroom8, self.schoolroom9]
         
@@ -793,7 +798,7 @@ class Overworld():
         
         
     # render text in the current room
-    def display_text(self, words_startx_starty:list, curr_biome:Biome, player:Player2, text_index:int, previous_text:list, screen:pygame.display):
+    def display_text(self, words_startx_starty:list, curr_biome:Biome, player:Player2, previous_text:list, screen:pygame.display):
         
         words = words_startx_starty[0] # the text you want to render
         start_x = words_startx_starty[1] # the x-coordinate of the point on the screen where the text should start
@@ -926,3 +931,16 @@ class Overworld():
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
                     biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 50, player.player_rectangle.y + 50, 1400, 400))
+                    
+                    
+    def samosa_final_boss(self, player, screen):
+        for m in self.schoolroom8.monsters:
+            if not m.alive:
+                self.samosa.x_pos = player.player_rectangle.topleft[0]
+                self.samosa.y_pos = player.player_rectangle.topleft[1]
+                for i in range(10):
+                    self.flykey(self.schoolroom8, player, self.samosa, screen, i)
+                self.display_text(["OH NO! MR. PURI HATES SAMOSAS AND IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 10, 45], self.schoolroom8, player, [], screen)
+                pygame.time.wait(3000)
+                self.given_samosa = True
+                return self.transition_next_level(player, self.schoolroom8, screen)
