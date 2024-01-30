@@ -113,7 +113,7 @@ class Overworld():
 
         npc_cricker_player_1=CricketNPC(10.0, 2, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
         npc_cricker_player_1.path_coords=[(npc_cricker_player_1.start_pos_x, npc_cricker_player_1.start_pos_y), 
-                                          (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y), 
+                                           (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y), 
                                           (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y+450), 
                                           (npc_cricker_player_1.start_pos_x, npc_cricker_player_1.start_pos_y+450)]
         self.cricketroom1.add_monsters([npc_cricker_player_1])
@@ -220,7 +220,7 @@ class Overworld():
         self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
         #add auntie minibosses
-        auntie_mini1 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini1", 100, 50, 300, 450, False, "shoot and follow path")
+        auntie_mini1 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini1", 100, 50, 300, 150, False, "shoot and follow path")
         auntie_mini1.path_coords = [(auntie_mini1.start_pos_x, auntie_mini1.start_pos_y), 
                                           (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y), 
                                           (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y+550), 
@@ -234,9 +234,9 @@ class Overworld():
         auntie_mini3 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
         self.houseroom2.add_monsters([auntie_mini1, auntie_mini2, auntie_mini3])
        
-        auntie_mini4 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False, "shoot and patrol")
+        auntie_mini4 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
         auntie_mini4.patrol_direction = "y"
-        auntie_mini4.patrol_distance = 700
+        auntie_mini4.patrol_distance = 450
 
         auntie_mini5 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False)
 
@@ -250,7 +250,7 @@ class Overworld():
         self.houseroom3.add_monsters([auntie_mini4, auntie_mini5, auntie_mini6])
        
         auntie_mini7 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False)
-        auntie_mini8 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and follow path")
+        auntie_mini8 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 250, False, "shoot and follow path")
         auntie_mini8.path_coords = [(auntie_mini8.start_pos_x, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y+550), 
@@ -263,15 +263,15 @@ class Overworld():
 
         self.houseroom4.add_monsters([auntie_mini7, auntie_mini8, auntie_mini9])
 
-        auntie_mini10 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False, "shoot and patrol")
+        auntie_mini10 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
         auntie_mini10.patrol_direction = "y"
-        auntie_mini10.patrol_distance = 700
+        auntie_mini10.patrol_distance = 500
 
-        auntie_mini11 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and follow path")
+        auntie_mini11 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 800, 350, False, "shoot and follow path")
         auntie_mini11.path_coords = [(auntie_mini11.start_pos_x, auntie_mini11.start_pos_y), 
                                           (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y), 
-                                          (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y+550), 
-                                          (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y+550),
+                                          (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y+400), 
+                                          (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y+400),
                                           (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y)]
         
         auntie_mini12 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
@@ -540,9 +540,9 @@ class Overworld():
     
     
     # add burnie obstacles
-    burnie1 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
-    burnie2 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
-    burnie3 = Obstacles("burnie_sanders.png", random.randint(0, Constants.screen_width), random.randint(0,Constants.screen_height), 100, 100)
+    burnie1 = Obstacles("burnie_sanders.png", random.randint(110, Constants.screen_width - 110), random.randint(110, Constants.screen_height - 110), 100, 100)
+    burnie2 = Obstacles("burnie_sanders.png", random.randint(110, Constants.screen_width - 110), random.randint(110, Constants.screen_height - 110), 100, 100)
+    burnie3 = Obstacles("burnie_sanders.png", random.randint(110, Constants.screen_width - 110), random.randint(110, Constants.screen_height -110), 100, 100)
         
     def add_burnie_sanders(self, screen, burnies:list = [burnie1, burnie2, burnie3]):
         self.galaroom6.add_obstacles_with_img(burnies, screen)
