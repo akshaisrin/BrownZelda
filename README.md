@@ -69,7 +69,7 @@ Design an engaging game that connects to our culture.
 - If not using XBox controller, use the arrow keys to move and the spacebar to attack
 - If using the XBox controller, connect it to the PC by either connecting it via MicroUSB or using Bluetooth. Once connected, use the left joystick to move and “X” to attack.
 
-
+\n
 **ARCHITECTURE**
 
 **Monsters:**
@@ -89,7 +89,7 @@ Player class has to take a spritesheet of the Chotta Bheem character in differen
 The render function renders the spritesheet frame that aligns with the current direction, and renders the punching version of the character. There is also a function to render health, which renders a full heart, half heart, and empty heart based on the value of the health_bar. 	
 The die_and_begone function checks if the health is completely 0, and if so, it blits the game over screen and respawns if it is turned on, or exits the game if player is playing without respawn.
 
-
+\n
 **USER EXPERIENCE**
 
 **Storyline:**
@@ -113,7 +113,7 @@ Out of the list of things in our backlog, we prioritized creating items that boo
 **Standardize Experience:**
 After initially developing the game, we noticed that the game ran at far different speeds across different machines, depending on their processing speed. This made it hard for us to balance things like animation and difficulty, as it was vastly different based on the machine the code was run on. To fix this, we set a max frames per second (30) that the game loop would run. We kept this number low enough that most of the machines we tested were able to easily run at that speed. This allowed us to standardize the experience across multiple machines and gave us control back over the user’s gameplay. When you are unsure about what exactly the user’s gameplay looks like due to differences in computing power, it makes it far harder to prioritize their experience while playing.
 
-
+\n
 **RETROSPECTIVES**
 
 **General Feeling:**
@@ -123,6 +123,7 @@ We feel that overall the process of writing this app was a success. We learned a
 Overall, our communication was quite strong. In the early days of the project, we immediately made a team group chat and used it extensively throughout the project. Additionally, we also split up tasks effectively, utilizing smaller groups to speed up discussion times. Later on, we utilized a calendar to plan out tasks and set deadlines in order to effectively finish the project on time. However, we did not use Github Issues very effectively, which I think cost us some efficiency in terms of work. 
 
 Our January Deadline Calendar:
+
 ![Screenshot 2024-01-30 164420](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/c8f2c2b2-2e10-4be2-b254-1195ef6ac930)
 
 **Major Surprises:**
