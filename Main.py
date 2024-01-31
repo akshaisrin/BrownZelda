@@ -9,8 +9,8 @@ from screens.InstructionsScreen import *
 from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
-#from inputs import get_gamepad
-#from XBoxController import *
+from inputs import get_gamepad
+from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
 from Overworld import *
@@ -138,7 +138,7 @@ def init_home_screen():
     
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.schoolroom8
     
     # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
@@ -159,6 +159,7 @@ def init_home_screen():
     direction_for_collision = None
     framecounter = 0
     firstchange = False
+    musicplaying = False
     
     display_text = True # if text should be rendered
     keep_text_displayed = True # if text should continue to be displayed after rendering
@@ -198,7 +199,11 @@ def init_home_screen():
             texts.append(new_text)
             keep_text_displayed = True
             display_text = False
-        
+
+        if curr_screen == overworld.schoolroom9:
+            pygame.mixer.music.load(os.path.join("Assets", "bossfightmusic.mp3"))
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1)
         # keeps the rendered text on the screen if necessary
         if keep_text_displayed:
             for t in texts:
@@ -457,7 +462,7 @@ def init_final_screen():
             if event.type == pygame.QUIT:
                 gameLoop = False
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and elapsedTime > 20:
                     pygame.mixer.music.stop()
                     gameLoop = False
 

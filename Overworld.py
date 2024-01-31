@@ -205,7 +205,7 @@ class Overworld():
         self.houseroom6.add_key_obstacles([self.block_key2_2])
         
         # create the seventh (last) room in level 2 which is a Biome object
-        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 600)
+        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE DOUGH!", 180, 45)], True, screen_width//2, 600)
         self.houseroom7.add_obstacles([self._24, self._212, self._28, self._29, self._213])
         
         # add exits to all the rooms in the second level - the exits lead to the next room
@@ -936,19 +936,19 @@ class Overworld():
         if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
-                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
                 if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
-                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
                 if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
-                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
-                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 100, 400))
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
                     
                     
     def samosa_final_boss(self, player, screen):
