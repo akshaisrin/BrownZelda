@@ -518,7 +518,7 @@ class Overworld():
             #copy all room.monsters list to room.monstersremoved
             room.monstersremoved = room.monsters.copy()
             if len(room.monsters) != 0 and room.name != "houseroom6" and room.name != "cricketroom4" and room.name != "galaroom6" and room.name != "galaroom7" and room.name != "schoolroom8" and room.name != "schoolroom9":
-                room.add_items(random.randint(1,2))
+                room.add_items(1)
         
 
     auntie_clone1 = AuntieClone(3.0, 6.0, pygame.image.load(os.path.join("Assets", "auntieclone1.png")), "auntie_clone 1", 100, 50, 0, 0, True)
@@ -842,7 +842,8 @@ class Overworld():
                 next_screen = self.transition_next_level(player, biome, screen)
                 return next_screen
             # player picked up a health booster item
-            elif item.item_type == "healing":
+            else: 
+                
                 player.get_healed(item)
 
     def pickupkeys(self, player:Player2, biome:Biome):
@@ -868,7 +869,6 @@ class Overworld():
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
                 del biome.combined_obstacle_rects[-1]
-                player.key_inventory = []
                 break
 
     def flykey(self, biome, player, key, screen, i):
