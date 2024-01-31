@@ -111,7 +111,7 @@ class Overworld():
         self.monster1=Kohli(1.0,"Kohli", 800, 100)
         self.cricketroom4.add_monsters([self.monster1])
 
-        npc_cricker_player_1=CricketNPC(10.0, 2, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
+        npc_cricker_player_1=CricketNPC(10.0, 4, "NPC Cricket Player 1", 935, 150, "shoot and follow path")
         npc_cricker_player_1.path_coords=[(npc_cricker_player_1.start_pos_x, npc_cricker_player_1.start_pos_y), 
                                            (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y), 
                                           (npc_cricker_player_1.start_pos_x+450, npc_cricker_player_1.start_pos_y+450), 
@@ -119,30 +119,30 @@ class Overworld():
         self.cricketroom1.add_monsters([npc_cricker_player_1])
 
 
-        npc_cricker_player_2=CricketNPC(1, 2, "NPC Cricket Player 2", 700, 500, "hit")
+        npc_cricker_player_2=CricketNPC(1, 4, "NPC Cricket Player 2", 700, 500, "hit")
         self.cricketroom1.add_monsters([npc_cricker_player_2])
 
-        npc_cricker_player_3=CricketNPC(1.0, 2, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
+        npc_cricker_player_3=CricketNPC(1.0, 4, "NPC Cricket Player 3", 180, 150, "shoot and patrol")
         npc_cricker_player_3.patrol_direction="x"
         npc_cricker_player_3.patrol_distance=1220
         self.cricketroom2.add_monsters([npc_cricker_player_3])
 
-        npc_cricker_player_4=CricketNPC(1.0, 2, "NPC Cricket Player 4", 700, 150, "hit")
+        npc_cricker_player_4=CricketNPC(1.0, 4, "NPC Cricket Player 4", 700, 150, "hit")
         self.cricketroom2.add_monsters([npc_cricker_player_4])
 
-        npc_cricker_player_5=CricketNPC(1.0, 2, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
+        npc_cricker_player_5=CricketNPC(1.0, 4, "NPC Cricket Player 5", 250, 150, "shoot and patrol")
         npc_cricker_player_5.patrol_direction="y"
         npc_cricker_player_5.patrol_distance=520
         self.cricketroom2.add_monsters([npc_cricker_player_5])
 
-        npc_cricker_player_6=CricketNPC(1.0, 2, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
+        npc_cricker_player_6=CricketNPC(1.0, 4, "NPC Cricket Player 6", 690, 150, "shoot and follow path")
         npc_cricker_player_6.path_coords=[(npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y), 
                                           (npc_cricker_player_6.start_pos_x-520, npc_cricker_player_6.start_pos_y+470), 
                                           (npc_cricker_player_6.start_pos_x, npc_cricker_player_6.start_pos_y+470)]
         self.cricketroom3.add_monsters([npc_cricker_player_6])
 
-        npc_cricker_player_7=CricketNPC(1.0, 2, "NPC Cricket Player 7", 190, 600, "hit")
+        npc_cricker_player_7=CricketNPC(1.0, 4, "NPC Cricket Player 7", 190, 600, "hit")
         self.cricketroom3.add_monsters([npc_cricker_player_7])
         
         
@@ -222,27 +222,27 @@ class Overworld():
         self.floor2rooms = [self.houseroom1, self.houseroom2, self.houseroom3, self.houseroom4, self.houseroom5, self.houseroom6, self.houseroom7]
         
         #add auntie minibosses
-        auntie_mini1 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini1", 100, 50, 300, 150, False, "shoot and follow path")
+        auntie_mini1 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini1", 100, 50, 300, 150, False, "shoot and follow path")
         auntie_mini1.path_coords = [(auntie_mini1.start_pos_x, auntie_mini1.start_pos_y), 
                                           (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y), 
                                           (auntie_mini1.start_pos_x+400, auntie_mini1.start_pos_y+550), 
                                           (auntie_mini1.start_pos_x, auntie_mini1.start_pos_y+550),
                                           (auntie_mini1.start_pos_x, auntie_mini1.start_pos_y)]
         
-        auntie_mini2 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and patrol")
+        auntie_mini2 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False, "shoot and patrol")
         auntie_mini2.patrol_direction = "x"
         auntie_mini2.patrol_distance = 700
 
-        auntie_mini3 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
+        auntie_mini3 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
         self.houseroom2.add_monsters([auntie_mini1, auntie_mini2, auntie_mini3])
        
-        auntie_mini4 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
+        auntie_mini4 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
         auntie_mini4.patrol_direction = "y"
         auntie_mini4.patrol_distance = 450
 
-        auntie_mini5 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False)
+        auntie_mini5 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 450, False)
 
-        auntie_mini6 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and follow path")
+        auntie_mini6 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and follow path")
         auntie_mini6.path_coords = [(auntie_mini6.start_pos_x, auntie_mini6.start_pos_y), 
                                           (auntie_mini6.start_pos_x+400, auntie_mini6.start_pos_y), 
                                           (auntie_mini6.start_pos_x+400, auntie_mini6.start_pos_y+550), 
@@ -251,39 +251,38 @@ class Overworld():
         
         self.houseroom3.add_monsters([auntie_mini4, auntie_mini5, auntie_mini6])
        
-        auntie_mini7 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False)
-        auntie_mini8 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 250, False, "shoot and follow path")
+        auntie_mini7 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False)
+        auntie_mini8 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 250, False, "shoot and follow path")
         auntie_mini8.path_coords = [(auntie_mini8.start_pos_x, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y+550), 
                                           (auntie_mini8.start_pos_x, auntie_mini8.start_pos_y+550),
                                           (auntie_mini8.start_pos_x, auntie_mini8.start_pos_y)]
         
-        auntie_mini9 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and patrol")
+        auntie_mini9 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False, "shoot and patrol")
         auntie_mini9.patrol_direction = "x"
         auntie_mini9.patrol_distance = 700
 
         self.houseroom4.add_monsters([auntie_mini7, auntie_mini8, auntie_mini9])
 
-        auntie_mini10 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
+        auntie_mini10 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 250, False, "shoot and patrol")
         auntie_mini10.patrol_direction = "y"
         auntie_mini10.patrol_distance = 500
 
-        auntie_mini11 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 800, 350, False, "shoot and follow path")
+        auntie_mini11 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 800, 350, False, "shoot and follow path")
         auntie_mini11.path_coords = [(auntie_mini11.start_pos_x, auntie_mini11.start_pos_y), 
                                           (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y), 
                                           (auntie_mini11.start_pos_x+400, auntie_mini11.start_pos_y+400), 
                                           (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y+400),
                                           (auntie_mini11.start_pos_x, auntie_mini11.start_pos_y)]
         
-        auntie_mini12 = AuntieClone(1.0, 2.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
+        auntie_mini12 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone3.png")), "auntie_mini", 100, 50, 300, 150, False)
         self.houseroom5.add_monsters([auntie_mini10, auntie_mini11, auntie_mini12])
-
-        # initialize the third level
         
         # initialize the third level (gala themed)
         
         # create the first room in level 3 which is a Biome object
+
         self.galaroom1 = Biome("galaroom1", "floor3/galaroom1.png", [], [("THE THIRD INGREDIENT IS HELD BY A FAMOUS ACTOR WHO COLLECTED IT DURING", 60, 695), ("HIS TRAVELS. HE DOES NOT SEEM TOO KEEN TO GIVE IT UP HOWEVER.", 160, 740)], False)
         self.left_crowd3 = Obstacles("test_object1.png", 0, 0, 415, screen_height)
         self.right_crowd3 = Obstacles("test_object1.png", 1120, 0, screen_width-1120, screen_height)
@@ -349,14 +348,14 @@ class Overworld():
         self.galaroom6.add_monsters([self.shah_rukh])
 
         #add paparazzi minibosses to all other rooms
-        pap1 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap2 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        pap1 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap2 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
         self.galaroom3.add_monsters([pap1,pap2])
-        pap3 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap4 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
+        pap3 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap4 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 300, 100)
         self.galaroom4.add_monsters([pap3, pap4])
-        pap5 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
-        pap6 = Paparazzi(1.0, 2.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
+        pap5 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi1.png")), "pap1", 100, 50, 100, 50)
+        pap6 = Paparazzi(1.0, 4.0, pygame.image.load(os.path.join("Assets", "paparazzi2.png")), "pap1", 100, 50, 100, 600)
         self.galaroom5.add_monsters([pap5, pap6])
 
 
@@ -383,10 +382,10 @@ class Overworld():
         self.schoolroom2.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.stairs4])
         
         # add 2 monsters to second room in level 4
-        csp_kid_1=CSP_Kid(1, 2, 200, 120, "shoot and patrol")
+        csp_kid_1=CSP_Kid(1, 4, 200, 120, "shoot and patrol")
         csp_kid_1.patrol_direction="x"
         csp_kid_1.patrol_distance=700
-        csp_kid_2=CSP_Kid(1, 2, 900, 120, "shoot and patrol")
+        csp_kid_2=CSP_Kid(1, 4, 900, 120, "shoot and patrol")
         csp_kid_2.patrol_direction="x"
         csp_kid_2.patrol_distance=-700
         self.schoolroom2.add_monsters([csp_kid_1, csp_kid_2])
@@ -405,14 +404,10 @@ class Overworld():
         self.schoolroom3.add_key_obstacles([self.block_key4_1])
         
         # add 3 monsters to third room in level 4
-        csp_kid_3=CSP_Kid(1, 2, 200, 120, "hit")
-        csp_kid_4=CSP_Kid(1, 2, 800, 120, "hit")
-        csp_kid_5=CSP_Kid(1, 2, 200, 500, "hit")
+        csp_kid_3=CSP_Kid(1, 4, 200, 120, "hit")
+        csp_kid_4=CSP_Kid(1, 4, 800, 120, "hit")
+        csp_kid_5=CSP_Kid(1, 4, 200, 500, "hit")
         self.schoolroom3.add_monsters([csp_kid_3, csp_kid_4, csp_kid_5])
-        # csp_kid_3=CSP_Kid(1, 1, 900, 120, "shoot and patrol")
-        # csp_kid_3.patrol_direction="x"
-        # csp_kid_3.patrol_distance=-700
-        # self.schoolroom3.add_monsters([csp_kid_3])
         
         # create the fourth room in level 4 which is a Biome object
         self.schoolroom4 = Biome("schoolroom4", "floor4/schoolroom4.png", [Exit(screen_width//2, screen_height, self.schoolroom3, "down", self.V_width, self.down_height)], [], False)
@@ -420,10 +415,10 @@ class Overworld():
         self.schoolroom4.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_left_bottom_band4, self.H_right_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.crowd4])
         
         # add 2 monsters to fourth room in level 4
-        csp_kid_6=CSP_Kid(1, 2, 200, 120, "shoot and patrol")
+        csp_kid_6=CSP_Kid(1, 4, 200, 120, "shoot and patrol")
         csp_kid_6.patrol_direction="y"
         csp_kid_6.patrol_distance=550
-        csp_kid_7=CSP_Kid(1, 2, 200, 120, "shoot and patrol")
+        csp_kid_7=CSP_Kid(1, 4, 200, 120, "shoot and patrol")
         csp_kid_7.patrol_direction="x"
         csp_kid_7.patrol_distance=700
         self.schoolroom4.add_monsters([csp_kid_6, csp_kid_7])
@@ -438,13 +433,13 @@ class Overworld():
         self.schoolroom5.add_obstacles([self.H_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.left_bookcase4, self.middle_bookcase4, self.right_bookcase4])
         
         # add 2 monsters to fifth room in level 4
-        csp_kid_8=CSP_Kid(1, 2, 200, 120, "shoot and follow path")
+        csp_kid_8=CSP_Kid(1, 4, 200, 120, "shoot and follow path")
         csp_kid_8.path_coords=[(csp_kid_8.start_pos_x, csp_kid_8.start_pos_y), 
                                           (csp_kid_8.start_pos_x+400, csp_kid_8.start_pos_y), 
                                           (csp_kid_8.start_pos_x+400, csp_kid_8.start_pos_y+550), 
                                           (csp_kid_8.start_pos_x, csp_kid_8.start_pos_y+550),
                                           (csp_kid_8.start_pos_x, csp_kid_8.start_pos_y)]
-        csp_kid_9=CSP_Kid(1, 2, 570, 120, "shoot and follow path")
+        csp_kid_9=CSP_Kid(1, 4, 570, 120, "shoot and follow path")
         csp_kid_9.path_coords=[(csp_kid_9.start_pos_x, csp_kid_9.start_pos_y), 
                                           (csp_kid_9.start_pos_x+400, csp_kid_9.start_pos_y), 
                                           (csp_kid_9.start_pos_x+400, csp_kid_9.start_pos_y+550), 
@@ -460,10 +455,10 @@ class Overworld():
         self.schoolroom6.add_obstacles([self.H_top_band4, self.V_top_right_band4, self.V_bottom_right_band4, self.H_bottom_band4, self.V_left_band4, self.bookcases4, self.top_bookcase4, self.bottom_bookcase4])
         
         # add 2 monsters to sixth room in level 4
-        csp_kid_10=CSP_Kid(1, 2, 200, 120, "shoot and patrol")
+        csp_kid_10=CSP_Kid(1, 4, 200, 120, "shoot and patrol")
         csp_kid_10.patrol_direction="x"
         csp_kid_10.patrol_distance=700
-        csp_kid_11=CSP_Kid(1, 2, 200, 550, "shoot and patrol")
+        csp_kid_11=CSP_Kid(1, 4, 200, 550, "shoot and patrol")
         csp_kid_11.patrol_direction="x"
         csp_kid_11.patrol_distance=700
         self.schoolroom6.add_monsters([csp_kid_10, csp_kid_11])
@@ -477,11 +472,11 @@ class Overworld():
         self.schoolroom7.add_key_obstacles([self.block_key4_2])
         
         # add 3 monsters to seventh room in level 4
-        csp_kid_12=CSP_Kid(1, 2, 1300, 120, "shoot and patrol")
+        csp_kid_12=CSP_Kid(1, 4, 1300, 120, "shoot and patrol")
         csp_kid_12.patrol_direction="y"
         csp_kid_12.patrol_distance=500
-        csp_kid_13=CSP_Kid(1, 2, 900, 600, "hit")
-        csp_kid_14=CSP_Kid(1, 2, 1300, 600, "hit")
+        csp_kid_13=CSP_Kid(1, 4, 900, 600, "hit")
+        csp_kid_14=CSP_Kid(1, 4, 1300, 600, "hit")
         self.schoolroom7.add_monsters([csp_kid_12, csp_kid_13, csp_kid_14])
         
         # create the eighth room in level 4 which is a Biome object
@@ -492,7 +487,7 @@ class Overworld():
         self.schoolroom8.add_obstacles([self.H_top_band4, self.V_right_band4, self.H_bottom_band4, self.V_top_left_band4, self.V_bottom_left_band4, self.top_computers4, self.bottom_computers4, self.teacher4])
         
         # add 1 monster to eighth room in level 4
-        csp_kid_15=CSP_Kid(1, 2, 1000, 300, "walk")
+        csp_kid_15=CSP_Kid(1, 4, 1000, 300, "walk")
         self.schoolroom8.add_monsters([csp_kid_15])
         
         # create the ninth (last) room in level 4 which is a Biome object
@@ -710,10 +705,8 @@ class Overworld():
 
                 # #find SRK
                 if isinstance(m, SRK):
-                    # print("is isinstance(m, SRK)")
                     if m.add_burnie:
                         self.add_burnie_sanders(screen)
-                        print("burnies have been added")
                         m.add_burnie = False
 
                 # check if paralyzing to spam SRK shirtless image
@@ -912,7 +905,6 @@ class Overworld():
                         biome.add_key(Key(self.houseroom4, m.monster_rectangle.x, m.monster_rectangle.y, 800, 100))
                 elif len(player.key_inventory) == 0 and biome.name.startswith("gala") and self.notunlocked(self.galaroom4):
                     if random.randint(0, 9) > 7:
-                        print("ayod")
                         biome.add_key(Key(self.galaroom4, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
                 elif len(player.key_inventory) == 0 and biome.name.startswith("schoolroom6") and self.notunlocked(self.schoolroom6):
                     if random.randint(0, 9) > 7:

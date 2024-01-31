@@ -152,6 +152,5 @@ class Biome():
                 return False
         return True
     def add_key(self, key):
-        print("Added a key")
         self.keys.append(key)
         

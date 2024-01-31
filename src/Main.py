@@ -141,7 +141,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.cricketroom1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -223,7 +223,7 @@ def init_home_screen():
         if curr_screen==overworld.game_over_screen and not game_over_playing:
             pygame.mixer.music.load(os.path.join("Assets", "death_sound_effect.mp3"))
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)
+            pygame.mixer.music.play()
             game_over_playing = True
         
         # keeps the rendered text on the screen if necessary
@@ -254,11 +254,6 @@ def init_home_screen():
             text_index = 0
             texts = []
             overworld.shah_rukh.paralyzing = False
-
-        # if not overworld.shah_rukh.paralyzing:
-        #     pygame.mixer.music.load(os.path.join("Assets", "cut down john cena music.mp3"))  
-        #     pygame.mixer.music.set_volume(0.3)
-        #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
 
@@ -271,7 +266,6 @@ def init_home_screen():
 
         # player controls for x box controller
      
-        
         axis="x"
         
         if controller_detected:        
@@ -415,6 +409,7 @@ def init_home_screen():
                     sys.exit()
                 
             player1.handlemove(direction, framecounter, firstchange)
+
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
         overworld.keydrop(player1, curr_screen)
