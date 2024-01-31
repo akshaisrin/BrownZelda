@@ -581,6 +581,7 @@ class Overworld():
         # give the player full health at the start of each level
         player.health_bar = 5
         self.shah_rukh.paralyzing = False
+        player.key_inventory = []
         return next_screen
     
     
