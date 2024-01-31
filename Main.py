@@ -8,8 +8,8 @@ from screens.InstructionsScreen import *
 from screens.FinalScreen import FinalScreen
 from pygame.locals import *
 from Constants import *
-#from inputs import get_gamepad
-#from XBoxController import *
+from inputs import get_gamepad
+from XBoxController import *
 from Player2 import *
 from items.Sword import Sword
 from Overworld import *
@@ -133,7 +133,10 @@ def init_home_screen():
     sword = Sword()
     #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
-     
+    pygame.mixer.music.load(os.path.join("Assets", "bgmusic.mp3"))
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
+         
     #test mode variable to skip slower parts of gameplay
     test_mode = False
     # create the overworld and starting room
@@ -164,6 +167,7 @@ def init_home_screen():
     direction_for_collision = None
     framecounter = 0
     firstchange = False
+    musicplaying = False
     
     display_text = True # if text should be rendered
     keep_text_displayed = True # if text should continue to be displayed after rendering
@@ -203,6 +207,19 @@ def init_home_screen():
             texts.append(new_text)
             keep_text_displayed = True
             display_text = False
+
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(os.path.join("Assets", "bgmusic.mp3"))
+            pygame.mixer.music.set_volume(0.5)
+            length = pygame.mixer.Sound(os.path.join("Assets", "bgmusic.mp3")).get_length()
+            start = random.uniform(0, length)
+            pygame.mixer.music.play(start=int(start))
+            musicplaying = True
+
+        if curr_screen == overworld.schoolroom9:
+            pygame.mixer.music.load(os.path.join("Assets", "bossfightmusic.mp3"))
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1)
         
         # keeps the rendered text on the screen if necessary
         if keep_text_displayed:

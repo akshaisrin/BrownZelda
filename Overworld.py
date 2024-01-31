@@ -205,7 +205,7 @@ class Overworld():
         self.houseroom6.add_key_obstacles([self.block_key2_2])
         
         # create the seventh (last) room in level 2 which is a Biome object
-        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 600)
+        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE DOUGH!", 180, 45)], True, screen_width//2, 600)
         self.houseroom7.add_obstacles([self._24, self._212, self._28, self._29, self._213])
         
         # add exits to all the rooms in the second level - the exits lead to the next room
