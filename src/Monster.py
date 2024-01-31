@@ -21,7 +21,7 @@ class Monster:
         self.alive = True
         self.monster_rectangle=self.img.get_rect()
         self.monster_rectangle.x, self.monster_rectangle.y = start_pos_x, start_pos_y
-        self.projectile = Projectile(0.5, self.monster_rectangle.x, self.monster_rectangle.y, proj_height, proj_width, pygame.image.load(os.path.join("Assets", proj_img)))
+        self.projectile = Projectile(1, self.monster_rectangle.x, self.monster_rectangle.y, proj_height, proj_width, pygame.image.load(os.path.join("Assets", proj_img)))
         self.current_increment=1
         self.total_increments=0
         self.patrol_constant=Constants.reg_patrol_constant
