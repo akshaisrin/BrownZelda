@@ -849,6 +849,7 @@ class Overworld():
                 return next_screen
             # player picked up a health booster item
             else: 
+                
                 player.get_healed(item)
 
     def pickupkeys(self, player:Player2, biome:Biome):
