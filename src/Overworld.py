@@ -842,8 +842,7 @@ class Overworld():
                 next_screen = self.transition_next_level(player, biome, screen)
                 return next_screen
             # player picked up a health booster item
-            else: 
-                
+            elif item.item_type=="healing": 
                 player.get_healed(item)
 
     def pickupkeys(self, player:Player2, biome:Biome):
@@ -869,6 +868,7 @@ class Overworld():
                 key.pickedup = True
                 biome.file_path = biome.file_path[:-4] + "unlocked.png"
                 del biome.combined_obstacle_rects[-1]
+                player.key_inventory = []
                 break
 
     def flykey(self, biome, player, key, screen, i):
