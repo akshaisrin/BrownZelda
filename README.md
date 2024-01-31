@@ -65,9 +65,11 @@ Design an engaging game that connects to our culture.
 
 
 <h2 align="center">Instructions to Run:</h2>
-- Run Main.py
-- If not using XBox controller, use the arrow keys to move and the spacebar to attack
-- If using the XBox controller, connect it to the PC by either connecting it via MicroUSB or using Bluetooth. Once connected, use the left joystick to move and “X” to attack. Additionally, run the command "pip install inputs" or "pip3 install inputs" to install the inputs library.
+<ul>
+  <li>Run Main.py</li>
+  <li>If not using XBox controller, use the arrow keys to move and the spacebar to attack</li>
+  <li>If using the XBox controller, connect it to the PC by either connecting it via MicroUSB or using Bluetooth. Once connected, use the left joystick to move and “X” to attack. Additionally, run the command "pip install inputs" or "pip3 install inputs" to install the inputs library.</li>
+</ul>
 
 
 <h1 align="center">ARCHITECTURE</h1>
