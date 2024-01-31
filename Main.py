@@ -141,7 +141,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.cricketroom1
+    curr_screen = overworld.room1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -497,6 +497,6 @@ def init_final_screen():
             current_screen.display(elapsedTime)
         pygame.display.update()
         
-# init_loading_screen()
-# init_instructions_screen()
+init_loading_screen()
+init_instructions_screen()
 init_home_screen()
