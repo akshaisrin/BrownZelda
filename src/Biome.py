@@ -78,7 +78,7 @@ class Biome():
             else:
                 if m not in self.monstersremoved:
                     continue
-                if random.randint(0, 9) > 5:
+                if random.randint(0, 9) > 6:
                     self.add_items(1, m.monster_rectangle.x, m.monster_rectangle.y)
                 self.monstersremoved.remove(m)
                 

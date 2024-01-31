@@ -898,7 +898,7 @@ class Overworld():
 
     def monsterkeydrop(self, player, biome):
         #if biome.keys is not empty, then return
-        if len(biome.keys) > 0:
+        if len(biome.keys) > 0 or len(player.key_inventory) > 0:
             return
         for m in biome.monstersremoved:
             if m.alive:
