@@ -252,7 +252,7 @@ class Overworld():
         self.houseroom3.add_monsters([auntie_mini4, auntie_mini5, auntie_mini6])
        
         auntie_mini7 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone1.png")), "auntie_mini", 100, 50, 300, 450, False)
-        auntie_mini8 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 600, 250, False, "shoot and follow path")
+        auntie_mini8 = AuntieClone(1.0, 4.0, pygame.image.load(os.path.join("Assets","auntieclone2.png")), "auntie_mini", 100, 50, 200, 200, False, "shoot and follow path")
         auntie_mini8.path_coords = [(auntie_mini8.start_pos_x, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y), 
                                           (auntie_mini8.start_pos_x+400, auntie_mini8.start_pos_y+550), 
