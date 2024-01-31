@@ -83,7 +83,7 @@ class Overworld():
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         # create the fifth room with obstacles in level 1 which is a Biome object
-        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT ROOM, KILL THE MONSTERS.", 310, 670)], False)
+        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT", screen_width-450, 320), ("ROOM, KILL THE", screen_width-450, 370), ("MONSTERS.", screen_width-450, 420)], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
@@ -817,8 +817,6 @@ class Overworld():
         start_y = words_startx_starty[2] # the y-coordinate of the point on the screen where the text should start
         
         color = (255, 255, 255)
-        if curr_biome.name == "cricketroom3":
-            color = (0, 255, 255)
         
         # render each letter in the text one at a time
         for i in range(1, len(words) + 1):
@@ -963,5 +961,4 @@ class Overworld():
                 self.display_text(["HE IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 340, 650], self.schoolroom8, player, [], screen)
                 pygame.time.wait(2000)
                 self.given_samosa = True
-                self.schoolroom8.text = []
                 return self.transition_next_level(player, self.schoolroom8, screen)
