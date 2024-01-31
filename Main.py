@@ -138,7 +138,7 @@ def init_home_screen():
     
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.cricketroom1
     
     # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
@@ -234,6 +234,13 @@ def init_home_screen():
         #     pygame.mixer.music.play(-1)   
                 
         monsters_alive = overworld.monster_attack(curr_screen, player1, screen)[1]
+
+        for item in curr_screen.items:
+            if item.used and not item.music_played:
+                pygame.mixer.music.load(os.path.join("Assets", "ladoo_sound_effect.mp3"))  
+                pygame.mixer.music.set_volume(0.2)
+                pygame.mixer.music.play()
+                item.music_played=True    
 
         # player controls for x box controller
         axis="x"

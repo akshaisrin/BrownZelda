@@ -115,6 +115,7 @@ class Player2:
             if (self.health_bar>self.original_health):
                 self.health_bar=self.original_health
             item.used=True
+            
     
     # picks up key off ground and adds it to inventory if player is in range
     def get_key(self, key):
