@@ -41,6 +41,8 @@ An interesting element of our group dynamic is that we are all Indian (shocking 
 We made the main character a famous Indian TV Show character from our childhoods, Chotta Bheem. Continuing the trend, we made healing items in the game ladoos, a famous Indian sweet and Chotta Bheem’s iconic power-boosting food. We connected to various elements of Indian culture, whether that was through sports with the Indian cricket team as the floor 1 enemy, or through arts and culture with Shah Ruh Khan as the floor 3 enemy. We also connected back to family dynamics in India, playing on inside jokes and having the main story being about Chotta Bheem failing a math test and his mom being mad at him, a common theme in South Asian households.
 We felt that creating this connection to our culture made the game far more meaningful to us when we worked on it, and hopefully more meaningful and entertaining to our fellow students when they play it.
 
+![Screenshot 2024-01-30 162722](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/b0e2336e-508e-458e-b40e-85cb023e7bed)
+
 Us at ISA Diwali
 
 **Mission Statement**
@@ -98,6 +100,7 @@ Overall, our communication was quite strong. In the early days of the project, w
 
 Our January Deadline Calendar
 
+![Screenshot 2024-01-30 164420](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/c8f2c2b2-2e10-4be2-b254-1195ef6ac930)
 
 
 **Major Surprises**
