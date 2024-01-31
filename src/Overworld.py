@@ -803,7 +803,7 @@ class Overworld():
         # play typing music
         pygame.mixer.music.load(os.path.join("Assets", "typing_music.mp3"))  
         pygame.mixer.music.set_volume(0.9)
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
         
         words = words_startx_starty[0] # the text you want to render
         start_x = words_startx_starty[1] # the x-coordinate of the point on the screen where the text should start
@@ -891,7 +891,7 @@ class Overworld():
 
     def monsterkeydrop(self, player, biome):
         #if biome.keys is not empty, then return
-        if len(biome.keys) > 0:
+        if len(biome.keys) > 0 or len(player.key_inventory) > 0:
             return
         for m in biome.monstersremoved:
             if m.alive:
@@ -919,7 +919,7 @@ class Overworld():
                     biome.add_key(Key(self.houseroom6, m.monster_rectangle.x, m.monster_rectangle.y, 100, 400))
                 elif biome.name.startswith("gala"):
                     biome.add_key(Key(self.galaroom6, m.monster_rectangle.x, m.monster_rectangle.y, 1400, 400))
-
+                    
     def keydrop(self, player, biome):
         #if biome.keys is not empty, then return
         if len(biome.keys) > 0:
@@ -927,20 +927,57 @@ class Overworld():
         if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
-                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
+                    x_pos, y_pos = self.generatepoint(biome)
+                    biome.add_key(Key(self.cricketroom3, x_pos, y_pos, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
                 if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
-                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
+                    x_pos, y_pos = self.generatepoint(biome)
+                    biome.add_key(Key(self.houseroom4, x_pos, y_pos, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
                 if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
-                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
+                    x_pos, y_pos = self.generatepoint(biome)
+                    biome.add_key(Key(self.galaroom4, x_pos, y_pos, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
-                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 100, 400))
+                    x_pos, y_pos = self.generatepoint(biome)
+                    biome.add_key(Key(self.schoolroom3, x_pos, y_pos, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
+                    x_pos, y_pos = self.generatepoint(biome)
+                    biome.add_key(Key(self.schoolroom7, x_pos, y_pos, 1400, 400))
                     
+    def generatepoint(self, biome):
+        x_pos = None
+        y_pos = None
+        while True:
+            x_pos = random.randint(0, screen_width)
+            y_pos = random.randint(0, screen_height)
+            if biome.is_valid_spawn(x_pos, y_pos):
+                break
+        return x_pos, y_pos
+    
+    """
+    def keydrop(self, player, biome):
+        #if biome.keys is not empty, then return
+        if len(biome.keys) > 0:
+            return
+        if biome in self.allrooms:
+            if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
+                if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x - 20, player.player_rectangle.y - 20, 800, 100))
+            elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
+                if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x - 20, player.player_rectangle.y - 20, 800, 100))
+            elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
+                if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x - 20, player.player_rectangle.y - 20, 1400, 400))
+            elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
+                if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x - 20, player.player_rectangle.y - 20, 100, 400))
+            elif biome.name == "schoolroom6":
+                if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x - 20, player.player_rectangle.y - 20, 1400, 400))
+    """
                     
     def samosa_final_boss(self, player, screen):
         for m in self.schoolroom8.monsters:
