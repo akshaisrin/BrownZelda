@@ -51,9 +51,11 @@ We felt that the initial Legend of Zelda game did not prioritize forcing the pla
 The above design choices support our idea of speed and story focus throughout the project, as well as forcing the user to fight the variety of monsters we created unlike the original game. We accepted and understood that our game was most enjoyable as a first time playthrough, and took that into account throughout our design process.
 
 <h2 align="center">Connection to Culture:</h2>
+<p>
 An interesting element of our group dynamic is that we are all Indian (shocking in a CS course, I know). While brainstorming our game, we thought it might be a fun idea to connect the game to various elements of our culture. We also took into account that a lot of the members of our ASP class were Indian, and as they were our audience, the game may strike a chord for them specifically as well.
 We made the main character a famous Indian TV Show character from our childhoods, Chotta Bheem. Continuing the trend, we made healing items in the game ladoos, a famous Indian sweet and Chotta Bheem’s iconic power-boosting food. We connected to various elements of Indian culture, whether that was through sports with the Indian cricket team as the floor 1 enemy, or through arts and culture with Shah Ruh Khan as the floor 3 enemy. We also connected back to family dynamics in India, playing on inside jokes and having the main story being about Chotta Bheem failing a math test and his mom being mad at him, a common theme in South Asian households.
 We felt that creating this connection to our culture made the game far more meaningful to us when we worked on it, and hopefully more meaningful and entertaining to our fellow students when they play it.
+</p>
 
 ![Screenshot 2024-01-30 162722](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/b0e2336e-508e-458e-b40e-85cb023e7bed)
 
@@ -123,9 +125,9 @@ We feel that overall the process of writing this app was a success. We learned a
 
 <h2 align="center">Communication:</h2>
 Overall, our communication was quite strong. In the early days of the project, we immediately made a team group chat and used it extensively throughout the project. Additionally, we also split up tasks effectively, utilizing smaller groups to speed up discussion times. Later on, we utilized a calendar to plan out tasks and set deadlines in order to effectively finish the project on time. However, we did not use Github Issues very effectively, which I think cost us some efficiency in terms of work. 
-
+<p>
 Our January Deadline Calendar:
-
+</p>
 ![Screenshot 2024-01-30 164420](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/c8f2c2b2-2e10-4be2-b254-1195ef6ac930)
 
 <h2 align="center">Major Surprises:</h2>
