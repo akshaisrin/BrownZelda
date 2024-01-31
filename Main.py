@@ -172,6 +172,7 @@ def init_home_screen():
     framecounter = 0
     firstchange = False
     musicplaying = False
+    game_over_playing=False
 
     display_text = True # if text should be rendered
     keep_text_displayed = True # if text should continue to be displayed after rendering
@@ -224,13 +225,14 @@ def init_home_screen():
         if curr_screen == overworld.schoolroom9 and not musicplaying:
             pygame.mixer.music.load(os.path.join("Assets", "bossfightmusic.mp3"))
             pygame.mixer.music.set_volume(0.3)
-            pygame.mixer.music.play(-1)
+            pygame.mixer.music.play()
+            musicplaying=True
         
-        if curr_screen==overworld.game_over_screen:
+        if curr_screen==overworld.game_over_screen and not game_over_playing:
             pygame.mixer.music.load(os.path.join("Assets", "death_sound_effect.mp3"))
             pygame.mixer.music.set_volume(0.3)
             pygame.mixer.music.play(-1)
-            musicplaying = True
+            game_over_playing = True
         
         # keeps the rendered text on the screen if necessary
         if keep_text_displayed:
