@@ -133,7 +133,6 @@ class Biome():
                     x_pos = random.randint(0, 1500)
                     y_pos = random.randint(0, 800)
                     if self.is_valid_spawn(x_pos, y_pos):
-                        self.items.append(Ladoo(x_pos, y_pos))
                         break
             self.items.append(Ladoo(x_pos, y_pos))
     
