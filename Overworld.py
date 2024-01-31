@@ -83,7 +83,7 @@ class Overworld():
         self.cricketroom2.add_obstacles([self.obstacle13, self.obstacle9, self.obstacle14, self.obstacle15, self.obstacle16])
         
         # create the fifth room with obstacles in level 1 which is a Biome object
-        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT ROOM, KILL THE MONSTERS.", 310, 670)], False)
+        self.cricketroom3 = Biome("cricketroom3", "floor1/cricketroom3.png", [Exit(screen_width, 200, self.cricketroom1, "right", self.right_width, self.H_height), Exit(screen_width, 600, self.cricketroom1, "right", self.right_width, self.H_height)], [("TO UNLOCK THE NEXT", screen_width-450, 320), ("ROOM, KILL THE", screen_width-450, 370), ("MONSTERS.", screen_width-450, 420)], False)
         self.obstacle17 = Obstacles("test_object1.png", 0, screen_height-155, screen_width, 155)
         self.obstacle18 = Obstacles("test_object1.png", screen_width-600, 290, 600, 200)
         self.cricketroom3.add_obstacles([self.obstacle7, self.obstacle8, self.obstacle17, self.obstacle16, self.obstacle18])
@@ -205,7 +205,7 @@ class Overworld():
         self.houseroom6.add_key_obstacles([self.block_key2_2])
         
         # create the seventh (last) room in level 2 which is a Biome object
-        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE BATTER!", 180, 45)], True, screen_width//2, 600)
+        self.houseroom7 = Biome("houseroom7", "floor2/houseroom7.png", [Exit(screen_width, 380, self.houseroom6, "right", self.right_width, self.H_height)], [("YOU HAVE COLLECTED THE SECOND SPECIAL INGREDIENT, THE DOUGH!", 180, 45)], True, screen_width//2, 600)
         self.houseroom7.add_obstacles([self._24, self._212, self._28, self._29, self._213])
         
         # add exits to all the rooms in the second level - the exits lead to the next room
@@ -817,8 +817,6 @@ class Overworld():
         start_y = words_startx_starty[2] # the y-coordinate of the point on the screen where the text should start
         
         color = (255, 255, 255)
-        if curr_biome.name == "cricketroom3":
-            color = (0, 255, 255)
         
         # render each letter in the text one at a time
         for i in range(1, len(words) + 1):
@@ -936,19 +934,19 @@ class Overworld():
         if biome in self.allrooms:
             if biome.name == "cricketroom1" or biome.name == "cricketroom2" or biome.name == "cricketroom3":
                 if self.nomonstersalive(self.cricketroom1) and self.nomonstersalive(self.cricketroom2) and self.nomonstersalive(self.cricketroom3) and self.notunlocked(self.cricketroom3):
-                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
+                    biome.add_key(Key(self.cricketroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
             elif biome.name == "houseroom1" or biome.name == "houseroom2" or biome.name == "houseroom3" or biome.name == "houseroom4":
                 if self.nomonstersalive(self.houseroom1) and self.nomonstersalive(self.houseroom2) and self.nomonstersalive(self.houseroom3) and self.nomonstersalive(self.houseroom4) and self.notunlocked(self.houseroom4):
-                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 800, 100))
+                    biome.add_key(Key(self.houseroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 800, 100))
             elif biome.name == "galaroom1" or biome.name == "galaroom2" or biome.name == "galaroom3" or biome.name == "galaroom4" or biome.name == "galaroom5":
                 if self.nomonstersalive(self.galaroom1) and self.nomonstersalive(self.galaroom2) and self.nomonstersalive(self.galaroom3) and self.nomonstersalive(self.galaroom4) and self.nomonstersalive(self.galaroom5) and self.notunlocked(self.galaroom4):
-                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
+                    biome.add_key(Key(self.galaroom4, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
             elif biome.name == "schoolroom1" or biome.name == "schoolroom2" or biome.name == "schoolroom3" or biome.name == "schoolroom4" or biome.name == "schoolroom5" or biome.name == "schoolroom7":
                 if self.nomonstersalive(self.schoolroom1) and self.nomonstersalive(self.schoolroom2) and self.nomonstersalive(self.schoolroom3) and self.nomonstersalive(self.schoolroom4) and self.nomonstersalive(self.schoolroom5) and self.nomonstersalive(self.schoolroom7) and self.notunlocked(self.schoolroom3):
-                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 100, 400))
+                    biome.add_key(Key(self.schoolroom3, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 100, 400))
             elif biome.name == "schoolroom6":
                 if self.nomonstersalive(self.schoolroom6) and self.notunlocked(self.schoolroom7):
-                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x + 60, player.player_rectangle.y + 60, 1400, 400))
+                    biome.add_key(Key(self.schoolroom7, player.player_rectangle.x - 60, player.player_rectangle.y - 60, 1400, 400))
                     
                     
     def samosa_final_boss(self, player, screen):
@@ -963,5 +961,4 @@ class Overworld():
                 self.display_text(["HE IS NOT HAPPY YOU DISRESPECTED HIM LIKE THIS!", 340, 650], self.schoolroom8, player, [], screen)
                 pygame.time.wait(2000)
                 self.given_samosa = True
-                self.schoolroom8.text = []
                 return self.transition_next_level(player, self.schoolroom8, screen)
