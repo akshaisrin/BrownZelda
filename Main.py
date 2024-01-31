@@ -135,10 +135,14 @@ def init_home_screen():
     sword = Sword()
     #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
+
+    pygame.mixer.music.load(os.path.join("Assets", "bgmusic.mp3"))
+    pygame.mixer.music.set_volume(0.5)
+    pygame.mixer.music.play(-1)
     
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.schoolroom8
+    curr_screen = overworld.room1
     
     # create variables for the current screen's x and y position
     curr_screen_x_pos = 0
@@ -200,10 +204,19 @@ def init_home_screen():
             keep_text_displayed = True
             display_text = False
 
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(os.path.join("Assets", "bgmusic.mp3"))
+            pygame.mixer.music.set_volume(0.5)
+            length = pygame.mixer.Sound(os.path.join("Assets", "bgmusic.mp3")).get_length()
+            start = random.uniform(0, length)
+            pygame.mixer.music.play(start=int(start))
+            musicplaying = True
+
         if curr_screen == overworld.schoolroom9:
             pygame.mixer.music.load(os.path.join("Assets", "bossfightmusic.mp3"))
             pygame.mixer.music.set_volume(0.5)
             pygame.mixer.music.play(-1)
+        
         # keeps the rendered text on the screen if necessary
         if keep_text_displayed:
             for t in texts:
