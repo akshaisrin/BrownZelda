@@ -1,6 +1,6 @@
-BrownZelda/DesignDoc
+<h1 align="center">BrownZelda/DesignDoc</h1>
 
-**OVERVIEW**
+<h2 align="center">OVERVIEW</h2>
 
 **General Information and Twists:**
 Our project is a remake of the 1980’s NES game, “The Legend of Zelda”. Our goal in making this project was to keep the general game mechanics of the NES game the same while customizing its storyline, graphics, monster design, and more to add in our own flair and bring a more unique experience to our players.
@@ -27,7 +27,7 @@ The original game has a separate overworld that the player travels through in or
 While our game is a PC-based game, we still wanted to bring the look, feel, and experience of playing using a handheld device and controller to the player. As an alternative, our game also supports XBox 1 controller functionality in addition to basic arrow key controls.
 
 
-**Design Choices**
+<h2 align="center">Design Choices</h2>
 
 **Overall Strategy:**
 After choosing our game and twist, it quickly became clear to us one thing stood out as our selling point: the story. We had a story that would briefly be hilarious, and wanted to prioritize that selling point throughout our game.
@@ -50,84 +50,84 @@ We felt that the initial Legend of Zelda game did not prioritize forcing the pla
 **Conclusion:**
 The above design choices support our idea of speed and story focus throughout the project, as well as forcing the user to fight the variety of monsters we created unlike the original game. We accepted and understood that our game was most enjoyable as a first time playthrough, and took that into account throughout our design process.
 
-**Connection to Culture:**
+<h2 align="center">Connection to Culture:</h2>
 An interesting element of our group dynamic is that we are all Indian (shocking in a CS course, I know). While brainstorming our game, we thought it might be a fun idea to connect the game to various elements of our culture. We also took into account that a lot of the members of our ASP class were Indian, and as they were our audience, the game may strike a chord for them specifically as well.
 We made the main character a famous Indian TV Show character from our childhoods, Chotta Bheem. Continuing the trend, we made healing items in the game ladoos, a famous Indian sweet and Chotta Bheem’s iconic power-boosting food. We connected to various elements of Indian culture, whether that was through sports with the Indian cricket team as the floor 1 enemy, or through arts and culture with Shah Ruh Khan as the floor 3 enemy. We also connected back to family dynamics in India, playing on inside jokes and having the main story being about Chotta Bheem failing a math test and his mom being mad at him, a common theme in South Asian households.
 We felt that creating this connection to our culture made the game far more meaningful to us when we worked on it, and hopefully more meaningful and entertaining to our fellow students when they play it.
 
 ![Screenshot 2024-01-30 162722](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/b0e2336e-508e-458e-b40e-85cb023e7bed)
 
-Us at ISA Diwali
+<p align="center">Us at ISA Diwali</p>
 
 
-**Mission Statement:**
+<h2 align="center">Mission Statement:</h2>
 Design an engaging game that connects to our culture.
 
 
-**Instructions to Run:**
+<h2 align="center">Instructions to Run:</h2>
 - Run Main.py
 - If not using XBox controller, use the arrow keys to move and the spacebar to attack
-- If using the XBox controller, connect it to the PC by either connecting it via MicroUSB or using Bluetooth. Once connected, use the left joystick to move and “X” to attack.
+- If using the XBox controller, connect it to the PC by either connecting it via MicroUSB or using Bluetooth. Once connected, use the left joystick to move and “X” to attack. Additionally, run the command "pip install inputs" or "pip3 install inputs" to install the inputs library.
 
 
-**ARCHITECTURE**
+<h1 align="center">ARCHITECTURE</h1>
 
-**Monsters:**
+<h2 align="center">Monsters:</h2>
 We have two different types of monsters, mini bosses and medium bosses. Mini bosses are the “henchmen” of the medium bosses and are the first wave of challenges in each dungeon- the player must first fight their way through all the mini bosses before getting to the medium boss, which is the boss for each dungeon. We have a generic Monster.py file, which contains all the baseline monster functions that all the mini bosses/medium bosses have and use for their behavior, like shooting, patrolling, moving, etc. Each monster also has a projectile attribute, which is a projectile object assigned to it. The monster file also has a realign_projectile function, which sends the projectile back to the monster after it goes off the screen or collides with the player. MiniBoss.py contains more functions specific to mini bosses like predefined close-ranged attacks and long-ranged attacks that we can easily call. MediumBoss.py works in a similar way, containing more generic attacks that all medium bosses are able to use. Finally, we have the specific monster files for each mini boss/medium boss. For our mini bosses files, we have CricketNPC.py, AuntieClone.py, Paparazzi.py, and CSPKid.py. Our medium boss files are Kohli.py, Antieji.py, SRK.py, and Puri.py. In each of our specific monster files we have an attack function that controls all the movement, attacks, and cooldowns (if necessary) for that monster. Each of our mini bosses have a main_attack string assigned to them (since each mini boss only has one type of attack assigned to them). For example, the CricketNPC has a patrol and shoot attack, a follow path and shoot attack, and a hit attack, which is where the monster just constantly travels towards the player. The medium bosses also all have some sort of cooldown, where after they use their main set of attacks, they are in a cooldown where they can’t move or attack. This is the player’s chance to hit the monster before the monster ends its cooldown and returns back to its original set of attacks, thereby making the game a bit easier to beat.
 
-**Overworld:**
+<h2 align="center">Overworld:</h2>
 The Overworld class is where all the rooms are initialized. Each room is its own Biome object that has an image (given by self.file_path), list of exits that lead to neighboring rooms, text, obstacles, items, and monsters. When you render a room (using the render and render_characters functions), the room image, obstacles, text, and monsters are all rendered together. After each room is initialized in Overworld, the monsters and obstacles for that room are also initialized and added to the room.
 The Overworld class also contains methods for transitioning between rooms and levels, preventing player and obstacle collision, allowing monsters to attack players, picking up items, and unlocking blocked exits. When transitioning between rooms and levels, the next room that needs to be rendered is shown in parts rather than changing all at once to provide a feeling of actually traveling to a new location. To do the player and obstacle collision, the colliderect function was used to detect when the player touches any of the obstacles in the room. If the colliderect function returns True, then the player position is adjusted according to what direction the player was traveling to prevent the player from walking through obstacles. Essentially, the Overworld class ties together many of the other classes and allows for all the rooms to be rendered.
 
-**Items:**
+<h2 align="center">Items:</h2>
 The Item class is for all items the player can pick up during the game. The classes it comprises are the Ladoo, Key and Ingredient sub-classes, all which have relatively similar functionality and so were able to inherit most methods from the main item class.
 The main method of the Item class is the render method, which just takes in the item image, scales it up to the standard item size, and renders the item. In classes like the key and ladoo class, I override this method with a majority of the same code, but a use case where if the item has already been picked up, it will not be rendered.
 Most of the functionality of the items are taken care of in other parts of the code, the Item class is mostly used just for simple consistent rendering across all items we added into the project.	
 
-**Player:**
+<h2 align="center">Player:</h2>
 Player class has to take a spritesheet of the Chotta Bheem character in different positions, and use subsurface() to separate the sprite sheet into a Surface that is added to the list of frames. In the handlemove() function, we check booleans for if the player is attacking, is paralyzed, and direction. When the player presses the right arrow key, for example, the direction variable is changed to “right”. And same for up. At the end, the player rectangle is updated with move_ip().
 The render function renders the spritesheet frame that aligns with the current direction, and renders the punching version of the character. There is also a function to render health, which renders a full heart, half heart, and empty heart based on the value of the health_bar. 	
 The die_and_begone function checks if the health is completely 0, and if so, it blits the game over screen and respawns if it is turned on, or exits the game if player is playing without respawn.
 
 
-**USER EXPERIENCE**
+<h1 align="center">USER EXPERIENCE</h1>
 
-**Storyline:**
+<h2 align="center">Storyline:</h2>
 We tried to make the storyline both entertaining and funny to keep the user engaged throughout the game. For example, in the third level (the gala rooms), we made the user experience more enjoyable by adding John Cena music and making the medium boss Shah Rukh Khan so that while the player is paralyzed and unable to attack, they are still entertained by these creative and comedic additions. We changed the location and monster images for each level of the game, while still trying to maintain an overall theme and the purpose of the quest, to prevent the user from feeling that the game was boring.
 
-**Text Guidance:**
+<h2 align="center">Text Guidance:</h2>
 There are text prompts throughout the game to make it easy for the user to understand how to play the game. For example, the starting few screens explain to the user how they can use arrow keys to move and press space to attack. Later in the game, the text slowly explains different aspects of the game such as how the player can pick up items to increase their health. By choosing to give instructions one at a time through the display of text on particular screens instead of giving them all at once in the beginning, we tried to slowly introduce the user to the game’s rules and functions to prevent them from feeling overwhelmed with information and confused at the beginning. Additionally, after testing our code, we decided to make the printing of the text faster so that the user didn’t have to wait for too long for the text to be fully displayed.
 
-**Difficulty Levels:**
+<h2 align="center">Difficulty Levels:</h2>
 We planned different attacks for each Medium Boss and lesser impact attacks for the Mini Bosses of each level. This allows that player to engage with different types of combat so the levels don’t get repetitive. Additionally, we changed constants such as projectile speeds and monster speeds of each monster based on our experiences during a play-through. For example, in the Auntieji level, we throw an unexpected curve at the player by cloning in Auntie Mini Bosses when the player has halfway defeated the main Auntie. 
 
-**Checkpoints:** 
+<h2 align="center">Checkpoints:</h2>
 To encourage the player to keep playing the game, even if they suck, we added checkpoints, which allows the player to respawn in the first room of the level they died in. This ensures that the player will not get frustrated with their lack of skill and continue to maintain hope to continue playing the game.
 
-**Theatrics:**
+<h2 align="center">Theatrics:</h2>
 We had many animations and theatrical transitions throughout the game to improve the user experience when transitioning between levels and rooms. For example, when the monster in a dungeon is killed, based on a probability they drop a key that the player “picks up”, and when the player enters the room with the locked door, the key reappears and moves toward the door to unlock it. Another example is the transition between levels, where the player moves to pick up an ingredient, and then the next level opens up with animation. Our game also has a variety of sound effects including background music as the player progresses through the dungeons. These details immensely improve the user experience and game experience.
 
-**Health/Food:**
+<h2 align="center">Health/Food:</h2>
 Out of the list of things in our backlog, we prioritized creating items that boost the player’s health such as the ladoos. This feature reduced the difficulty of the game to ensure that the user didn’t find it impossible to finish the game and thus felt motivated to continue playing.
 
-**Standardize Experience:**
+<h2 align="center">Standardize Experience:</h2>
 After initially developing the game, we noticed that the game ran at far different speeds across different machines, depending on their processing speed. This made it hard for us to balance things like animation and difficulty, as it was vastly different based on the machine the code was run on. To fix this, we set a max frames per second (30) that the game loop would run. We kept this number low enough that most of the machines we tested were able to easily run at that speed. This allowed us to standardize the experience across multiple machines and gave us control back over the user’s gameplay. When you are unsure about what exactly the user’s gameplay looks like due to differences in computing power, it makes it far harder to prioritize their experience while playing.
 
 
-**RETROSPECTIVES**
+<h1 align="center">RETROSPECTIVES</h1>
 
-**General Feeling:**
+<h2 align="center">General Feeling:</h2>
 We feel that overall the process of writing this app was a success. We learned a lot about collaborating with others, both through code in Git and with our overall communication. The process was very rewarding overall, developing a fun game allowed us to have a product of our efforts that we could show to others. Despite some frustrations along the way (mostly fixing the numerous bugs that inevitably showed up during our development), the process was overall very enjoyable.
 
-**Communication:**
+<h2 align="center">Communication:</h2>
 Overall, our communication was quite strong. In the early days of the project, we immediately made a team group chat and used it extensively throughout the project. Additionally, we also split up tasks effectively, utilizing smaller groups to speed up discussion times. Later on, we utilized a calendar to plan out tasks and set deadlines in order to effectively finish the project on time. However, we did not use Github Issues very effectively, which I think cost us some efficiency in terms of work. 
 
 Our January Deadline Calendar:
 
 ![Screenshot 2024-01-30 164420](https://github.com/akshaisrin/BrownZeldaButNotGarbage/assets/90334707/c8f2c2b2-2e10-4be2-b254-1195ef6ac930)
 
-**Major Surprises:**
+<h2 align="center">Major Surprises:</h2>
 We each spent a long time fixing bugs in our code, especially for the collision system. While we expected that there would inevitably be issues with the code after we all put together our individual parts, we didn’t expect that these issues would take several days to debug and that at times it would be very difficult to determine why the issue was happening. Another surprise was when we had lots of merging and git issues when trying to push code. While merging issues were expected since we were working in a larger group, there were times when git raised issues even after we followed the process of add > commit > git pull –rebase > resolve merge conflicts > git rebase –continue > git push.
 
-**Improvements for Next Time:**
+<h2 align="center">Improvements for Next Time:</h2>
 We spent the first two weeks of the project trying to learn how to use React and Electron as alternate frameworks to Pygame. However, in the end we decided to just use Pygame due to the steep learning curve it would take to learn an entirely new framework. We decided to prioritize making our game more appealing to our players over choosing a framework that offered more functionality but was difficult to learn. Next time, it would be better if we spent less time determining what platform and programming language we would like to use as this time could have been better spent adding additional features to our game. Next time we would also like to start putting together the individual components of our game earlier on. This would allow us to fix bugs in our code that arose after we put everything together one at a time rather than having to fix all the bugs at once closer to the end of the deadline.
