@@ -156,14 +156,6 @@ def init_home_screen():
     
     controller_detected=joystick.check_if_connected()
 
-    """
-    try:
-        joystick=XboxController()
-    except:
-        controller_detected=False
-    # Establishing game loop to keep screen running
-    """
-
     #adds gameloop variable and direction variable to keep track of player movement
     #also adds in text variables to keep track of text display
     gameLoop = True
@@ -272,7 +264,7 @@ def init_home_screen():
 
         for item in curr_screen.items:
             if item.used and not item.music_played:
-                pygame.mixer.music.load(os.path.join("Assets", "ladoo_sound_effect.wav"))  
+                pygame.mixer.music.load(os.path.join("Assets", "ladoo_sound_effect.mp3"))  
                 pygame.mixer.music.set_volume(0.2)
                 pygame.mixer.music.play()
                 item.music_played=True    

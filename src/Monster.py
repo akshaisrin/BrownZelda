@@ -283,7 +283,6 @@ class Monster:
         screen.blit(image, self.monster_rectangle)
     
     def get_hit(self, damage:float):
-        print("monster got hit")
         self.health-=damage
         self.attacked = True
         self.attacktime = time.time()
