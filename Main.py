@@ -129,7 +129,7 @@ def init_instructions_screen():
 def init_home_screen():
     #creates clock to make fps consistent across machines
     clock = pygame.time.Clock()
-    controller_detected=True 
+    controller_detected=False
     sword = Sword()
     #loads in player and weapon
     player1 = Player2("bheem", {}, sword, 1, 1.2, 1, 5, 5, "str", 750, 400, 0)
@@ -141,7 +141,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.schoolroom8
+    curr_screen = overworld.cricketroom1
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -152,6 +152,10 @@ def init_home_screen():
     curr_screen_x_pos = 0
     curr_screen_y_pos = 0
     
+    joystick=XboxController()
+    
+    controller_detected=joystick.check_if_connected()
+
     """
     try:
         joystick=XboxController()
@@ -173,6 +177,7 @@ def init_home_screen():
     keep_text_displayed = True # if text should continue to be displayed after rendering
     text_index = 0 # what text sentence should be rendered
     texts = [] # the list of all the text that needs to be rendered
+    curr_dir=""
 
 
     while gameLoop:
@@ -210,7 +215,7 @@ def init_home_screen():
 
         if not pygame.mixer.music.get_busy():
             pygame.mixer.music.load(os.path.join("Assets", "bgmusic.mp3"))
-            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.set_volume(0.3)
             length = pygame.mixer.Sound(os.path.join("Assets", "bgmusic.mp3")).get_length()
             start = random.uniform(0, length)
             pygame.mixer.music.play(start=int(start))
@@ -218,7 +223,12 @@ def init_home_screen():
 
         if curr_screen == overworld.schoolroom9:
             pygame.mixer.music.load(os.path.join("Assets", "bossfightmusic.mp3"))
-            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.set_volume(0.3)
+            pygame.mixer.music.play(-1)
+        
+        if curr_screen==overworld.game_over_screen:
+            pygame.mixer.music.load(os.path.join("Assets", "death_sound_effect.mp3"))
+            pygame.mixer.music.set_volume(0.3)
             pygame.mixer.music.play(-1)
         
         # keeps the rendered text on the screen if necessary
@@ -259,125 +269,160 @@ def init_home_screen():
 
         for item in curr_screen.items:
             if item.used and not item.music_played:
-                pygame.mixer.music.load(os.path.join("Assets", "ladoo_sound_effect.mp3"))  
+                pygame.mixer.music.load(os.path.join("Assets", "ladoo_sound_effect.wav"))  
                 pygame.mixer.music.set_volume(0.2)
                 pygame.mixer.music.play()
                 item.music_played=True    
 
         # player controls for x box controller
+     
+        
         axis="x"
         
         if controller_detected:        
             new_state=(joystick.get_x_axis(), joystick.get_y_axis())
-
+            
             # player movement with x box controller
-
-        if (new_state[0]<-1*Constants.controller_threshold):
-            direction = "left"
-            player1.current_frame = 10
-        elif (new_state[0]>Constants.controller_threshold):
-            direction = "right"
-            player1.current_frame = 10
-        if (new_state[1]<-1*Constants.controller_threshold):
-            direction = "down"
-            player1.current_frame = 11
-        if (new_state[1]>controller_threshold):
-            direction = "up"   
-            player1.current_frame = 9
-        if (joystick.X) and not sword.attacking:
-            attacktime = time.time()
-            sword.attack(curr_screen.monsters[0])
-        """
- 
-        #controls movement - sets direction variable
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:                   
-                if event.key == pygame.K_LEFT: 
+            val=[abs(joystick.get_x_axis()), abs(joystick.get_y_axis())]
+            # The player can only move in one direction at a given point in time.
+            # This code takes the greater of the values in the axes, and moves the player in that directtion
+            if val[1]>val[0]:
+                axis="y"
+            if axis=="x":
+                if (new_state[0]<-1*Constants.controller_threshold):
                     direction = "left"
                     direction_for_collision = "left"
-                    firstchange = True
-                elif event.key == pygame.K_RIGHT: 
+                    firstchange=True
+                elif (new_state[0]>Constants.controller_threshold):
                     direction = "right"
                     direction_for_collision = "right"
-                    firstchange = True
-                elif event.key == pygame.K_UP:
-                    direction = "up" 
-                    direction_for_collision = "up"
-                    firstchange = True
-                elif event.key == pygame.K_DOWN: 
+                    firstchange=True
+            
+            elif axis=="y":
+                if (new_state[1]<-1*Constants.controller_threshold):
                     direction = "down"
                     direction_for_collision = "down"
-                    firstchange = True
-                # lets the player respawn to the beginning of the current level
-                elif event.key == pygame.K_k:
-                    if respawn:
-                        overworld = Overworld()
-                        # determine what the current level is
-                        if screen_before_death.name[0:4] == "cric":
-                            curr_screen = overworld.room1
-                            player1.player_rectangle.topleft = (screen_width//2, screen_height//2)
-                        elif screen_before_death.name[0:4] == "hous":
-                            curr_screen = overworld.houseroom1
-                            player1.player_rectangle.topleft = (screen_width//2, 650)
-                        elif screen_before_death.name[0:4] == "gala":
-                            curr_screen = overworld.galaroom1
-                            player1.player_rectangle.topleft = (screen_width//2, 650)
-                        elif screen_before_death.name == "schoolroom9":
-                            curr_screen = overworld.schoolroom8
-                            player1.player_rectangle.topleft = (100, 400)
-                            overworld.given_samosa = False
-                        else:
-                            curr_screen = overworld.schoolroom1
-                            player1.player_rectangle.topleft = (screen_width//2, 700)
-                        player1.health_bar = 5
-                        player1.lives_remaining = 5
-                        keep_text_displayed = False
-                        text_index = 0
-                        respawn = False
-                        
-            #stops movement if key is released - sets direction to None
-            elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    firstchange=True
+                elif (new_state[1]>controller_threshold):
+                    direction = "up" 
+                    direction_for_collision = "up"
+                    firstchange=True
+            
+            # This code represents a key-up if keyboard controls were used- if the direction is changed, the current frame is changed
+            if curr_dir!=direction:
+                if direction=="left" or direction=="right":
                     player1.current_frame = 10
-                    direction = None
-                elif event.key == pygame.K_UP:
+                
+                if direction=="up":
                     player1.current_frame = 11
-                    direction = None
-                elif event.key == pygame.K_DOWN:
+                    
+                if direction=="down":
                     player1.current_frame = 9
-                    direction = None
-                elif (event.key == pygame.K_SPACE) and not player1.attacking:
-                    canattack = True
-                    #check if player 1 is within 100 pixels of any obstacle in the biome
-                    if player1.current_frame == 10 and player1.flipped: 
-                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] + 150, player1.player_rectangle.topleft[1]):
-                            canattack = False
-                    elif player1.current_frame == 10 and not player1.flipped:
-                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] - 50, player1.player_rectangle.topleft[1]):
-                            canattack = False
-                    elif player1.current_frame == 9:
-                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] + 150):
-                            canattack = False
-                    elif player1.current_frame == 11:
-                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] - 50):
-                            canattack = False
+                
+                curr_dir=direction
+                direction=None
+            
+            if abs(new_state[0])<Constants.controller_threshold and abs(new_state[1])<Constants.controller_threshold:
+                direction=None
+                curr_dir=direction
+            # This handles the player attack using the controller
+            if (joystick.X) and not player1.attacking:
+                manage_player_attack(player1, curr_screen)
+            
+            # This handles the player respawn functionality using the controller
+            if joystick.A:
+                if respawn:
+                    overworld = Overworld()
+                    # determine what the current level is
+                    if screen_before_death.name[0:4] == "cric":
+                        curr_screen = overworld.room1
+                        player1.player_rectangle.topleft = (screen_width//2, screen_height//2)
+                    elif screen_before_death.name[0:4] == "hous":
+                        curr_screen = overworld.houseroom1
+                        player1.player_rectangle.topleft = (screen_width//2, 650)
+                    elif screen_before_death.name[0:4] == "gala":
+                        curr_screen = overworld.galaroom1
+                        player1.player_rectangle.topleft = (screen_width//2, 650)
                     else:
-                        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1]):
-                            canattack = False
-                    if canattack:
-                        player1.attacking = True
-                        player1.attackingtime = time.time()
-                        player1.attack(curr_screen.monsters)
-
-            if event.type == pygame.QUIT:
-                gameLoop=False
+                        curr_screen = overworld.schoolroom1
+                        player1.player_rectangle.topleft = (screen_width//2, 700)
+                    player1.health_bar = 5
+                    player1.lives_remaining = 5
+                    keep_text_displayed = False
+                    text_index = 0
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameLoop=False
+                    pygame.quit()
+                    sys.exit()
+            player1.handlemove(direction, framecounter, firstchange)     
+        else:   
+            
+            #controls movement - sets direction variable
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:                   
+                    if event.key == pygame.K_LEFT: 
+                        direction = "left"
+                        direction_for_collision = "left"
+                        firstchange = True
+                    elif event.key == pygame.K_RIGHT: 
+                        direction = "right"
+                        direction_for_collision = "right"
+                        firstchange = True
+                    elif event.key == pygame.K_UP:
+                        direction = "up" 
+                        direction_for_collision = "up"
+                        firstchange = True
+                    elif event.key == pygame.K_DOWN: 
+                        direction = "down"
+                        direction_for_collision = "down"
+                        firstchange = True
+                    # lets the player respawn to the beginning of the current level
+                    elif event.key == pygame.K_k:
+                        if respawn:
+                            overworld = Overworld()
+                            # determine what the current level is
+                            if screen_before_death.name[0:4] == "cric":
+                                curr_screen = overworld.room1
+                                player1.player_rectangle.topleft = (screen_width//2, screen_height//2)
+                            elif screen_before_death.name[0:4] == "hous":
+                                curr_screen = overworld.houseroom1
+                                player1.player_rectangle.topleft = (screen_width//2, 650)
+                            elif screen_before_death.name[0:4] == "gala":
+                                curr_screen = overworld.galaroom1
+                                player1.player_rectangle.topleft = (screen_width//2, 650)
+                            else:
+                                curr_screen = overworld.schoolroom1
+                                player1.player_rectangle.topleft = (screen_width//2, 700)
+                            player1.health_bar = 5
+                            player1.lives_remaining = 5
+                            keep_text_displayed = False
+                            text_index = 0
+                            respawn = False
+                            
+                #stops movement if key is released - sets direction to None
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                        player1.current_frame = 10
+                        direction = None
+                    elif event.key == pygame.K_UP:
+                        player1.current_frame = 11
+                        direction = None
+                    elif event.key == pygame.K_DOWN:
+                        player1.current_frame = 9
+                        direction = None
+                    elif (event.key == pygame.K_SPACE) and not player1.attacking:
+                        manage_player_attack(player1, curr_screen)
         
+                if event.type == pygame.QUIT:
+                    gameLoop=False
+                    pygame.quit()
+                    sys.exit()
+                
+            player1.handlemove(direction, framecounter, firstchange)
         #handles monsters dropping keys to unlock dungeons
         overworld.monsterkeydrop(player1, curr_screen)
         overworld.keydrop(player1, curr_screen)
-        
-        #handles player movement and renders health
-        player1.handlemove(direction, framecounter, firstchange)
         player1.renderhealth(10, 10, screen)
         firstchange = False
         
@@ -393,7 +438,33 @@ def init_home_screen():
             gameLoop = False
         
         pygame.display.update()
-     
+
+
+
+def manage_player_attack(player1, curr_screen):
+    canattack = True
+    #check if player 1 is within 100 pixels of any obstacle in the biome
+    if player1.current_frame == 10 and player1.flipped: 
+        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] + 150, player1.player_rectangle.topleft[1]):
+            canattack = False
+    elif player1.current_frame == 10 and not player1.flipped:
+        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0] - 50, player1.player_rectangle.topleft[1]):
+            canattack = False
+    elif player1.current_frame == 9:
+        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] + 150):
+            canattack = False
+    elif player1.current_frame == 11:
+        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1] - 50):
+            canattack = False
+    else:
+        if not curr_screen.is_valid_point(player1.player_rectangle.topleft[0], player1.player_rectangle.topleft[1]):
+            canattack = False
+    if canattack:
+        player1.attacking = True
+        player1.attackingtime = time.time()
+        player1.attack(curr_screen.monsters)
+
+
 #final screen method - follows similar logic to instructions sceen
 def init_final_screen():
     current_screen = FinalScreen(screen)
