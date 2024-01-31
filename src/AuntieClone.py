@@ -26,7 +26,7 @@ class AuntieClone(MiniBoss):
                
                 else:
                     
-                    self.move_towards_player(player,Constants.csp_kid_walk_towards_player_speed, screen)
+                    self.move_towards_player(player,Constants.auntie_clone_speed, screen)
         
             if self.in_hit_cooldown:
                 now = pygame.time.get_ticks()
