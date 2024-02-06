@@ -17,7 +17,7 @@ class Puri(MediumBoss):
         self.not_spawned=True
         self.current_attack="shoot"
         self.reset_csp_mob()
-        
+        self.og_health = self.health
         self.shoot_attack_cooldown_count=4000
         self.first_time_in_room=True
         self.last_csp_mob = pygame.time.get_ticks()
@@ -29,9 +29,18 @@ class Puri(MediumBoss):
 
         self.csp_speech_bubble=pygame.image.load(os.path.join("Assets", "csp_kids_speech_bubble.png"))
         self.csp_speech_bubble=pygame.transform.scale(self.csp_speech_bubble, (150, 50))
+
+        self.end_you_speech_bubble=pygame.image.load(os.path.join("Assets", "i_will_end_you.png"))
+        self.end_you_speech_bubble=pygame.transform.scale(self.end_you_speech_bubble, (150, 50))
         
     def attack(self, player, screen):
-        
+        if (self.health==self.og_health or self.health==self.og_health//2 or self.health==self.og_health//5) and self.current_attack=="shoot":
+            screen.blit(self.end_you_speech_bubble, (self.monster_rectangle.topright[0]-20, self.monster_rectangle.topright[1]+5))
+
+        if self.health==self.og_health//2:
+            Constants.puri_speed=4.4
+            Constants.puri_projectile_speed=17
+
         if self.current_attack=="shoot":
             if self.first_time_in_room:
                 self.shoot_attack_cooldown_count+=4000

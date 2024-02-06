@@ -141,7 +141,7 @@ def init_home_screen():
     test_mode = False
     # create the overworld and starting room
     overworld = Overworld()
-    curr_screen = overworld.room1
+    curr_screen = overworld.schoolroom9
     if test_mode:
         curr_screen = overworld.cricketroom1
         overworld.cricketroom3.add_key(Key(overworld.cricketroom3, 800, 400, 800, 100))
@@ -172,7 +172,7 @@ def init_home_screen():
     texts = [] # the list of all the text that needs to be rendered
     curr_dir=""
 
-
+    respawn=False
     while gameLoop:
         #sets fps to 30 frames
         clock.tick(30)
