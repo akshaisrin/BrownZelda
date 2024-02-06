@@ -1,0 +1,70 @@
+Project 3
+-------------------------------------------------------------------------------
+
+BrownZeldaButNotGarbage
+
+Contributor Code Docu Asst Adj. Score
+----------- ---- ---- ---- ---- -----
+Akshai      1377  137   35   +1 20/20 A
+Arjun       1446        22   +1 20/20 A
+Medha        791         6   -1 20/20 A
+Riddhi       409        14   -1 20/20 A
+
+-------------------------------------------------------------------------------
+
+Rubric:
+1. Baseline:   15
+2. Creativity: +2       great ideas, cultural connection, xbox controller
+3. Design:     +2       good flow, nice graphics
+4. Clean code: +1       good module breakdown, generally nice small functions
+5. Document:   +1       detailed description, good retrospective
+   Total:      21
+
+-------------------------------------------------------------------------------
+
+Comments:
+
+* You guys did a fantastic job overall. The premise is hilarious, and you
+  executed well.
+
+* Am I doing something wrong? When I try to play the game, it starts at the
+  Eastlake level.
+
+* Code readability: most of your code has nice small functions and is well
+  documented. But there are some files (Main.py, Overworld.py, Player2.py)
+  that have embarrassingly long functions. Breaking those into smaller parts
+  would make your code more readable.
+
+* Great retrospective. You're learning all the right things.
+
+* Issues: 89 created. Looks like you used the issue system quite effectively,
+  with many of our commits tagged. You say you feel you could use issues
+  better (great!), but you already did better than most groups.
+
+-------------------------------------------------------------------------------
+
+Generic fine print:
+a. "Code" shows the approximate lines of code contributed. This is just a line
+   count of "git blame" and shouldn't be taken too seriously. Still, in many
+   cases it gives quick sniff test of who did how much work.
+b. "Docu" is the same thing applied to the documentation if it is in markdown.
+c. "Asst" is an approximate count of the non-code assets contributed, e.g.
+   images and sounds.
+d. "Adj." is a credit adjustment for contributors who did significantly more or
+   less than than average contributor. Credit adjustments sum to 0.
+e. "Score" is the final score, taken by adding the lines from the rubric and
+   the credit adjustment. Score is capped at 20/20.
+
+1. "Baseline" means all requirements are met. This gives you a C if it's all you
+   have.
+2. "Creativity" is a measure of how much tought and energy you put into going
+   beyond the minimum requirements.
+   Points can be deducted here if some requirements are missing.
+3. "Design" gives extra points for the look of the UI and overall usability.
+   Points can be deducted here if there are errors or crashes.
+4. "Clean code" indicates how easy the code is to read. Good code consists of
+   short functions with clear names, organized in a coherent way.
+   Points can be deducted here if code is redundant or especially messy.
+5. "Document" gives extra points if the documentation is especially clear or
+   comprehensive.
+   Points can be deducted here if the documentation is missing or insufficient.
